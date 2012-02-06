@@ -1,0 +1,401 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 375.0,
+		"selected_items":
+		[
+			[
+				"fet",
+				"Fetch"
+			],
+			[
+				"",
+				"Fetch: Manage remote files"
+			],
+			[
+				"fe",
+				"Fetch"
+			],
+			[
+				"f",
+				"Fetch"
+			],
+			[
+				"Package install",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 579.0
+	},
+	"console":
+	{
+		"height": 115.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": true,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/libs/backbone/loader.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/apps/portfolio/App.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/main.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/libs/backbone/backbone-0.5.3.min.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/libs/underscore/loader.js",
+		"/Volumes/Users/mcmahonb/Documents/Admin/redmine-setup.txt",
+		"/Volumes/Users/mcmahonb/Desktop/README.txt",
+		"/Volumes/Users/mcmahonb/Documents/DFR/CDA Tech Review Meetings/notes.txt",
+		"/Volumes/Users/mcmahonb/Documents/DFR/Events Calendar/EventCalendarPIR.txt",
+		"/Volumes/Users/mcmahonb/Documents/Admin/the-plan.txt",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/index.html",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/run.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/.gitignore",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/libs/piewpiew/piewpiew-backbone.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/build.sh",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/app.build.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/apps/portfolio/views/ApplicationView.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/apps/portfolio/controllers/commands.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/apps/portfolio/ApplicationFacade.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/apps/portfolio/models/ApplicationModel.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/apps/portfolio/views/views.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/apps/portfolio/models/collections/Projects.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/apps/portfolio/views/FeaturedProjectsView.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/apps/portfolio/views/ProjectListView.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/apps/portfolio/views/ProjectView.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/ApplicationFacade.js",
+		"/Volumes/Users/mcmahonb/workspace/projects/digitalbrilliance.com.au/index.htm",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/templates/ProjectListView.html",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/css/styles.less",
+		"/Volumes/Users/mcmahonb/workspace/projects/awardentry.gpyr.com.au/index.htm",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/PiewPiew-JS-Library/src/js/piewpiew.data.model.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/PiewPiew-JS-Library/src/index.html",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/config.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/libs/piewpiew/piewpiew-core.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/controllers/commands.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/libs/piewpiew/piewpiew-core-0.0.1.min.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/libs/piewpiew/piewpiew-backbone-0.0.1.min.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/views/ProjectView.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/views/ProjectListView.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/views/FeaturedProjectsView.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/views/ApplicationView.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/require-js-template.sublime-project",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/backbone-modular-example/src/js/main.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/backbone-modular-example/README.md",
+		"/Volumes/Users/mcmahonb/Library/Application Support/Sublime Text 2/Packages/User/Default (OSX).sublime-keymap",
+		"/Volumes/Users/mcmahonb/Library/Application Support/Sublime Text 2/Packages/Default/Default (OSX).sublime-keymap",
+		"/Volumes/Users/mcmahonb/Library/Application Support/Sublime Text 2/Packages/User/Base File.sublime-settings",
+		"/Volumes/Users/mcmahonb/Library/Application Support/Sublime Text 2/Packages/User/Global.sublime-settings",
+		"/Volumes/Users/mcmahonb/Documents/Dev Meetings/minutes.txt",
+		"/Volumes/Users/mcmahonb/workspace/projects/www.melbourneracingclub.net.au/lib/vendor/symfony/lib/plugins/sfDoctrinePlugin/config/skeleton/config/doctrine/schema.yml",
+		"/Volumes/Users/mcmahonb/workspace/projects/www.melbourneracingclub.net.au/doc/Patching the database.rtf",
+		"/Volumes/Users/mcmahonb/workspace/projects/www.melbourneracingclub.net.au/doc/Data Model.pdf",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/libs/underscore/underscore-1.2.4.min.js",
+		"/Volumes/Users/mcmahonb/Library/Application Support/Sublime Text 2/Packages/User/Fetch.sublime-settings",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/libs/backbone/backbone-min.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/libs/requirejs/requirejs-1.0.4.min.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/libs/jquery/jquery-min.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/libs/jquery/jquery-1.7.1.min.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/libs/jquery-min.js",
+		"/Volumes/Users/mcmahonb/workspace/projects/www.melbourneracingclub.net.au/web/m/index.html",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/controllers/Commands.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/libs/piewpiew-backbone.js",
+		"/Volumes/Users/mcmahonb/workspace/projects/www.melbourneracingclub.net.au/config/databases.yml",
+		"/Volumes/Users/mcmahonb/workspace/projects/www.melbourneracingclub.net.au/data/sql/schema.sql",
+		"/Volumes/Users/mcmahonb/workspace/projects/www.melbourneracingclub.net.au/config/server.inc.php",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/models/Project.js",
+		"/Volumes/Users/mcmahonb/Documents/MRC/svn migration.rtf",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/backbone-example/js/main.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/models/ApplicationModel.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/Application.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/libs/puremvc.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/models/collections/Projects.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/libs/puremvc.jss",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/templates/ProjectView.html",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/controllers/ApplicationController.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/README",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/application.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/router.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/data/projects.json",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/templates/FeaturedProjectsView.html",
+		"/Volumes/Users/mcmahonb/Library/Application Support/Sublime Text 2/Packages/User/LESS.tmLanguage",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/img/bg-main",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/templates/projectView.htmld",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/views/projectViedw.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/views/applicationView.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/templates/applicationView.html",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/css/styles.css",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/views/featuredProjectsView.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/views/projectView.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/templates/projectView.html",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/controllers/applicationController.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/collections/projects.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/templates/featuredProjectsView.html",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/text.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/tempates/ProjectListView.html",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/PiewPiew-JS-Library/src/js/piewpiew.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/libs/backbone-min.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/libs/gpyr-backbone.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/controllers/users.js",
+		"/Volumes/Users/mcmahonb/Library/Application Support/Sublime Text 2/Packages/Default/Base File.sublime-settings",
+		"/Volumes/Users/mcmahonb/Library/Application Support/Sublime Text 2/Packages/Default/Global.sublime-settings",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/domReady.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/backbone-example/index.html",
+		"/Volumes/Users/mcmahonb/workspace/lib/json2.js",
+		"/Volumes/Users/mcmahonb/workspace/lib/underscore-1.2.3.min.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/backbone-example/js/backbone.min.js",
+		"/Volumes/Users/mcmahonb/workspace/lib/jquery-1.7.1.min.js",
+		"/Volumes/Users/mcmahonb/workspace/lib/require-domReady-1.0.2.min.js",
+		"/Volumes/Users/mcmahonb/workspace/lib/require-order-1.0.0.min.js",
+		"/Volumes/Users/mcmahonb/workspace/lib/require-i18n-1.0.0.min.js",
+		"/Volumes/Users/mcmahonb/workspace/lib/require-text-1.0.2.min.js",
+		"/Volumes/Users/mcmahonb/workspace/lib/require-1.0.2.min.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/js-binary-stuff/js/script.js",
+		"/Volumes/Users/mcmahonb/Library/Application Support/Sublime Text 2/Packages/HTML/html5.sublime-snippet",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/PiewPiew-JS-Library/src/test.html",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/PiewPiew-JS-Library/PiewPiew-JS-Library.sublime-project",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/PiewPiew-JS-Library/src/StateMachine.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/PiewPiew-JS-Library/src/js/piewpiew.data.list.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/PiewPiew-JS-Library/src/js/piewpiew.Base.js",
+		"/Volumes/Users/mcmahonb/Documents/DFR/Pen Testing/notes.md",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/mollify/backend/configuration.php",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/PiewPiew-JS-Library/src/js/piewpiew.StringBundle.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/PiewPiew-JS-Library/src/js/piewpiew.ui.TemplatableView.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/PiewPiew-JS-Library/src/js/piewpiew.ui.TemplateContext.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/PiewPiew-JS-Library/src/js/piewpiew.ui.View.js",
+		"/Volumes/Users/mcmahonb/Documents/Admin/Hosting/project-provisioning-ideas.md",
+		"/Volumes/Users/mcmahonb/Documents/DFR/OLAT-PF-Bridge/meeting-minutes/17-11-2011.txt",
+		"/Volumes/Users/mcmahonb/Library/Application Support/Sublime Text 2/Packages/Markdown/Markdown.tmLanguage"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"make",
+			"&lt;",
+			"&gt;",
+			"&lt;",
+			"tree",
+			"initializeRouter",
+			"m4v",
+			"mp4",
+			"m4v",
+			"mp4",
+			"afl",
+			"command",
+			"keys",
+			"	{ \"keys\": [\"shift+tab\"], \"command\": \"prev_field\", \"context\":\n",
+			"keys",
+			"cache",
+			"retail",
+			"cadbury",
+			"cricket-test",
+			"Events(",
+			"console",
+			"collection",
+			"Backbone",
+			"_",
+			"$",
+			"initializing",
+			"	{ \"",
+			"		]\n	},\n	{ \"keys\": [\"super+shift+space\"], \"command\": \"expand_selection\", \"args\": {\"to\": \"scope\"} },\n	{ \"keys\": [\"ctrl+shift+m\"], \"command\": \"expand_selection\", \"args\": {\"to\": \"brackets\"} },\n	{ \"keys\": [\"ctrl+m\"], \"command\": \"move_to\", \"args\": {\"to\": \"brackets\"} },\n	{ \"keys\": [\"super+shift+j\"], \"command\": \"expand_selection\", \"args\": {\"to\": \"indentation\"} },\n	{ \"keys\": [\"super+shift+a\"], \"command\": \"expand_selection\", \"args\": {\"to\": \"tag\"} },\n\n	{ \"keys\": [\"super+alt+.\"], \"command\": \"close_tag\" },\n",
+			"objects",
+			"_properties",
+			"\\",
+			"%",
+			":",
+			" ",
+			"£",
+			":[Idunno.AntiCsrf.SuppressCsrfCheck]",
+			":<%@ Implements Interface=\"Idunno.AntiCsrf.ISuppressCsrfCheck\" %>",
+			"  /",
+			"\\",
+			"C:\\workspace\\www.defencejobs.gov.au\\www",
+			"</span>",
+			"<span style=\"color: #000000;\">",
+			"font",
+			"/images/blog",
+			"'images/",
+			"bern",
+			"jquery",
+			"?q=",
+			"alert",
+			"one",
+			"*Incomplete*",
+			"Complete",
+			"*Incomplete*",
+			"Complete",
+			"orbit",
+			"footer",
+			"subscribe to all events",
+			"RSS feed for",
+			"rss feed for",
+			"upcoming events",
+			"the-races",
+			"Calendar",
+			"Add all events",
+			"add all events",
+			"add all",
+			"add all events",
+			"subscribe",
+			"alert",
+			"updateHTML",
+			"roundNumber",
+			"getCurrentTime",
+			"getDuration",
+			"updateytp",
+			"videoTime",
+			"}"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"<",
+			">",
+			"<",
+			"command",
+			"model",
+			"/",
+			"",
+			"%",
+			":",
+			"f",
+			"",
+			"/",
+			"",
+			"images",
+			"'/images/blog/",
+			"",
+			"console.log",
+			"two",
+			" *Incomplete* ",
+			"%{color:green}Complete%",
+			"%{color:red}Incomplete%",
+			"%{color:green}green%"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 32.0
+	},
+	"input":
+	{
+		"height": 27.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"main",
+				"require-js-template/src/js/main.js"
+			],
+			[
+				"projectvi",
+				"require-js-template/src/js/views/projectView.js"
+			],
+			[
+				"applicationc",
+				"require-js-template/src/js/controllers/applicationController.js"
+			],
+			[
+				"ind",
+				"require-js-template/src/index.html"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"",
+				"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/require-js-template.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 314.0,
+	"status_bar_visible": true
+}
