@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var MODULE_PATH = './build/node_modules';
 var CONFIG_PATH = './build-config.js';
 var fs = require('fs');
