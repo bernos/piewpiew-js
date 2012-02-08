@@ -1,3 +1,11 @@
+PiewPiew! (the sound that a laser gun makes in the future)
+==========================================================
+
+PiewPiew is a bunch of handy javascript utilities, libraries, stuff designed to
+make javascripting more good. Theres a bit of everything here, from low level
+stuff like the quasi-oop <code>piewpiew.Class</code> to some useful addons to
+existing libraries such as the <code>piewpiew.Backbone</code> utils. 
+
 piewpiew.core
 =============
 
