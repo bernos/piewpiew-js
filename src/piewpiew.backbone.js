@@ -1,7 +1,19 @@
-/**
- * This is an AMD module containing some useful, re-usable backbone utilities
- */
-define(['underscore', 'backbone', 'piewpiew'], function(_, Backbone, piewpiew) {  
+(function(root, factory) {
+  // If AMD is available, use the define() method to load our dependencies 
+  //and declare our module
+  if (typeof define === 'function' && define.amd) {
+    define(['underscore', 'backbone', 'piewpiew'], function(_, Backbone, piewpiew) {
+      return factory(root, _, Backbone, piewpiew);
+    });
+  }
+  // Otherwise we will attach our module to root, and pass references to our 
+  // dependencies into the factory. We're assuming that our dependencies are 
+  // also attached to root here, but they could come from anywhere 
+  else 
+  {    
+    root.piewpiew.backbone = factory(root, _, Backbone, piewpiew);
+  }
+})(this, function(root, _, Backbone, piewpiew) {  
   
   /**
    *  piewpiew.View base class
@@ -371,6 +383,9 @@ define(['underscore', 'backbone', 'piewpiew'], function(_, Backbone, piewpiew) {
 
   return piewpiew;
 });
+
+
+
 
 
 

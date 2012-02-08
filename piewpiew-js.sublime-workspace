@@ -56,6 +56,7 @@
 	},
 	"file_history":
 	[
+		"/E/projects/piewpiew-js/piewpiew-js.sublime-project",
 		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/libs/backbone/loader.js",
 		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/apps/portfolio/App.js",
 		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/main.js",
@@ -182,8 +183,7 @@
 		"/Volumes/Users/mcmahonb/workspace/sandbox/PiewPiew-JS-Library/src/js/piewpiew.ui.TemplateContext.js",
 		"/Volumes/Users/mcmahonb/workspace/sandbox/PiewPiew-JS-Library/src/js/piewpiew.ui.View.js",
 		"/Volumes/Users/mcmahonb/Documents/Admin/Hosting/project-provisioning-ideas.md",
-		"/Volumes/Users/mcmahonb/Documents/DFR/OLAT-PF-Bridge/meeting-minutes/17-11-2011.txt",
-		"/Volumes/Users/mcmahonb/Library/Application Support/Sublime Text 2/Packages/Markdown/Markdown.tmLanguage"
+		"/Volumes/Users/mcmahonb/Documents/DFR/OLAT-PF-Bridge/meeting-minutes/17-11-2011.txt"
 	],
 	"find":
 	{

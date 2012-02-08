@@ -1,4 +1,19 @@
-define(['underscore'], function(_) {
+(function(root, factory) {
+  // If AMD is available, use the define() method to load our dependencies 
+  //and declare our module
+  if (typeof define === 'function' && define.amd) {
+    define(['underscore'], function(_) {
+      return factory(root, _);
+    });
+  }
+  // Otherwise we will attach our module to root, and pass references to our 
+  // dependencies into the factory. We're assuming that our dependencies are 
+  // also attached to root here, but they could come from anywhere 
+  else 
+  {
+    root.piewpiew = factory(root, _);
+  }
+})(this, function(root, _) {
   var piewpiew = {};
 
   /**

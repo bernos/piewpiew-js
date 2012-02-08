@@ -7,7 +7,7 @@
   {
 
     "piewpiew-core" : {
-      "version" : "0.0.1",
+      "version" : "0.0.2",
       "input-files" : [
         "piewpiew.core.js"
       ],
@@ -17,7 +17,7 @@
     },
 
     "piewpiew-backbone" : {
-      "version" : "0.0.1",
+      "version" : "0.0.2",
       "input-files" : [
         "piewpiew.backbone.js"
       ]
