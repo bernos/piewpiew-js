@@ -3,10 +3,62 @@
 	{
 		"selected_items":
 		[
+			[
+				"sr",
+				"srcFolder"
+			],
+			[
+				"sour",
+				"sourceString"
+			],
+			[
+				"buil",
+				"buildModule"
+			],
+			[
+				"dest",
+				"destFile"
+			],
+			[
+				"ma",
+				"mangle_options"
+			],
+			[
+				"as",
+				"ast_mangle"
+			],
+			[
+				"strin",
+				"strict_semicolons"
+			],
+			[
+				"par",
+				"parse"
+			],
+			[
+				"mod",
+				"modules"
+			],
+			[
+				"inpu",
+				"inputFile"
+			],
+			[
+				"file",
+				"fileName"
+			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"contents": "add room for adding extra cost etc... into details doc...\n\n",
+			"settings":
+			{
+				"buffer_size": 59,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -56,7 +108,14 @@
 	},
 	"file_history":
 	[
-		"/E/projects/piewpiew-js/piewpiew-js.sublime-project",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/piewpiew-js/tests/piewpiew.core.tests.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/piewpiew-js/src/piewpiew.core.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/piewpiew-js/build-config.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/piewpiew-js/build.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/piewpiew-js/README.md",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/piewpiew-js/src/piewpiew.backbone.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/piewpiew-js/dist/piewpiew-core-0.0.2.min.js",
+		"/Volumes/Users/mcmahonb/workspace/sandbox/piewpiew-js/dist/piewpiew-core-0.0.1.min.js",
 		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/libs/backbone/loader.js",
 		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/apps/portfolio/App.js",
 		"/Volumes/Users/mcmahonb/workspace/sandbox/require-js-template/src/js/main.js",
@@ -176,14 +235,7 @@
 		"/Volumes/Users/mcmahonb/workspace/sandbox/PiewPiew-JS-Library/src/StateMachine.js",
 		"/Volumes/Users/mcmahonb/workspace/sandbox/PiewPiew-JS-Library/src/js/piewpiew.data.list.js",
 		"/Volumes/Users/mcmahonb/workspace/sandbox/PiewPiew-JS-Library/src/js/piewpiew.Base.js",
-		"/Volumes/Users/mcmahonb/Documents/DFR/Pen Testing/notes.md",
-		"/Volumes/Users/mcmahonb/workspace/sandbox/mollify/backend/configuration.php",
-		"/Volumes/Users/mcmahonb/workspace/sandbox/PiewPiew-JS-Library/src/js/piewpiew.StringBundle.js",
-		"/Volumes/Users/mcmahonb/workspace/sandbox/PiewPiew-JS-Library/src/js/piewpiew.ui.TemplatableView.js",
-		"/Volumes/Users/mcmahonb/workspace/sandbox/PiewPiew-JS-Library/src/js/piewpiew.ui.TemplateContext.js",
-		"/Volumes/Users/mcmahonb/workspace/sandbox/PiewPiew-JS-Library/src/js/piewpiew.ui.View.js",
-		"/Volumes/Users/mcmahonb/Documents/Admin/Hosting/project-provisioning-ideas.md",
-		"/Volumes/Users/mcmahonb/Documents/DFR/OLAT-PF-Bridge/meeting-minutes/17-11-2011.txt"
+		"/Volumes/Users/mcmahonb/Documents/DFR/Pen Testing/notes.md"
 	],
 	"find":
 	{
@@ -201,6 +253,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"'",
 			"make",
 			"&lt;",
 			"&gt;",
@@ -283,6 +336,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"\"",
 			"<",
 			">",
 			"<",
@@ -315,8 +369,34 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"settings":
+					{
+						"buffer_size": 59,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								59,
+								59
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -396,6 +476,6 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 314.0,
+	"side_bar_width": 245.0,
 	"status_bar_visible": true
 }

@@ -1,5 +1,13 @@
 #!/usr/bin/env node
 
+/**
+ * Script build the project using the uglify-js node module.
+ *
+ * Requires that nodejs is installed
+ *
+ * Check out build-config.js for configuring build options.
+ */
+
 var MODULE_PATH = './build/node_modules';
 var CONFIG_PATH = './build-config.js';
 var fs = require('fs');
