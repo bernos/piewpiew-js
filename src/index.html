@@ -1,0 +1,33 @@
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="underscore-backbone.min.js"></script>
+	<script type="text/javascript" src="piewpiew.core.js"></script>
+	<script type="text/javascript" src="piewpiew.backbone.js"></script>
+	<script type="text/javascript" src="piewpiew.backbone.data.js"></script>
+	<script type="text/javascript">
+		Person = piewpiew.Model.extend({
+			fields: {
+				name : new piewpiew.data.fields.StringField({
+					validators: {
+						length: new piewpiew.data.validators.StringValidator({
+							minLength: 2,
+							maxLength: 6
+						})
+					}
+				})
+			}
+		});
+
+		var brendan = new Person({name: "brendan"});
+
+		brendan.on("error", function(model, error) {
+			console.log("An error occured", error);
+		});
+
+	</script>
+</head>
+<body>
+
+</body>
+</html>
