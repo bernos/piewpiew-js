@@ -19,7 +19,8 @@
     "piewpiew-backbone" : {
       "version" : "0.0.2",
       "input-files" : [
-        "piewpiew.backbone.js"
+        "piewpiew.backbone.js",
+        "piewpiew.backbone.data.js"
       ]
     }
   }  
