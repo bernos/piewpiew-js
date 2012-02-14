@@ -17,10 +17,15 @@
   
   piewpiew.data || (piewpiew.data = {});
 
+  /**
+   *  piewpiew.data.fields namespace
+   *  ==========================================================================
+   *  
+   */
   piewpiew.data.fields || (piewpiew.data.fields = {});
 
   /**
-   *  piewpiew.Field base class
+   *  piewpiew.data.fields.Field base class
    *  --------------------------------------------------------------------------
    *  
    */
@@ -34,8 +39,13 @@
 
       _.extend(this, options);
 
-      // TODO: allow for default validators.
-      this.validators || (this.validators = {});
+      this.validators = this.defaultValidators();
+
+      _.extend(this.validators, options.validators);
+    },
+
+    defaultValidators: function() {
+      return {};
     },
 
     /**
@@ -43,7 +53,6 @@
      * return false, otherwise return an array of validation errors
      */
     validate: function(value) {
-      console.log("field is validating", value);
       var errors = [];
 
       // First ensure the type of value is acceptable.
@@ -89,7 +98,7 @@
   });
 
   /**
-   *  piewpiew.StringField class
+   *  piewpiew.data.fields.StringField class
    *  --------------------------------------------------------------------------
    *  
    */
@@ -105,7 +114,19 @@
     }
   });
 
+  piewpiew.data.fields.EmailField = piewpiew.data.fields.StringField.extend({
+    defaultValidators: function() {
+      return {
+        email: new piewpiew.data.validators.EmailValidator()
+      }
+    }
+  });
 
+  /**
+   *  piewpiew.data.validators namespace
+   *  ==========================================================================
+   *  
+   */
   piewpiew.data.validators || (piewpiew.data.validators = {});
 
   /**
@@ -115,6 +136,7 @@
    */
   piewpiew.data.validators.Validator = piewpiew.Class({
     initialize: function(options) {
+      options || (options = {});
       options.messages || (options.messages = {});
 
       _.extend(this, options);
@@ -129,7 +151,7 @@
     },
 
     validate: function(value) {
-      return null;
+      return [];
     }
   });
 
@@ -181,6 +203,72 @@
   });
 
   /**
+   * Range validator class. Determines whether a numeric value is between a
+   * minimum and maximum boundary.
+   *
+   * @property {Number} min
+   *  Minimum allowed value in range
+   * @property {Number} max
+   *  Maximum allowed valud in range. Set this lower than min to allow 
+   *  unbounded values
+   *
+   * Validation messages:
+   *  outOfRange - Displayed when the value being validated is out of range
+   */
+  piewpiew.data.validators.RangeValidator = piewpiew.data.validators.Validator.extend({
+    min: 0,
+    max: -1,
+
+    defaultMessages: function() {
+      return {
+        outOfRange: "A value between ${min} and ${max} is required."
+      }
+    },
+
+    validate: function(value) {
+      var errors = [];
+
+      if (this.max < this.min) return errors;
+
+      if (value < this.min || value > this.max) {
+        errors.push(piewpiew.printf(this.messages.outOfRange, { min: this.min, max: this.max }));        
+      }
+
+      return errors;
+    }
+  });
+
+  piewpiew.data.validators.RegexValidator = piewpiew.data.validators.Validator.extend({
+    regex: /./,
+
+    defaultMessages: function() {
+      return {
+        invalid: "The supplied string does not match the regular expression."
+      }
+    },
+
+    validate: function(value) {
+      var errors = [];
+
+      if (!this.regex.test(value)) {
+        errors.push(piewpiew.printf(this.messages.invalid, {value: value}))
+      }
+
+      return errors;
+    }
+  });
+
+  piewpiew.data.validators.EmailValidator = piewpiew.data.validators.RegexValidator.extend({
+    regex: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+
+    defaultMessages: function() {
+      return {
+        invalid: "${value} is not a valid email address."
+      }
+    }
+  });  
+
+  /**
    *  piewpiew.Model base class
    *  --------------------------------------------------------------------------
    *  Adds formal field definitions and a validation framework to the base 
@@ -189,7 +277,19 @@
   piewpiew.Model = Backbone.Model.extend({
 
     initialize: function(attributes, options) {
-      console.log(attributes, options);
+
+      // Initialize each of our field objects...
+      _.each(this.fields, function(field, name) {
+        
+        attributes || (attributes = {});
+
+        // Set a default label if none has been provided...
+        if (!field.label) {
+          field.label = name;
+        }
+
+        field.name  = name;
+      });
     },
     
     /**

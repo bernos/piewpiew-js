@@ -15,6 +15,8 @@
   }
 })(this, function(root, _, Backbone, piewpiew) {  
   
+  piewpiew.view || (piewpiew.view = {});
+
   /**
    *  piewpiew.View base class
    *  --------------------------------------------------------------------------
@@ -67,7 +69,11 @@
      * context to templateFunction()
      */
     render: function() {
-      $(this.el).html(this.templateFunction(this.template, this.templateContext()));
+      var templateContext = this.templateContext();
+
+      _.extend(templateContext, piewpiew.View.helpers);
+
+      $(this.el).html(this.templateFunction(this.template, templateContext));
       return this;
     },
 
@@ -99,7 +105,55 @@
    */
   piewpiew.View.template = function(template, context) {
     return _.template(template, context);
-  }
+  };
+
+  /**
+   * View helpers. These methods get attached to templateContext objects when they
+   * are passed to view templates for rendering.
+   */
+  piewpiew.View.helpers = {
+    Html: {
+      editorForModel: function(model) {
+        
+      },
+
+      editorForField: function(model, field, options) {
+        return piewpiew.View.template(field.editorTemplate, {name: field.name, value: model.get(field.name), options: options});
+      },
+
+      labelForField: function(model, field, options) {
+        return piewpiew.View.template(field.labelTemplate, {name: field.name, value: field.label, options:options}); 
+      }
+    }
+  };
+
+  /**
+   * Default templates for things like labels, field editors and so forth. If you
+   * change the default piewpiew.View.template() function then you will need to
+   * update these default templates to match the syntax of the new template() 
+   * implementation.
+   */
+  piewpiew.View.defaultTemplates = {
+    textfield: function() {
+      return '<input name="<%= name %>" type="text" value="<%= value %>"/>';
+    },
+
+    label: function() {
+      return '<label for="<%= name %>"><%= value %></label>';
+    }
+
+  };
+
+
+
+
+
+
+
+
+
+
+
 
   /**
    *  piewpiew.App

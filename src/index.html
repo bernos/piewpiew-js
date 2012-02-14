@@ -1,33 +1,113 @@
 <html>
 <head>
 	<title></title>
+
+	<script type="text/html" id="template-form">
+	  <div class='contact'>
+	  	<% _.each(model.fields, function(field, name) { %>
+	  		<div>
+	  			<label><%= field.label %> : </label>
+	  			<span><%= model.get(field.name) %></span>
+	  			<%= Html.labelForField(model, field) %>
+	  			<%= Html.editorForField(model, field) %>
+	  		</div>
+	  	<% }); %>
+	  </div>
+	</script>
+
+
+	<script type="text/javascript" src="jquery.min.js"></script>
 	<script type="text/javascript" src="underscore-backbone.min.js"></script>
 	<script type="text/javascript" src="piewpiew.core.js"></script>
 	<script type="text/javascript" src="piewpiew.backbone.js"></script>
 	<script type="text/javascript" src="piewpiew.backbone.data.js"></script>
 	<script type="text/javascript">
+	$.fn.serializeObject = function()
+	{
+	    var o = {};
+	    var a = this.serializeArray();
+	    $.each(a, function() {
+	        if (o[this.name] !== undefined) {
+	            if (!o[this.name].push) {
+	                o[this.name] = [o[this.name]];
+	            }
+	            o[this.name].push(this.value || '');
+	        } else {
+	            o[this.name] = this.value || '';
+	        }
+	    });
+	    return o;
+	};
+
 		Person = piewpiew.Model.extend({
 			fields: {
-				name : new piewpiew.data.fields.StringField({
+				
+				firstName : new piewpiew.data.fields.StringField({
+					label: "First name",
 					validators: {
 						length: new piewpiew.data.validators.StringValidator({
 							minLength: 2,
 							maxLength: 6
 						})
-					}
+					},
+					editorTemplate: piewpiew.View.defaultTemplates.textfield(),
+					labelTemplate: piewpiew.View.defaultTemplates.label()					
+				}),
+
+				lastName : new piewpiew.data.fields.StringField({
+					label: "Last name",
+					validators: {
+						length: new piewpiew.data.validators.StringValidator({
+							minLength: 2,
+							maxLength: 6
+						})
+					},
+					editorTemplate: piewpiew.View.defaultTemplates.textfield(),
+					labelTemplate: piewpiew.View.defaultTemplates.label()						
 				})
 			}
 		});
 
-		var brendan = new Person({name: "brendan"});
-
-		brendan.on("error", function(model, error) {
-			console.log("An error occured", error);
+		FormView = piewpiew.View.extend({
+			el: 'body',
+			template: $('#template-form').html(),
+			templateContext: function() {
+				return {
+					model:this.model
+				};
+			}
 		});
 
 	</script>
+
+	
 </head>
 <body>
+	
 
+
+	<script type="text/javascript">
+
+		var model = new Person({
+			firstName: "Simon",
+			lastName: "Annnnn"
+		});
+
+		var view = new FormView({
+			model: model
+		});
+
+		console.log("view is " + view.render().$el.html());
+
+
+		$("#create-person-form").submit(function() {
+			var values = $(this).serializeObject();
+
+			var p = new Person();
+			p.set(values);
+
+			return false;
+		});
+	</script>
 </body>
 </html>
