@@ -33,6 +33,8 @@
     required: false,
     requiredMessage: "This is a required field",
     invalidTypeMessage: "The value of this field is invalid",
+    labelTemplate: piewpiew.View.defaultTemplates.label(),
+    editorTemplate: "",
 
     initialize: function(options) {
       options || (options = {});
@@ -104,6 +106,8 @@
    */
   piewpiew.data.fields.StringField = piewpiew.data.fields.Field.extend({
     invalidTypeMessage: "The value of this field must be a string",
+    editorTemplate: piewpiew.View.defaultTemplates.textfield(),
+    labelTemplate: piewpiew.View.defaultTemplates.label(),
 
     validateType: function(value) {
       return (typeof value == "string");

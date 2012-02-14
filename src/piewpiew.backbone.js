@@ -113,16 +113,42 @@
    */
   piewpiew.View.helpers = {
     Html: {
+      attributeString: function(htmlAttributes) {
+        var buf = [];
+
+        _.each(htmlAttributes, function(value, key) {
+          buf.push(piewpiew.printf('${key}="${value}"', {key:key, value:value}));
+        });
+
+        return buf.join(" ");
+      },
+
       editorForModel: function(model) {
         
       },
 
-      editorForField: function(model, field, options) {
-        return piewpiew.View.template(field.editorTemplate, {name: field.name, value: model.get(field.name), options: options});
+      editorForField: function(model, field, htmlAttributes) {
+        htmlAttributes || (htmlAttributes = {});
+
+        htmlAttributes.class || (htmlAttributes.class = "");
+        
+        if (htmlAttributes.class.length > 0) htmlAttributes.class += " ";
+
+        htmlAttributes.class += "field-editor";
+
+        return piewpiew.View.template(field.editorTemplate, {
+          name: field.name, 
+          value: model.get(field.name), 
+          attributes: this.attributeString(htmlAttributes)
+        });
       },
 
-      labelForField: function(model, field, options) {
-        return piewpiew.View.template(field.labelTemplate, {name: field.name, value: field.label, options:options}); 
+      labelForField: function(model, field, htmlAttributes) {
+        return piewpiew.View.template(field.labelTemplate, {
+          name: field.name, 
+          value: field.label, 
+          attributes: this.attributeString(htmlAttributes)
+        }); 
       }
     }
   };
@@ -135,11 +161,11 @@
    */
   piewpiew.View.defaultTemplates = {
     textfield: function() {
-      return '<input name="<%= name %>" type="text" value="<%= value %>"/>';
+      return '<input name="<%= name %>" type="text" value="<%= value %>" <%= attributes %>/>';
     },
 
     label: function() {
-      return '<label for="<%= name %>"><%= value %></label>';
+      return '<label for="<%= name %>" <%= attributes %>><%= value %></label>';
     }
 
   };
