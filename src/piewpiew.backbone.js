@@ -113,10 +113,21 @@
    */
   piewpiew.View.helpers = {
     Html: {
+      /**
+       * Creates an HTML attributes string from an object. Name:value pairs in the
+       * object will be translated into name="value" in the attribute string. The
+       * one exception is for css classes. An array of css class names can be stored
+       * in the "classes" property of the attributes object and it will be parsed
+       * into the appropriate class attribute.
+       */
       attributeString: function(htmlAttributes) {
         var buf = [];
 
         _.each(htmlAttributes, function(value, key) {
+          if (key == "classes") {
+            key = "class";
+            value = value.join(" ");
+          }
           buf.push(piewpiew.printf('${key}="${value}"', {key:key, value:value}));
         });
 
@@ -124,43 +135,55 @@
       },
 
       editorForModel: function(model) {
-        
+        return piewpiew.View.template(model.editorTemplate(), _.extend({
+          model:model
+        }, piewpiew.View.helpers));
       },
 
+      /**
+       * Creates an editor control for a field, using the value of the field from
+       * a particular model. The template used is determined by the value of the
+       * field.editorTemplate property.
+       */
       editorForField: function(model, field, htmlAttributes) {
         htmlAttributes || (htmlAttributes = {});
+        htmlAttributes.classes || (htmlAttributes.classes = []);   
+        htmlAttributes.classes.push("field-editor");
 
-        htmlAttributes.class || (htmlAttributes.class = "");
-        
-        if (htmlAttributes.class.length > 0) htmlAttributes.class += " ";
-
-        htmlAttributes.class += "field-editor";
-
-        return piewpiew.View.template(field.editorTemplate(), {
+        return piewpiew.View.template(field.editorTemplate(), _.extend({
           name: field.name, 
           value: model.get(field.name), 
           attributes: this.attributeString(htmlAttributes)
-        });
+        }, piewpiew.View.helpers));
       },
 
+      /**
+       * Creates a label for a field, using the value of the field from
+       * a particular model. The template used is determined by the value of the
+       * field.editorTemplate property.
+       */
       labelForField: function(model, field, htmlAttributes) {
-        return piewpiew.View.template(field.labelTemplate(), {
+        htmlAttributes || (htmlAttributes = {});
+        htmlAttributes.classes || (htmlAttributes.classes = []);   
+        htmlAttributes.classes.push("field-label");
+
+        return piewpiew.View.template(field.labelTemplate(), _.extend({
           name: field.name, 
           value: field.label, 
           attributes: this.attributeString(htmlAttributes)
-        }); 
+        }, piewpiew.View.helpers)); 
       },
 
       label: function(name, value, htmlAttributes) {
         // TODO: create attribute string from attributes...
-        return piewpiew.View.template(piewpiew.View.defaultTemplates.label, {
+        return piewpiew.View.template(piewpiew.View.defaultTemplates.label(), {
           name: name,
           value: value
         });
       },
 
       textfield: function(name, value, htmlAttributes) {
-        return piewpiew.View.template(piewpiew.View.defaultTemplates.textfield, {
+        return piewpiew.View.template(piewpiew.View.defaultTemplates.textfield(), {
           name: name,
           value: value
         });
@@ -181,8 +204,20 @@
 
     label: function() {
       return '<label for="<%= name %>" <%= attributes %>><%= value %></label>';
-    }
+    },
 
+    modelEditor: function() {
+      var buf = [];
+
+      buf.push("<% _.each(model.fields, function(field, name) { %>");
+      buf.push("<div>");
+      buf.push("<%= Html.labelForField(model, field) %>");
+      buf.push("<%= Html.editorForField(model, field) %>");
+      buf.push("</div>");
+      buf.push("<% }); %>");
+
+      return buf.join("\n");
+    }
   };
 
 

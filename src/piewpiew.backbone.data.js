@@ -59,6 +59,11 @@
       return ""
     },
 
+    /**
+     * Initialise the field instance.
+     *
+     * @param {object} options
+     */
     initialize: function(options) {
       options || (options = {});
 
@@ -69,6 +74,10 @@
       _.extend(this.validators, options.validators);
     },
 
+    /**
+     * Creates default validators for the field. Inheritting classes
+     * should provide their own implementation
+     */
     defaultValidators: function() {
       return {};
     },
@@ -308,6 +317,10 @@
    *  Backbone Model class.
    */
   piewpiew.Model = Backbone.Model.extend({
+
+    editorTemplate: function() {
+      return piewpiew.View.defaultTemplates.modelEditor();
+    },
 
     initialize: function(attributes, options) {
 

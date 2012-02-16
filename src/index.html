@@ -4,14 +4,7 @@
 
 	<script type="text/html" id="template-form">
 	  <div class='contact'>
-	  	<% _.each(model.fields, function(field, name) { %>
-	  		<div>
-	  			<label><%= field.label %> : </label>
-	  			<span><%= model.get(field.name) %></span>
-	  			<%= Html.labelForField(model, field) %>
-	  			<%= Html.editorForField(model, field) %>
-	  		</div>
-	  	<% }); %>
+	  	<%= Html.editorForModel(model) %>
 	  </div>
 	</script>
 
