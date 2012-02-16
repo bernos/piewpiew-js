@@ -136,7 +136,7 @@
 
         htmlAttributes.class += "field-editor";
 
-        return piewpiew.View.template(field.editorTemplate, {
+        return piewpiew.View.template(field.editorTemplate(), {
           name: field.name, 
           value: model.get(field.name), 
           attributes: this.attributeString(htmlAttributes)
@@ -144,11 +144,26 @@
       },
 
       labelForField: function(model, field, htmlAttributes) {
-        return piewpiew.View.template(field.labelTemplate, {
+        return piewpiew.View.template(field.labelTemplate(), {
           name: field.name, 
           value: field.label, 
           attributes: this.attributeString(htmlAttributes)
         }); 
+      },
+
+      label: function(name, value, htmlAttributes) {
+        // TODO: create attribute string from attributes...
+        return piewpiew.View.template(piewpiew.View.defaultTemplates.label, {
+          name: name,
+          value: value
+        });
+      },
+
+      textfield: function(name, value, htmlAttributes) {
+        return piewpiew.View.template(piewpiew.View.defaultTemplates.textfield, {
+          name: name,
+          value: value
+        });
       }
     }
   };

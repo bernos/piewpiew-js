@@ -30,11 +30,34 @@
    *  
    */
   piewpiew.data.fields.Field = piewpiew.Class({
+    /**
+     * Is the field required?
+     */
     required: false,
+
+    /**
+     * Error message if a value fails required validation
+     */
     requiredMessage: "This is a required field",
+    
+    /**
+     * Error message if a value is of the wrong type
+     */
     invalidTypeMessage: "The value of this field is invalid",
-    labelTemplate: piewpiew.View.defaultTemplates.label(),
-    editorTemplate: "",
+    
+    /**
+     * Returns a template string for rendering the field label.
+     */
+    labelTemplate: function() {
+      return piewpiew.View.defaultTemplates.label();
+    },
+    
+    /**
+     * Template for rendering an editor component for this field.
+     */
+    editorTemplate: function() {
+      return ""
+    },
 
     initialize: function(options) {
       options || (options = {});
@@ -106,8 +129,14 @@
    */
   piewpiew.data.fields.StringField = piewpiew.data.fields.Field.extend({
     invalidTypeMessage: "The value of this field must be a string",
-    editorTemplate: piewpiew.View.defaultTemplates.textfield(),
-    labelTemplate: piewpiew.View.defaultTemplates.label(),
+    
+    editorTemplate: function() {
+      return piewpiew.View.defaultTemplates.textfield();
+    },
+    
+    labelTemplate: function() {
+      return piewpiew.View.defaultTemplates.label();
+    },
 
     validateType: function(value) {
       return (typeof value == "string");
