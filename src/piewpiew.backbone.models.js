@@ -15,21 +15,21 @@
   }
 })(this, function(root, _, Backbone, piewpiew) {  
   
-  piewpiew.data || (piewpiew.data = {});
+  piewpiew.models || (piewpiew.models = {});
 
   /**
-   *  piewpiew.data.fields namespace
+   *  piewpiew.models.fields namespace
    *  ==========================================================================
    *  
    */
-  piewpiew.data.fields || (piewpiew.data.fields = {});
+  piewpiew.models.fields || (piewpiew.models.fields = {});
 
   /**
-   *  piewpiew.data.fields.Field base class
+   *  piewpiew.models.fields.Field base class
    *  --------------------------------------------------------------------------
    *  
    */
-  piewpiew.data.fields.Field = piewpiew.Class({
+  piewpiew.models.fields.Field = piewpiew.Class({
     /**
      * Is the field required?
      */
@@ -49,7 +49,7 @@
      * Returns a template string for rendering the field label.
      */
     labelTemplate: function() {
-      return piewpiew.View.defaultTemplates.label();
+      return '<label for="<%= name %>" <%= attributes %>><%= value %></label>';
     },
     
     /**
@@ -132,19 +132,15 @@
   });
 
   /**
-   *  piewpiew.data.fields.StringField class
+   *  piewpiew.models.fields.StringField class
    *  --------------------------------------------------------------------------
    *  
    */
-  piewpiew.data.fields.StringField = piewpiew.data.fields.Field.extend({
+  piewpiew.models.fields.StringField = piewpiew.models.fields.Field.extend({
     invalidTypeMessage: "The value of this field must be a string",
     
     editorTemplate: function() {
-      return piewpiew.View.defaultTemplates.textfield();
-    },
-    
-    labelTemplate: function() {
-      return piewpiew.View.defaultTemplates.label();
+      return '<input name="<%= name %>" type="text" value="<%= value %>" <%= attributes %>/>';
     },
 
     validateType: function(value) {
@@ -156,27 +152,27 @@
     }
   });
 
-  piewpiew.data.fields.EmailField = piewpiew.data.fields.StringField.extend({
+  piewpiew.models.fields.EmailField = piewpiew.models.fields.StringField.extend({
     defaultValidators: function() {
       return {
-        email: new piewpiew.data.validators.EmailValidator()
+        email: new piewpiew.models.validators.EmailValidator()
       }
     }
   });
 
   /**
-   *  piewpiew.data.validators namespace
+   *  piewpiew.models.validators namespace
    *  ==========================================================================
    *  
    */
-  piewpiew.data.validators || (piewpiew.data.validators = {});
+  piewpiew.models.validators || (piewpiew.models.validators = {});
 
   /**
-   *  piewpiew.data.validators.Validator  base class
+   *  piewpiew.models.validators.Validator  base class
    *  --------------------------------------------------------------------------
    *  
    */
-  piewpiew.data.validators.Validator = piewpiew.Class({
+  piewpiew.models.validators.Validator = piewpiew.Class({
     initialize: function(options) {
       options || (options = {});
       options.messages || (options.messages = {});
@@ -213,7 +209,7 @@
    *  tooShortNoMaxLength - String is shorter than min length with no maxLength
    *    specified
    */
-  piewpiew.data.validators.StringValidator = piewpiew.data.validators.Validator.extend({
+  piewpiew.models.validators.StringValidator = piewpiew.models.validators.Validator.extend({
     minLength: -1,
     maxLength: -1,
 
@@ -257,7 +253,7 @@
    * Validation messages:
    *  outOfRange - Displayed when the value being validated is out of range
    */
-  piewpiew.data.validators.RangeValidator = piewpiew.data.validators.Validator.extend({
+  piewpiew.models.validators.RangeValidator = piewpiew.models.validators.Validator.extend({
     min: 0,
     max: -1,
 
@@ -280,7 +276,7 @@
     }
   });
 
-  piewpiew.data.validators.RegexValidator = piewpiew.data.validators.Validator.extend({
+  piewpiew.models.validators.RegexValidator = piewpiew.models.validators.Validator.extend({
     regex: /./,
 
     defaultMessages: function() {
@@ -300,7 +296,7 @@
     }
   });
 
-  piewpiew.data.validators.EmailValidator = piewpiew.data.validators.RegexValidator.extend({
+  piewpiew.models.validators.EmailValidator = piewpiew.models.validators.RegexValidator.extend({
     regex: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
 
     defaultMessages: function() {
@@ -319,7 +315,16 @@
   piewpiew.Model = Backbone.Model.extend({
 
     editorTemplate: function() {
-      return piewpiew.View.defaultTemplates.modelEditor();
+      var buf = [];
+
+      buf.push("<% _.each(model.fields, function(field, name) { %>");
+      buf.push("<div>");
+      buf.push("<%= Html.labelForField(model, field) %>");
+      buf.push("<%= Html.editorForField(model, field) %>");
+      buf.push("</div>");
+      buf.push("<% }); %>");
+
+      return buf.join("\n");
     },
 
     initialize: function(attributes, options) {

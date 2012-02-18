@@ -13,7 +13,8 @@
 	<script type="text/javascript" src="underscore-backbone.min.js"></script>
 	<script type="text/javascript" src="piewpiew.core.js"></script>
 	<script type="text/javascript" src="piewpiew.backbone.js"></script>
-	<script type="text/javascript" src="piewpiew.backbone.data.js"></script>
+	<script type="text/javascript" src="piewpiew.backbone.models.js"></script>
+	<script type="text/javascript" src="piewpiew.backbone.views.js"></script>
 	<script type="text/javascript">
 	$.fn.serializeObject = function()
 	{
@@ -35,20 +36,20 @@
 		Person = piewpiew.Model.extend({
 			fields: {
 				
-				firstName : new piewpiew.data.fields.StringField({
+				firstName : new piewpiew.models.fields.StringField({
 					label: "First name",
 					validators: {
-						length: new piewpiew.data.validators.StringValidator({
+						length: new piewpiew.models.validators.StringValidator({
 							minLength: 2,
 							maxLength: 6
 						})
 					}		
 				}),
 
-				lastName : new piewpiew.data.fields.StringField({
+				lastName : new piewpiew.models.fields.StringField({
 					label: "Last name",
 					validators: {
-						length: new piewpiew.data.validators.StringValidator({
+						length: new piewpiew.models.validators.StringValidator({
 							minLength: 2,
 							maxLength: 6
 						})
