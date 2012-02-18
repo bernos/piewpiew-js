@@ -2,8 +2,8 @@
   // If AMD is available, use the define() method to load our dependencies 
   //and declare our module
   if (typeof define === 'function' && define.amd) {
-    define(['underscore', 'backbone', 'piewpiew'], function(_, Backbone, piewpiew) {
-      return factory(root, _, Backbone, piewpiew);
+    define(['underscore', 'backbone', 'piewpiew', 'jquery'], function(_, Backbone, piewpiew, $) {
+      return factory(root, _, Backbone, piewpiew, $);
     });
   }
   // Otherwise we will attach our module to root, and pass references to our 
@@ -11,9 +11,9 @@
   // also attached to root here, but they could come from anywhere 
   else 
   {    
-    root.piewpiew.backbone = factory(root, _, Backbone, piewpiew);
+    root.piewpiew.backbone = factory(root, _, Backbone, piewpiew, $);
   }
-})(this, function(root, _, Backbone, piewpiew) {  
+})(this, function(root, _, Backbone, piewpiew, $) {  
   
   piewpiew.views || (piewpiew.views = {});
 
@@ -23,7 +23,7 @@
    *  Adds external template support to the basic Backbone.View class, as well 
    *  as default implementations for rendering and and app registration.
    */
-  piewpiew.View = Backbone.View.extend({
+  piewpiew.views.View = Backbone.View.extend({
 
     // A default template.
     template: 'No template specified for view',
@@ -135,9 +135,10 @@
       },
 
       editorForModel: function(model) {
-        return piewpiew.views.template(model.editorTemplate(), _.extend({
-          model:model
-        }, piewpiew.views.Helpers));
+        return piewpiew.views.template(model.editorTemplate(), _.extend(
+          model.editorTemplateContext(), 
+          piewpiew.views.Helpers
+        ));
       },
 
       /**
@@ -150,11 +151,14 @@
         htmlAttributes.classes || (htmlAttributes.classes = []);   
         htmlAttributes.classes.push("field-editor");
 
-        return piewpiew.views.template(field.editorTemplate(), _.extend({
-          name: field.name, 
-          value: model.get(field.name), 
-          attributes: this.attributeString(htmlAttributes)
-        }, piewpiew.views.Helpers));
+        var context = _.extend(
+          field.editorTemplateContext(model), 
+          piewpiew.views.Helpers
+        );
+
+        context.attributes = this.attributeString(htmlAttributes);
+
+        return piewpiew.views.template(field.editorTemplate(), context);
       },
 
       /**
@@ -167,11 +171,14 @@
         htmlAttributes.classes || (htmlAttributes.classes = []);   
         htmlAttributes.classes.push("field-label");
 
-        return piewpiew.views.template(field.labelTemplate(), _.extend({
-          name: field.name, 
-          value: field.label, 
-          attributes: this.attributeString(htmlAttributes)
-        }, piewpiew.views.Helpers)); 
+        var context = _.extend(
+          field.labelTemplateContext(model), 
+          piewpiew.views.Helpers
+        );
+
+        context.attributes = this.attributeString(htmlAttributes);
+
+        return piewpiew.views.template(field.labelTemplate(), context); 
       },
 
       label: function(name, value, htmlAttributes) {
@@ -194,6 +201,27 @@
         });
       }
     }
+  };
+
+  /**
+   * Add ability to serialize jquery matches to javascript objects.
+   * useful for handling form data and so forth.
+   */
+  $.fn.serializeObject = function()
+  {
+      var o = {};
+      var a = this.serializeArray();
+      $.each(a, function() {
+          if (o[this.name] !== undefined) {
+              if (!o[this.name].push) {
+                  o[this.name] = [o[this.name]];
+              }
+              o[this.name].push(this.value || '');
+          } else {
+              o[this.name] = this.value || '';
+          }
+      });
+      return o;
   };
 
   return piewpiew;

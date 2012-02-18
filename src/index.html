@@ -3,9 +3,10 @@
 	<title></title>
 
 	<script type="text/html" id="template-form">
-	  <div class='contact'>
+	  <form>
 	  	<%= Html.editorForModel(model) %>
-	  </div>
+	  	<input type="submit" value="save"/>
+	  </form>
 	</script>
 
 
@@ -16,24 +17,9 @@
 	<script type="text/javascript" src="piewpiew.backbone.models.js"></script>
 	<script type="text/javascript" src="piewpiew.backbone.views.js"></script>
 	<script type="text/javascript">
-	$.fn.serializeObject = function()
-	{
-	    var o = {};
-	    var a = this.serializeArray();
-	    $.each(a, function() {
-	        if (o[this.name] !== undefined) {
-	            if (!o[this.name].push) {
-	                o[this.name] = [o[this.name]];
-	            }
-	            o[this.name].push(this.value || '');
-	        } else {
-	            o[this.name] = this.value || '';
-	        }
-	    });
-	    return o;
-	};
+		
 
-		Person = piewpiew.Model.extend({
+		Person = piewpiew.models.Model.extend({
 			fields: {
 				
 				firstName : new piewpiew.models.fields.StringField({
@@ -58,13 +44,71 @@
 			}
 		});
 
-		FormView = piewpiew.View.extend({
-			el: 'body',
+		FormView = piewpiew.views.View.extend({
+
 			template: $('#template-form').html(),
+
+			initialize: function(options) {
+				if (this.model) {
+					this.model.bind("error", this.handleError, this);
+				}	
+			},
+
 			templateContext: function() {
 				return {
 					model:this.model
 				};
+			},
+
+			events: {
+				'submit form': 'handleSubmit' 
+			},
+
+			handleSubmit: function(e) {
+				var formData = this.$('form').serializeObject();
+
+				if (null != this.model) {
+					if (this.model.set(formData)) this.trigger("submit", this);
+				}			
+
+				e.preventDefault();
+			},
+
+			handleError: function(model, error) {
+				// TODO: show form errors
+				console.log("ERROR", arguments);
+
+				// Strategy should be... if there is already an element with a classname
+				// error-for-<element name> then we will set its inner html
+			},
+
+			clearErrors: function() {
+				
+			},
+
+			clearError: function(elementName) {
+				
+			}
+		});
+
+		Application = piewpiew.Application.extend({
+			initializeModel: function() {
+				this.registerModel('model', new Person({
+					firstName: "Barry",
+					lastName: "Smith"
+				}));	
+			},
+
+			initializeView: function() {
+				this.registerView('view', new FormView({
+					model: this.getModel('model')
+				}).bind("submit", function(formView) {
+					console.log("You submitted ", formView);
+				}));
+			},
+
+			startup: function() {
+				$(this.el).append(this.getView('view').render().$el);
 			}
 		});
 
@@ -78,17 +122,11 @@
 
 	<script type="text/javascript">
 
-		var model = new Person({
-			firstName: "Simon",
-			lastName: "Annnnn"
+		$(function() {
+			var app = new Application().startup();
 		});
 
-		var view = new FormView({
-			model: model
-		});
-
-		console.log("view is " + view.render().$el.html());
-
+		
 
 		$("#create-person-form").submit(function() {
 			var values = $(this).serializeObject();

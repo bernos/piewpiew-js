@@ -1,0 +1,1 @@
+Model fields need to be able to be models or collections.

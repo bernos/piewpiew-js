@@ -51,12 +51,29 @@
     labelTemplate: function() {
       return '<label for="<%= name %>" <%= attributes %>><%= value %></label>';
     },
+
+    /**
+     * Returns a template context object for passing to our label template
+     */
+    labelTemplateContext: function(model) {
+      return {
+        name: this.name,
+        value: this.label
+      }; 
+    },
     
     /**
      * Template for rendering an editor component for this field.
      */
     editorTemplate: function() {
       return ""
+    },
+
+    editorTemplateContext: function(model) {
+      return {
+        name: this.name,
+        value: model.get(this.name)
+      }
     },
 
     /**
@@ -312,7 +329,7 @@
    *  Adds formal field definitions and a validation framework to the base 
    *  Backbone Model class.
    */
-  piewpiew.Model = Backbone.Model.extend({
+  piewpiew.models.Model = Backbone.Model.extend({
 
     editorTemplate: function() {
       var buf = [];
@@ -325,6 +342,12 @@
       buf.push("<% }); %>");
 
       return buf.join("\n");
+    },
+
+    editorTemplateContext: function() {
+      return {
+        model:this
+      }
     },
 
     initialize: function(attributes, options) {
@@ -366,11 +389,8 @@
       var model = this;
 
       _.each(attrs, function(value, key) {
-        console.log("validating ", key, value);
         if (model.fields[key]) {
-          console.log(model.fields);
           var e = model.fields[key].validate(value);
-          console.log("validated ", e);
           if (e) {
             isValid = false;
             errors[key] = e;

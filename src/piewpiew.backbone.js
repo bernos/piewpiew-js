@@ -14,32 +14,30 @@
     root.piewpiew.backbone = factory(root, _, Backbone, piewpiew);
   }
 })(this, function(root, _, Backbone, piewpiew) {  
-  
+
   /**
-   *  piewpiew.App
+   *  piewpiew.Application
    *  -------------------------------------------------------------------------
-   *  The App class represents the 'core' of our app or app component. It
-   *  provides a consistent point of access to views and models in our app
+   *  The Application class represents the 'core' of our app or app component. 
+   *  It provides a consistent point of access to views and models in our app
    *  via the regsiterView, registerModel, getView, getModel methods.
    */    
-  piewpiew.App = Backbone.View.extend({
+  piewpiew.Application = piewpiew.Class({
 
     /**
-     * Initializes the App instance.
+     * Default element for the application is the body tag
+     */
+    el: 'body',
+
+    /**
+     * Initializes the Application instance.
      *
-     * @param {String} key
-     *  Unique multiton key for the app
      * @param {Object} options
      *  Default options for the app
      */
-    initialize: function(key, options) {
-      if (piewpiew.App.instanceMap[key]) {
-        throw "App instance with key '" + key + "' already exists."
-      }
+    initialize: function(options) {
 
-      piewpiew.App.instanceMap[key] = this;
-
-      options = options || {};
+      options || (options = {});
 
       var defaults;
 
@@ -50,7 +48,6 @@
         options = _.extend({}, defaults, options);
       }
 
-      this._multitonKey = key;
       this._routerMap   = {};
       this._modelMap    = {};
       this._viewMap     = {};
@@ -232,8 +229,6 @@
       return this;
     }
   });
-
-  piewpiew.App.instanceMap = {};
 
   /**
    *  piewpiew.SimpleCommand base class
