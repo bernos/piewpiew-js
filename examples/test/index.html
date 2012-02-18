@@ -1,0 +1,141 @@
+<html>
+<head>
+  <title></title>
+
+  <script type="text/html" id="template-form">
+    <form>
+      <%= Html.editorForModel(model) %>
+      <input type="submit" value="save"/>
+    </form>
+  </script>
+
+  <script type="text/javascript" src="js/jquery-underscore-backbone.min.js"></script>
+  <script type="text/javascript" src="js/piewpiew.backbone-0.0.1.min.js"></script>
+  <script type="text/javascript">
+    
+
+    Person = piewpiew.models.Model.extend({
+      fields: {
+        
+        firstName : new piewpiew.models.fields.StringField({
+          label: "First name",
+          validators: {
+            length: new piewpiew.models.validators.StringValidator({
+              minLength: 2,
+              maxLength: 6
+            })
+          }   
+        }),
+
+        lastName : new piewpiew.models.fields.StringField({
+          label: "Last name",
+          validators: {
+            length: new piewpiew.models.validators.StringValidator({
+              minLength: 2,
+              maxLength: 6
+            })
+          }         
+        })
+      }
+    });
+
+    FormView = piewpiew.views.View.extend({
+
+      template: $('#template-form').html(),
+
+      initialize: function(options) {
+        if (this.model) {
+          this.model.bind("error", this.handleError, this);
+        } 
+      },
+
+      templateContext: function() {
+        return {
+          model:this.model
+        };
+      },
+
+      events: {
+        'submit form': 'handleSubmit' 
+      },
+
+      handleSubmit: function(e) {
+        var formData = this.$('form').serializeObject();
+
+        this.clearErrors();
+
+        if (null != this.model) {
+          if (this.model.set(formData)) this.trigger("submit", this);
+        }     
+
+        e.preventDefault();
+      },
+
+      handleError: function(model, errors) {
+        // TODO: show form errors
+        //console.log("ERROR", arguments);
+
+        // Strategy should be... if there is already an element with a classname
+        // error-for-<element name> then we will set its inner html
+        _.each(errors, function(error, name) {
+          console.log("Handling error for ", name, error);
+
+          if (!this.$(".error-for-" + name).html(error.join(" ")).length) {
+            console.log("need to create custom error label");
+            var errorLabel = piewpiew.printf('<label for="${name}" class="error error-for-${name} generated">${message}</label>', {
+              name:name,
+              message: error.join(" ")
+            });
+
+            this.$("*[name=" + name + "]").parent().append(errorLabel);
+          }
+        });
+      },
+
+      clearErrors: function() {
+        this.$(".error").html("");
+      },
+
+      clearError: function(elementName) {
+        this.$(".error-for-" + elementName).html("");
+      }
+    });
+
+    Application = piewpiew.Application.extend({
+      initializeModel: function() {
+        this.registerModel('model', new Person({
+          firstName: "Barry",
+          lastName: "Smith"
+        }));  
+      },
+
+      initializeView: function() {
+        this.registerView('view', new FormView({
+          model: this.getModel('model')
+        }).bind("submit", function(formView) {
+          console.log("You submitted ", formView);
+        }));
+      },
+
+      startup: function() {
+        $(this.el).append(this.getView('view').render().$el);
+      }
+    });
+
+  </script>
+
+  
+</head>
+<body>
+  
+
+
+  <script type="text/javascript">
+
+    $(function() {
+      var app = new Application().startup();
+    });
+
+  </script>
+</body>
+</html>

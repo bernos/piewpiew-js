@@ -13,12 +13,49 @@ var CONFIG_PATH = './build-config.js';
 var fs = require('fs');
 var uglify = require(buildModulePath('uglify-js'));
 
+/**
+ * Add a copy method to the filesystem library
+ */
+fs.copy = function (src, dst, cb) {
+
+  var util = require('util');
+
+  function copy(err) {
+    var is
+      , os
+      ;
+
+    if (!err) {
+      return cb(new Error("File " + dst + " exists."));
+    }
+
+    fs.stat(src, function (err) {
+      if (err) {
+        return cb(err);
+      }
+      is = fs.createReadStream(src);
+      os = fs.createWriteStream(dst);
+      util.pump(is, os, cb);
+    });
+  }
+
+  fs.stat(dst, copy);
+};
+
 main(loadConfig(CONFIG_PATH));
 
 /**
  * Main entry point
  */
 function main(config) {
+  buildModules(config);
+  buildExamples(config);
+}
+
+/**
+ * builds each of the modules in our config
+ */
+function buildModules(config) {
   var modules = config.modules;
   
   // Iterate over all modules
@@ -28,10 +65,27 @@ function main(config) {
 }
 
 /**
+ * builds the examples
+ */
+function buildExamples(config) {
+  var examples = config.examples;
+
+  for (var name in examples) {
+    buildExample(examples[name]);
+  }
+}
+
+/**
  * Loads our config file
  */
 function loadConfig(path) {
   return JSON.parse(fs.readFileSync(path, 'utf-8'));
+}
+
+function buildExample(example) {
+  for(var src in example.copy) {
+    fs.copy(src, example.copy[src], function(){});
+  }
 }
 
 /**
@@ -86,3 +140,4 @@ function uglify(input, options) {
 function buildModulePath(module) {
   return MODULE_PATH.replace(/\/$/, '') + '/' + module.replace(/^\//, '');
 }
+

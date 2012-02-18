@@ -3,11 +3,10 @@
 
   "dest-folder" : "dist",
 
-  "modules" : 
-  {
+  "modules" : {
 
-    "piewpiew-core" : {
-      "version" : "0.0.2",
+    "piewpiew.core" : {
+      "version" : "0.0.1",
       "input-files" : [
         "piewpiew.core.js"
       ],
@@ -16,12 +15,22 @@
       }
     },
 
-    "piewpiew-backbone" : {
-      "version" : "0.0.2",
+    "piewpiew.backbone" : {
+      "version" : "0.0.1",
       "input-files" : [
+        "piewpiew.core.js",
         "piewpiew.backbone.js",
-        "piewpiew.backbone.data.js"
+        "piewpiew.backbone.models.js",
+        "piewpiew.backbone.views.js"
       ]
     }
-  }  
+  },
+
+  "examples" : {
+    "test" : {
+      "copy" : {
+        "dist/piewpiew.backbone-0.0.1.min.js" : "examples/test/js/piewpiew.backbone-0.0.1.min.js"
+      }
+    }
+  }
 }

@@ -28,7 +28,9 @@
    */
   piewpiew.printf = function(str, o) {
     for (var t in o) {
-      str = str.replace("${" + t + "}", o[t]);
+      var re = new RegExp("\\$\\{" + t + "\\}", "g");
+      console.log(re);
+      str = str.replace(re, o[t]);
     }
     return str;
   };
