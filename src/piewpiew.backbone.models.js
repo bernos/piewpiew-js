@@ -61,17 +61,30 @@
         value: this.label
       }; 
     },
+
+    formControlTemplate: function() {
+      return "";
+    },
+
+    formControlTemplateContext: function(model) {
+      return {
+        name: this.name,
+        value: model.get(this.name)
+      };
+    },
     
     /**
      * Template for rendering an editor component for this field.
      */
     editorTemplate: function() {
-      return ""
+      return '<div <%= attributes %>><%= Html.labelForField(model, field) %><div class="controls"><%= Html.formControlForField(model, field) %></div></div>'
     },
 
     editorTemplateContext: function(model) {
       return {
         name: this.name,
+        model: model,
+        field: this,
         value: model.get(this.name)
       }
     },
@@ -156,7 +169,7 @@
   piewpiew.models.fields.StringField = piewpiew.models.fields.Field.extend({
     invalidTypeMessage: "The value of this field must be a string",
     
-    editorTemplate: function() {
+    formControlTemplate: function() {
       return '<input name="<%= name %>" type="text" value="<%= value %>" <%= attributes %>/>';
     },
 
@@ -334,9 +347,15 @@
     editorTemplate: function() {
       var buf = [];
 
+      // buf.push("<% _.each(model.fields, function(field, name) { %>");
+      // buf.push("<div>");
+      // buf.push("<%= Html.labelForField(model, field) %>");
+      // buf.push("<%= Html.editorForField(model, field) %>");
+      // buf.push("</div>");
+      // buf.push("<% }); %>");
+
       buf.push("<% _.each(model.fields, function(field, name) { %>");
       buf.push("<div>");
-      buf.push("<%= Html.labelForField(model, field) %>");
       buf.push("<%= Html.editorForField(model, field) %>");
       buf.push("</div>");
       buf.push("<% }); %>");

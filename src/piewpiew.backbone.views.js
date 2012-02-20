@@ -69,11 +69,18 @@
      * context to templateFunction()
      */
     render: function() {
+      var template = null;
       var templateContext = this.templateContext();
 
       _.extend(templateContext, piewpiew.views.Helpers);
 
-      $(this.el).html(this.templateFunction(this.template, templateContext));
+      if (typeof this.template == 'function') {
+        template = this.template();
+      } else {
+        template = this.template;
+      }
+
+      $(this.el).html(this.templateFunction(template, templateContext));
       return this;
     },
 
@@ -149,7 +156,8 @@
       editorForField: function(model, field, htmlAttributes) {
         htmlAttributes || (htmlAttributes = {});
         htmlAttributes.classes || (htmlAttributes.classes = []);   
-        htmlAttributes.classes.push("field-editor");
+        htmlAttributes.classes.push("control-group");
+        htmlAttributes.classes.push("control-group-for-" + field.name);
 
         var context = _.extend(
           field.editorTemplateContext(model), 
@@ -162,6 +170,27 @@
       },
 
       /**
+       * Creates a form control for a field, using the value of the field from
+       * a particular model. The template used is determined by the value of the
+       * field.formControlTemplate property.
+       */
+      formControlForField: function(model, field, htmlAttributes) {
+        htmlAttributes || (htmlAttributes = {});
+        htmlAttributes.classes || (htmlAttributes.classes = []);   
+        htmlAttributes.classes.push("control");
+        htmlAttributes.classes.push("control-for-" + field.name);
+
+        var context = _.extend(
+          field.formControlTemplateContext(model), 
+          piewpiew.views.Helpers
+        );
+
+        context.attributes = this.attributeString(htmlAttributes);
+
+        return piewpiew.views.template(field.formControlTemplate(), context);
+      },
+
+      /**
        * Creates a label for a field, using the value of the field from
        * a particular model. The template used is determined by the value of the
        * field.editorTemplate property.
@@ -169,7 +198,7 @@
       labelForField: function(model, field, htmlAttributes) {
         htmlAttributes || (htmlAttributes = {});
         htmlAttributes.classes || (htmlAttributes.classes = []);   
-        htmlAttributes.classes.push("field-label");
+        htmlAttributes.classes.push("control-label");
 
         var context = _.extend(
           field.labelTemplateContext(model), 

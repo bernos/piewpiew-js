@@ -84,6 +84,11 @@ function loadConfig(path) {
 
 function buildExample(example) {
   for(var src in example.copy) {
+    try {
+      fs.unlinkSync(example.copy[src]);
+    } catch(e) {
+      
+    }
     fs.copy(src, example.copy[src], function(){});
   }
 }
