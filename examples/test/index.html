@@ -45,6 +45,12 @@
         var buf = [];
 
         buf.push('<form>');
+
+        if (this.model.id) {
+          buf.push('<%= Html.hidden("id", model.id) %>');
+        }
+
+        buf.push('<%= Html.hidden("cid", model.cid) %>');
         buf.push('<%= Html.editorForModel(model) %>');
         buf.push('<input type="submit" value="save"/>');
         buf.push('</form>');
@@ -164,7 +170,6 @@
         $input.parent().append(errorElement);
         $input.closest('.control-group').addClass('error');
       }
-
     });
 
     Application = piewpiew.Application.extend({

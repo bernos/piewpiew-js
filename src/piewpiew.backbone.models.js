@@ -344,6 +344,17 @@
    */
   piewpiew.models.Model = Backbone.Model.extend({
 
+    /**
+     * Custom implementation of toJSON that ensures the models cid and id (if 
+     * set) are included in the json representation of the model
+     */
+    toJSON: function() {
+      return _.extend(Backbone.Model.prototype.toJSON.apply(this), {
+        id: this.id,
+        cid: this.cid
+      });
+    },
+
     editorTemplate: function() {
       var buf = [];
 

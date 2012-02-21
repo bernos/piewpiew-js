@@ -210,6 +210,13 @@
         return piewpiew.views.template(field.labelTemplate(), context); 
       },
 
+      hidden: function(name, value) {
+        return piewpiew.views.template('<hidden name="<%= name %>" value="<%= value %>"/>', {
+          name:name,
+          value:value
+        });
+      },
+
       label: function(name, value, htmlAttributes) {
         var template = '<label for="<%= name %>" <%= attributes %>><%= value %></label>';
 
