@@ -55,6 +55,7 @@
       initialize: function(options) {
         if (this.model) {
           this.model.bind("error", this.handleError, this);
+          this.model.bind("change", this.render, this);
         } 
       },
 
@@ -81,7 +82,7 @@
       },
 
       /**
-       * Hanlder for our model's validation error event. Displays error messages for
+       * Handlder for our model's validation error event. Displays error messages for
        * each of the fields that failed validation.
        */
       handleError: function(model, errors) {
@@ -96,7 +97,8 @@
       },
 
       /** 
-       * Clears all errors from the form view
+       * Clears all errors from the form view. If you implement your own validation
+       * error message strategy you should override this.
        */
       clearErrors: function() {
         this.$(".control-group.error .help-inline").remove();
@@ -195,9 +197,10 @@
 
 
   <script type="text/javascript">
+    var app = new Application();
 
     $(function() {
-      var app = new Application().startup();
+      app.startup();
     });
 
   </script>

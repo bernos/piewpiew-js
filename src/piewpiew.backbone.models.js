@@ -347,13 +347,6 @@
     editorTemplate: function() {
       var buf = [];
 
-      // buf.push("<% _.each(model.fields, function(field, name) { %>");
-      // buf.push("<div>");
-      // buf.push("<%= Html.labelForField(model, field) %>");
-      // buf.push("<%= Html.editorForField(model, field) %>");
-      // buf.push("</div>");
-      // buf.push("<% }); %>");
-
       buf.push("<% _.each(model.fields, function(field, name) { %>");
       buf.push("<div>");
       buf.push("<%= Html.editorForField(model, field) %>");
