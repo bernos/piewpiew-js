@@ -35,6 +35,23 @@
   };
 
   /**
+   * Helper function used by other piewpiew modules to resolve config values.
+   * Modules will often have a config object, containing various configuration
+   * options, like templates, message string and so on. Sometimes these values
+   * are scalars, sometimes they are complex types, and sometimes they are
+   * functions that need to be executed at call time in order to return the
+   * actual config value. Modules can pass the config item to this function and
+   * it will derive the value of the config item based on its type.
+   */
+  piewpiew.configValue = function(configItem) {
+    // If the item is a function, call it and return the return value
+    if (typeof configItem == 'function') {
+      return configItem();
+    }
+    return configItem;
+  };
+
+  /**
    *  piewpiew.Class
    *  --------------------------------------------------------------------------
    *  Utility function for defining 'Classes'. 

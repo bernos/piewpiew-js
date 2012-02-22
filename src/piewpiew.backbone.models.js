@@ -18,6 +18,51 @@
   piewpiew.models || (piewpiew.models = {});
 
   /**
+   *  piewpiew.models.Config
+   *  ==========================================================================
+   *  
+   *  Any and all strings for messages, templates and so forth should live here,
+   *  and be retrieved by objects in the models module, rather than declared on
+   *  objects themselves. Just makes it easier to change stuff as you don't need
+   *  to go looking for strings hidden away in source.
+   */
+  piewpiew.models.Config = {
+
+    validationMessages: {
+       required: "This is a required field"
+      ,invalidType: "The value of this field is invalid"
+      ,stringFieldInvalidType: "The value of this field must be a string"
+      ,stringTooLongNoMinLength: "String must have no more than ${maxLength} characters"
+      ,stringTooShortNoMaxLength: "String must have at least ${minLength} characters"
+      ,stringOutOfRange: "String must have between ${minLength} and ${maxLength} characters"
+      ,rangeOutOfRange: "A value between ${min} and ${max} is required."
+      ,regexNoMatch:  "The supplied string does not match the regular expression."
+      ,emailInvalid: "${value} is not a valid email address."
+    },
+
+    templates: {
+       fieldLabel: '<label for="<%= name %>" <%= attributes %>><%= value %></label>'
+      ,fieldEditor: '<div <%= attributes %>><%= Html.labelForField(model, field) %><div class="controls"><%= Html.formControlForField(model, field) %></div></div>'
+      ,stringFieldFormControl: '<input name="<%= name %>" type="text" value="<%= value %>" <%= attributes %>/>'
+      ,modelEditor: function() {
+        var buf = [];
+
+        buf.push("<% _.each(model.fields, function(field, name) { %>");
+        buf.push("<div>");
+        buf.push("<%= Html.editorForField(model, field) %>");
+        buf.push("</div>");
+        buf.push("<% }); %>");
+
+        return buf.join("\n");
+      }
+    }    
+  };
+
+  // Shortcut access to config and config value
+  var c = piewpiew.models.Config;
+  var configValue = piewpiew.configValue;
+
+  /**
    *  piewpiew.models.fields namespace
    *  ==========================================================================
    *  
@@ -38,18 +83,18 @@
     /**
      * Error message if a value fails required validation
      */
-    requiredMessage: "This is a required field",
+    requiredMessage: configValue(c.validationMessages.required),
     
     /**
      * Error message if a value is of the wrong type
      */
-    invalidTypeMessage: "The value of this field is invalid",
+    invalidTypeMessage: configValue(c.validationMessages.invalidType),
     
     /**
      * Returns a template string for rendering the field label.
      */
     labelTemplate: function() {
-      return '<label for="<%= name %>" <%= attributes %>><%= value %></label>';
+      return configValue(c.templates.fieldLabel);
     },
 
     /**
@@ -77,7 +122,7 @@
      * Template for rendering an editor component for this field.
      */
     editorTemplate: function() {
-      return '<div <%= attributes %>><%= Html.labelForField(model, field) %><div class="controls"><%= Html.formControlForField(model, field) %></div></div>'
+      return configValue(c.templates.fieldEditor);
     },
 
     editorTemplateContext: function(model) {
@@ -167,10 +212,10 @@
    *  
    */
   piewpiew.models.fields.StringField = piewpiew.models.fields.Field.extend({
-    invalidTypeMessage: "The value of this field must be a string",
+    invalidTypeMessage: configValue(c.validationMessages.stringFieldInvalidType),
     
     formControlTemplate: function() {
-      return '<input name="<%= name %>" type="text" value="<%= value %>" <%= attributes %>/>';
+      return configValue(c.templates.stringFieldFormControl);      
     },
 
     validateType: function(value) {
@@ -245,9 +290,9 @@
 
     defaultMessages: function() {
       return {
-        tooLongNoMinLength : "String must have no more than ${maxLength} characters",
-        tooShortNoMaxLength : "String must have at least ${minLength} characters",
-        outOfRange : "String must have between ${minLength} and ${maxLength} characters"
+        tooLongNoMinLength : configValue(c.validationMessages.stringTooLongNoMinLength),
+        tooShortNoMaxLength : configValue(c.validationMessages.stringTooShortNoMaxLength),
+        outOfRange : configValue(c.validationMessages.stringTooShortNoMaxLength)
       }
     },
 
@@ -289,7 +334,7 @@
 
     defaultMessages: function() {
       return {
-        outOfRange: "A value between ${min} and ${max} is required."
+        outOfRange: configValue(c.validationMessages.rangeOutOfRange)
       }
     },
 
@@ -311,7 +356,7 @@
 
     defaultMessages: function() {
       return {
-        invalid: "The supplied string does not match the regular expression."
+        invalid: configValue(c.validationMessages.regexNoMatch)
       }
     },
 
@@ -331,7 +376,7 @@
 
     defaultMessages: function() {
       return {
-        invalid: "${value} is not a valid email address."
+        invalid: configValue(c.validationMessages.emailInvalid)
       }
     }
   });  
@@ -356,15 +401,7 @@
     },
 
     editorTemplate: function() {
-      var buf = [];
-
-      buf.push("<% _.each(model.fields, function(field, name) { %>");
-      buf.push("<div>");
-      buf.push("<%= Html.editorForField(model, field) %>");
-      buf.push("</div>");
-      buf.push("<% }); %>");
-
-      return buf.join("\n");
+      return configValue(c.templates.modelEditor);
     },
 
     editorTemplateContext: function() {
