@@ -64,7 +64,9 @@
       },
 
       events: {
-        'submit form': 'handleSubmit' 
+        'submit form': 'handleSubmit',
+        'blur input': 'handleBlur',
+        'focus input': 'handleFocus' 
       },
 
       handleSubmit: function(e) {
@@ -77,6 +79,17 @@
         }     
 
         e.preventDefault();
+      },
+
+      handleFocus: function(e) {
+        console.log('focus');
+      },
+
+      handleBlur: function(e) {
+        var $field = $(e.target);
+
+        console.log('blur', $(e.target).attr('name'), $field.val());
+        this.model.set($field.attr('name'), $field.val());
       },
 
       /**
