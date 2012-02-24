@@ -35,6 +35,11 @@
       ,stringTooLongNoMinLength: "String must have no more than ${maxLength} characters"
       ,stringTooShortNoMaxLength: "String must have at least ${minLength} characters"
       ,stringOutOfRange: "String must have between ${minLength} and ${maxLength} characters"
+
+      ,stringFieldTooLongNoMinLength: "${label} must have no more than ${maxLength} characters"
+      ,stringFieldTooShortNoMaxLength: "${label} must have at least ${minLength} characters"
+      ,stringFieldOutOfRange: "${label} must have between ${minLength} and ${maxLength} characters"
+
       ,rangeOutOfRange: "A value between ${min} and ${max} is required."
       ,regexNoMatch:  "The supplied string does not match the regular expression."
       ,emailInvalid: "${value} is not a valid email address."
@@ -213,7 +218,27 @@
    */
   piewpiew.models.fields.StringField = piewpiew.models.fields.Field.extend({
     invalidTypeMessage: configValue(c.validationMessages.stringFieldInvalidType),
-    
+
+    minLength: -1,
+
+    maxLength: -1,
+
+    defaultValidators: function() {
+      var field = this;
+
+      return {
+        length: new piewpiew.models.validators.StringValidator({
+          minLength: field.minLength,
+          maxLength: field.maxLength,
+          messages: {
+            tooLongNoMinLength : piewpiew.printf(configValue(c.validationMessages.stringFieldTooLongNoMinLength), field),
+            tooShortNoMaxLength : piewpiew.printf(configValue(c.validationMessages.stringFieldTooShortNoMaxLength), field),
+            outOfRange : piewpiew.printf(configValue(c.validationMessages.stringFieldOutOfRange), field)
+          }
+        })
+      }
+    },
+
     formControlTemplate: function() {
       return configValue(c.templates.stringFieldFormControl);      
     },
