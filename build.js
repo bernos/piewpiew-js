@@ -13,17 +13,65 @@ var CONFIG_PATH = './build-config.js';
 var fs = require('fs');
 var uglify = require(buildModulePath('uglify-js'));
 
+/**
+ * Add a copy method to the filesystem library
+ */
+fs.copy = function (src, dst, cb) {
+
+  var util = require('util');
+
+  function copy(err) {
+    var is
+      , os
+      ;
+
+    if (!err) {
+      return cb(new Error("File " + dst + " exists."));
+    }
+
+    fs.stat(src, function (err) {
+      if (err) {
+        return cb(err);
+      }
+      is = fs.createReadStream(src);
+      os = fs.createWriteStream(dst);
+      util.pump(is, os, cb);
+    });
+  }
+
+  fs.stat(dst, copy);
+};
+
 main(loadConfig(CONFIG_PATH));
 
 /**
  * Main entry point
  */
 function main(config) {
+  buildModules(config);
+  buildExamples(config);
+}
+
+/**
+ * builds each of the modules in our config
+ */
+function buildModules(config) {
   var modules = config.modules;
   
   // Iterate over all modules
   for (var name in modules) {
     buildModule(name, config.modules[name], config['src-folder'], config['dest-folder']);
+  }
+}
+
+/**
+ * builds the examples
+ */
+function buildExamples(config) {
+  var examples = config.examples;
+
+  for (var name in examples) {
+    buildExample(examples[name]);
   }
 }
 
@@ -34,6 +82,17 @@ function loadConfig(path) {
   return JSON.parse(fs.readFileSync(path, 'utf-8'));
 }
 
+function buildExample(example) {
+  for(var src in example.copy) {
+    try {
+      fs.unlinkSync(example.copy[src]);
+    } catch(e) {
+      
+    }
+    fs.copy(src, example.copy[src], function(){});
+  }
+}
+
 /**
  * Builds a single module.
  */
@@ -42,7 +101,7 @@ function buildModule(name, config, srcFolder, destFolder) {
 
   if (null != config['input-files']) {
     var sourceString = concatFiles(srcFolder, config['input-files']);
-    var uglifiedString = uglify(sourceString, config['uglify-js-options']);
+    var uglifiedString = config['uglify'] ? uglify(sourceString, config['uglify-js-options']) : sourceString;
     var destPath = destFolder.replace(/\/$/,'') + '/' + destFile;
 
     // TODO: Remove old destFile...
@@ -86,3 +145,4 @@ function uglify(input, options) {
 function buildModulePath(module) {
   return MODULE_PATH.replace(/\/$/, '') + '/' + module.replace(/^\//, '');
 }
+
