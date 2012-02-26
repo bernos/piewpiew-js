@@ -33,7 +33,7 @@
      * provided by the underscore library. By default instances call
      * piewpiew.View.template(). You can implement per-view template functions
      * by overriding this method. If you want to override the template function
-     * for all views in your app, you should override piewpiew.View.template()
+     * for all views in your app, you should override piewpiew.views.template()
      *
      * @param {String} template
      *  The unparsed template string
@@ -70,9 +70,6 @@
      */
     render: function() {
       var template = null;
-      var templateContext = this.templateContext();
-
-      _.extend(templateContext, piewpiew.views.Helpers);
 
       if (typeof this.template == 'function') {
         template = this.template();
@@ -80,7 +77,13 @@
         template = this.template;
       }
 
-      $(this.el).html(this.templateFunction(template, templateContext));
+      $(this.el).html(
+        this.templateFunction(
+          template, 
+          piewpiew.views.TemplateContext(this.templateContext())
+        )
+      );
+
       return this;
     },
 
@@ -115,6 +118,17 @@
   };
 
   /**
+   * Builds a template context object by merging template data with our view helpers
+   *
+   * @param {object} data
+   *  Template data
+   * @return {object}
+   */
+  piewpiew.views.TemplateContext = function(data) {
+    return _.extend(data, piewpiew.views.Helpers);
+  };
+
+  /**
    * View helpers. These methods get attached to templateContext objects when they
    * are passed to view templates for rendering.
    */
@@ -142,10 +156,10 @@
       },
 
       editorForModel: function(model) {
-        return piewpiew.views.template(model.editorTemplate(), _.extend(
-          model.editorTemplateContext(), 
-          piewpiew.views.Helpers
-        ));
+        return piewpiew.views.template(
+          model.editorTemplate(), 
+          piewpiew.views.TemplateContext(model.editorTemplateContext())
+        );
       },
 
       /**
@@ -159,11 +173,7 @@
         htmlAttributes.classes.push("control-group");
         htmlAttributes.classes.push("control-group-for-" + field.name);
 
-        var context = _.extend(
-          field.editorTemplateContext(model), 
-          piewpiew.views.Helpers
-        );
-
+        var context = piewpiew.views.TemplateContext(field.editorTemplateContext(model));
         context.attributes = this.attributeString(htmlAttributes);
 
         return piewpiew.views.template(field.editorTemplate(), context);
@@ -180,11 +190,7 @@
         htmlAttributes.classes.push("control");
         htmlAttributes.classes.push("control-for-" + field.name);
 
-        var context = _.extend(
-          field.formControlTemplateContext(model), 
-          piewpiew.views.Helpers
-        );
-
+        var context = piewpiew.views.TemplateContext(field.formControlTemplateContext(model));
         context.attributes = this.attributeString(htmlAttributes);
 
         return piewpiew.views.template(field.formControlTemplate(), context);
@@ -200,11 +206,7 @@
         htmlAttributes.classes || (htmlAttributes.classes = []);   
         htmlAttributes.classes.push("control-label");
 
-        var context = _.extend(
-          field.labelTemplateContext(model), 
-          piewpiew.views.Helpers
-        );
-
+        var context = piewpiew.views.TemplateContext(field.labelTemplateContext(model));
         context.attributes = this.attributeString(htmlAttributes);
 
         return piewpiew.views.template(field.labelTemplate(), context); 

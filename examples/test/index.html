@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
   <title></title>
@@ -8,6 +9,8 @@
       <input type="submit" value="save"/>
     </form>
   </script>
+
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css"></link>
 
   <script type="text/javascript" src="js/jquery-underscore-backbone.min.js"></script>
   <script type="text/javascript" src="js/piewpiew.backbone-0.0.1.min.js"></script>
@@ -27,7 +30,58 @@
           label: "Last name",
           minLength: 4,
           maxLength: 6         
+        }),
+
+        emailAddress: new piewpiew.models.fields.EmailField({
+          label: "Email address"
         })
+      }
+    });
+
+    ListView = piewpiew.views.View.extend({
+      tagName: "ul",
+
+      itemTemplate: function(item) {
+        return "";
+      },
+
+      itemTemplateContext: function(item) {
+        return piewpiew.view.TemplateContext(item.toJSON());
+      },
+
+      initialize: function() {
+        this.collection.bind("reset", this.render, this);
+        this.collection.bind("add", this.handleAdd, this);
+        this.collection.bind("remove", this.handleRemove, this);
+      },
+
+      handleAdd: function(model, collection, options) {
+        this.appendItem(model.toJSON());
+      },
+
+      handleRemove: function() {
+        console.log("remove", arguments);
+      },
+
+      render: function() {
+        var self = this;
+
+        $(this.el).empty();
+
+        _(this.collection.models).each(function(model) {
+          self.appendItem(model);
+        });
+
+        return this;
+      },
+
+      appendItem: function(item) {
+        console.log(item);
+        if (this.$el) {
+          this.$el.append("<li>" + item.name + "</li>");
+        } else {
+          this.render();
+        }
       }
     });
 
@@ -36,7 +90,7 @@
       template: function() {
         var buf = [];
 
-        buf.push('<form>');
+        buf.push('<form class="form-horizontal">');
 
         if (this.model.id) {
           buf.push('<%= Html.hidden("id", model.id) %>');
@@ -53,7 +107,6 @@
       initialize: function(options) {
         if (this.model) {
           this.model.bind("error", this.handleError, this);
-          this.model.bind("change", this.render, this);
         } 
       },
 
@@ -82,13 +135,12 @@
       },
 
       handleFocus: function(e) {
-        console.log('focus');
+
       },
 
       handleBlur: function(e) {
         var $field = $(e.target);
-
-        console.log('blur', $(e.target).attr('name'), $field.val());
+        this.clearErrorFor($field.attr('name'));
         this.model.set($field.attr('name'), $field.val());
       },
 
@@ -102,7 +154,7 @@
         _.each(errors, function(messages, name) {
           var msg = view.formatErrorMessagesFor(name,messages);
           var errorEl = view.formatErrorElementFor(name, msg);
-
+          view.clearErrorFor(name);
           view.attachErrorElementFor(name, errorEl);          
         });
       },
@@ -178,6 +230,9 @@
     });
 
     Application = piewpiew.Application.extend({
+
+      el: "#app",
+
       initializeModel: function() {
         this.registerModel('model', new Person({
           firstName: "Barry",
@@ -203,6 +258,15 @@
   
 </head>
 <body>
+  <div class="container">
+    <div id="app" class="span12"></div>
+    <div class="span12">
+      <form class="well">
+        <input type="text"/>
+      </form>
+
+    </div>
+  </div>
   
 
 
@@ -210,8 +274,15 @@
     var app = new Application();
 
     $(function() {
-      app.startup();
+    //  app.startup();
     });
+
+    var collection = new Backbone.Collection();
+    var listView = new ListView({
+      collection:collection
+    });
+
+    $("#app").append(listView.render().$el);
 
   </script>
 </body>
