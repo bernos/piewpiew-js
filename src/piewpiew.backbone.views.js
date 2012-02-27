@@ -58,8 +58,11 @@
      * @return {Object}
      */
     templateContext: function() {
-      if (this.model && typeof this.model.toJSON == 'function') {
-        return this.model.toJSON();
+      if (this.model) {
+        if (typeof this.model.toJSON == 'function') {
+          return this.model.toJSON();
+        }
+        return this.model;
       }
       return {};
     },

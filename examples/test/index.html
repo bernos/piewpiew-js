@@ -42,25 +42,39 @@
       tagName: "ul",
 
       itemTemplate: function(item) {
-        return "";
+        return "<li>"+item.toString()+"</li>";
       },
 
       itemTemplateContext: function(item) {
-        return piewpiew.view.TemplateContext(item.toJSON());
+        if (typeof item.toJSON == 'function') {
+          item = item.toJSON();
+        }
+
+        return piewpiew.views.TemplateContext(item);
       },
 
-      initialize: function() {
+      itemView: null,
+
+      initialize: function(options) {
         this.collection.bind("reset", this.render, this);
         this.collection.bind("add", this.handleAdd, this);
         this.collection.bind("remove", this.handleRemove, this);
+
+        _.extend(this, options);
       },
 
+      /**
+       * Handler for our model "add" event
+       */
       handleAdd: function(model, collection, options) {
-        this.appendItem(model.toJSON());
+        this.appendItem(model);
       },
 
+      /**
+       * Handler for our model "remove" event
+       */
       handleRemove: function() {
-        console.log("remove", arguments);
+        
       },
 
       render: function() {
@@ -75,10 +89,41 @@
         return this;
       },
 
-      appendItem: function(item) {
-        console.log(item);
+      /**
+       * Appends an item to the list view. If the ListView.itemView property
+       * is set (usually to a class that extends Backbone.View) then an instance
+       * of that view will be created, its model will be set to the item to be 
+       * appended, and it will be rendered and appended.
+       *
+       * If no itemView property is set, then we will use ListView.itemTemplate
+       * to render the item. Context for the itemTemplate is constructed by calling
+       * listView.itemTemplateContext
+       */
+      appendItem: function(item) {        
+        // TODO: do we really need to check $el?
+        console.log("append", item);
         if (this.$el) {
-          this.$el.append("<li>" + item.name + "</li>");
+          var content = "";
+
+          if (this.itemView) {
+            var view = new this.itemView({
+              model: item
+            });
+
+            content = view.render().$el;
+          } else {
+            var tmpl;
+
+            if (typeof this.itemTemplate == 'function') {
+              tmpl = this.itemTemplate(item);
+            } else {
+              tmpl = this.itemTemplate;
+            }
+
+            content = piewpiew.views.template(tmpl, this.itemTemplateContext(item));
+          }
+
+          this.$el.append(content);
         } else {
           this.render();
         }
@@ -277,12 +322,33 @@
     //  app.startup();
     });
 
-    var collection = new Backbone.Collection();
+    ItemView = piewpiew.views.View.extend({
+      template: '<li><a class="show-age" href="#"><%= firstName %></a></li>',
+
+      events: {
+        'click .show-age' : 'handleClick'
+      },
+
+      handleClick : function(e) {
+        alert(this.model.get("lastName"));
+        e.preventDefault();
+      }
+    });
+
+    PersonCollection = Backbone.Collection.extend({
+      model: Person
+    });
+
+    var collection = new PersonCollection();
     var listView = new ListView({
-      collection:collection
+      collection:collection,
+      itemView: ItemView
+      //itemTemplate: '<li><%= Html.label("name", "Name") %>:<span><%= name %></span><%= Html.label("age", "Age") %>: <span><%= age %></span></li>'
     });
 
     $("#app").append(listView.render().$el);
+
+    collection.add({firstName:"brdan", lastName:"mchon"});
 
   </script>
 </body>
