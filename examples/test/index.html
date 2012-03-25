@@ -12,10 +12,11 @@
 
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css"></link>
 
+
   <script type="text/javascript" src="js/jquery-underscore-backbone.min.js"></script>
   <script type="text/javascript" src="js/piewpiew.backbone-0.0.1.min.js"></script>
   <script type="text/javascript">
-    
+
 
     Person = piewpiew.models.Model.extend({
       fields: {
@@ -38,6 +39,7 @@
       }
     });
 
+<<<<<<< HEAD
     ListView = piewpiew.views.View.extend({
       tagName: "ul",
 
@@ -273,6 +275,8 @@
         $input.closest('.control-group').addClass('error');
       }
     });
+=======
+>>>>>>> Moved FormView and ListView from example page to View module
 
     Application = piewpiew.Application.extend({
 
@@ -305,12 +309,6 @@
 <body>
   <div class="container">
     <div id="app" class="span12"></div>
-    <div class="span12">
-      <form class="well">
-        <input type="text"/>
-      </form>
-
-    </div>
   </div>
   
 
@@ -319,7 +317,7 @@
     var app = new Application();
 
     $(function() {
-    //  app.startup();
+      app.startup();
     });
 
     ItemView = piewpiew.views.View.extend({
@@ -346,7 +344,7 @@
       //itemTemplate: '<li><%= Html.label("name", "Name") %>:<span><%= name %></span><%= Html.label("age", "Age") %>: <span><%= age %></span></li>'
     });
 
-    $("#app").append(listView.render().$el);
+    //$("#app").append(listView.render().$el);
 
     collection.add({firstName:"brdan", lastName:"mchon"});
 
