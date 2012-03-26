@@ -177,7 +177,7 @@
         htmlAttributes.classes.push("control-group-for-" + field.name);
 
         var context = piewpiew.views.TemplateContext(field.editorTemplateContext(model));
-        context.attributes = this.attributeString(htmlAttributes);
+        context.attributes = htmlAttributes;
 
         return piewpiew.views.template(field.editorTemplate(), context);
       },
@@ -194,7 +194,7 @@
         htmlAttributes.classes.push("control-for-" + field.name);
 
         var context = piewpiew.views.TemplateContext(field.formControlTemplateContext(model));
-        context.attributes = this.attributeString(htmlAttributes);
+        context.attributes = htmlAttributes;
 
         return piewpiew.views.template(field.formControlTemplate(), context);
       },
@@ -210,7 +210,7 @@
         htmlAttributes.classes.push("control-label");
 
         var context = piewpiew.views.TemplateContext(field.labelTemplateContext(model));
-        context.attributes = this.attributeString(htmlAttributes);
+        context.attributes = htmlAttributes;
 
         return piewpiew.views.template(field.labelTemplate(), context); 
       },
@@ -233,7 +233,7 @@
       },
 
       textfield: function(name, value, htmlAttributes) {
-        var template = '<label for="<%= name %>" <%= attributes %>><%= value %></label>';
+        var template = '<input name="<%= name %>" type="text" value="<%= value %>" <%= attributes %>/>';
         
         return piewpiew.views.template(template, {
           name: name,

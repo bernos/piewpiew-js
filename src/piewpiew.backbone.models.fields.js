@@ -51,9 +51,9 @@
     },
 
     templates: {
-       fieldLabel: '<label for="<%= name %>" <%= attributes %>><%= value %></label>'
-      ,fieldEditor: '<div <%= attributes %>><%= Html.labelForField(model, field) %><div class="controls"><%= Html.formControlForField(model, field) %></div></div>'
-      ,stringFieldFormControl: '<input name="<%= name %>" type="text" value="<%= value %>" <%= attributes %>/>'
+       fieldLabel: '<%= Html.label(name, value, attributes) %>' 
+      ,fieldEditor: '<div <%= Html.attributeString(attributes) %>><%= Html.labelForField(model, field) %><div class="controls"><%= Html.formControlForField(model, field) %></div></div>'
+      ,stringFieldFormControl: '<%= Html.textfield(name, value, attributes) %>'
     }    
   };
 
