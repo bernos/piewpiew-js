@@ -216,16 +216,14 @@
       },
 
       hidden: function(name, value) {
-        return piewpiew.views.template('<hidden name="<%= name %>" value="<%= value %>"/>', {
+        return piewpiew.printf('<hidden name="${name}" value="${value}"/>', {
           name:name,
           value:value
         });
       },
 
-      label: function(name, value, htmlAttributes) {
-        var template = '<label for="<%= name %>" <%= attributes %>><%= value %></label>';
-
-        return piewpiew.views.template(template, {
+      label: function(name, value, htmlAttributes) {        
+        return piewpiew.printf('<label for="${name}" ${attributes}>${value}</label>', {
           name: name,
           value: value,
           attributes: this.attributeString(htmlAttributes)
@@ -233,11 +231,9 @@
       },
 
       textfield: function(name, value, htmlAttributes) {
-        var template = '<input name="<%= name %>" type="text" value="<%= value %>" <%= attributes %>/>';
-        
-        return piewpiew.views.template(template, {
+        return piewpiew.printf('<input name="${name}" type="text" value="${value}" ${attributes}/>', {
           name: name,
-          value: value,
+          value:  (value != null) ? value : "",
           attributes: this.attributeString(htmlAttributes)
         });
       }
