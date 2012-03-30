@@ -11,7 +11,7 @@
   // also attached to root here, but they could come from anywhere 
   else 
   {    
-    root.piewpiew.backbone = factory(root, _, Backbone, piewpiew, piewpiew.models.validators);
+    root.piewpiew = factory(root, _, Backbone, piewpiew, piewpiew.models.validators);
   }
 })(this, function(root, _, Backbone, piewpiew, validators) {  
 
