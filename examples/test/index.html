@@ -3,20 +3,11 @@
 <head>
   <title></title>
 
-  <script type="text/html" id="template-form">
-    <form>
-      <%= Html.editorForModel(model) %>
-      <input type="submit" value="save"/>
-    </form>
-  </script>
-
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css"></link>
-
 
   <script type="text/javascript" src="js/jquery-underscore-backbone.min.js"></script>
   <script type="text/javascript" src="js/piewpiew.backbone-0.0.1.min.js"></script>
   <script type="text/javascript">
-
 
     Person = piewpiew.models.Model.extend({
       fields: {
@@ -51,7 +42,7 @@
       },
 
       initializeView: function() {
-        this.registerView('view', new FormView({
+        this.registerView('view', new piewpiew.views.FormView({
           model: this.getModel('model')
         }).bind("submit", function(formView) {
           console.log("You submitted ", formView.model.toJSON());
