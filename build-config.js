@@ -18,14 +18,15 @@
 
     "piewpiew.backbone" : {
       "version" : "0.0.1",
-      "uglify" : true, 
+      "uglify" : false, 
       "input-files" : [
         "piewpiew.core.js",
         "piewpiew.backbone.js",
         "piewpiew.backbone.models.js",
         "piewpiew.backbone.models.validators.js",
         "piewpiew.backbone.models.fields.js",
-        "piewpiew.backbone.views.js"
+        "piewpiew.backbone.views.js",
+        "piewpiew.backbone.views.helpers.js"
       ]
     }
   },
