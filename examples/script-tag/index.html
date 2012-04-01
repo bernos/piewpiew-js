@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css"></link>
+
+  <script type="text/javascript" src="js/jquery-underscore-backbone.min.js"></script>
+  <script type="text/javascript" src="js/piewpiew-0.0.1.min.js"></script>
+
+  
+
+  
+</head>
+<body>
+  <div class="container">
+    <div id="app" class="span12"></div>
+  </div>
+
+  <script type="text/javascript">
+    Person = piewpiew.models.Model.extend({
+      fields: {
+        
+        firstName : new piewpiew.models.fields.StringField({
+          label: "First name",
+          minLength: 4,
+          maxLength: 6
+        }),
+
+        lastName : new piewpiew.models.fields.StringField({
+          label: "Last name",
+          minLength: 4,
+          maxLength: 6         
+        }),
+
+        emailAddress: new piewpiew.models.fields.EmailField({
+          label: "Email address"
+        })
+      }
+    });
+
+    var man = new Person({
+      firstName: "",
+      lastName: "",
+      age:33
+    });
+
+    var manView = new piewpiew.views.FormView({
+      model:man
+    });
+
+    $("body").append(manView.render().$el);
+
+  </script>
+</body>
+</html>
