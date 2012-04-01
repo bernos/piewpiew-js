@@ -1,20 +1,22 @@
-(function(root, factory) {
-  // If AMD is available, use the define() method to load our dependencies 
-  //and declare our module
-  if (typeof define === 'function' && define.amd) {
-    define(['underscore'], function(_) {
-      return factory(root, _);
-    });
-  }
-  // Otherwise we will attach our module to root, and pass references to our 
-  // dependencies into the factory. We're assuming that our dependencies are 
-  // also attached to root here, but they could come from anywhere 
-  else 
-  {
-    root.piewpiew = factory(root, _);
-  }
-})(this, function(root, _) {
+(function(global) {
   var piewpiew = {};
+
+  var modules  = {
+    'underscore' : global._,
+    'backbone'   : global.Backbone,
+    'jquery'     : global.jQuery
+  };
+
+  var extend = function(obj) {
+    for (var i = 0, max = arguments.length; i < max; i++) {
+      var source = arguments[i];
+      for (var prop in source) {
+        obj[prop] = source[prop];
+      }
+    }
+
+    return obj;
+  };
 
   /**
    * Simple string formatting function. Replaces all occurances of ${token}
@@ -95,7 +97,7 @@
       initializing = false;
     }
 
-    _.extend(klass.prototype, methods);
+    extend(klass.prototype, methods);
     
     klass.prototype.constructor = klass;
 
@@ -110,5 +112,29 @@
     return klass;
   };
 
-  return piewpiew;
-});
+  piewpiew.define = function(module, dependencies, fn) {
+    if (typeof define === 'function' && define.amd) {
+      define(module, dependencies, fn);
+    } else {
+      if (dependencies && dependencies.length) {
+        for (var i = 0; i < dependencies.length; i++) {
+          dependencies[i] = modules[dependencies[i]];
+        }
+      }
+      modules[module] = fn.apply(this, dependencies || []);
+    }
+  };
+
+  global.piewpiew = piewpiew;
+
+  if (typeof exports != 'undefined') {
+    exports.piewpiew = piewpiew;
+  }
+
+  piewpiew.define('piewpiew.core', [], function() { return piewpiew });
+
+  if (typeof define === 'undefined') {
+    global.define = piewpiew.define;
+  }
+
+}(typeof window === 'undefined' ? this : window));

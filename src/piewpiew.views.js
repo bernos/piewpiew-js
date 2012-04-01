@@ -1,21 +1,6 @@
-(function(root, factory) {
-  // If AMD is available, use the define() method to load our dependencies 
-  //and declare our module
-  if (typeof define === 'function' && define.amd) {
-    define(['underscore', 'backbone', 'piewpiew', 'jquery'], function(_, Backbone, piewpiew, $) {
-      return factory(root, _, Backbone, piewpiew, $);
-    });
-  }
-  // Otherwise we will attach our module to root, and pass references to our 
-  // dependencies into the factory. We're assuming that our dependencies are 
-  // also attached to root here, but they could come from anywhere 
-  else 
-  {    
-    root.piewpiew = factory(root, _, Backbone, piewpiew, $);
-  }
-})(this, function(root, _, Backbone, piewpiew, $) {  
-  
-  piewpiew.views || (piewpiew.views = {});
+define('piewpiew.views', ['underscore', 'backbone', 'piewpiew.core', 'jquery'], function(_, Backbone, piewpiew, $) {
+
+  var views = {};
 
   /**
    *  piewpiew.View base class
@@ -23,7 +8,7 @@
    *  Adds external template support to the basic Backbone.View class, as well 
    *  as default implementations for rendering and and app registration.
    */
-  piewpiew.views.View = Backbone.View.extend({
+  views.View = Backbone.View.extend({
 
     // A default template.
     template: 'No template specified for view',
@@ -42,7 +27,7 @@
      * @return {String} the rendered template
      */
     templateFunction: function(template, context) {
-      return piewpiew.views.template(template, context);
+      return views.template(template, context);
     },
 
     /**
@@ -83,7 +68,7 @@
       $(this.el).html(
         this.templateFunction(
           template, 
-          piewpiew.views.TemplateContext(this.templateContext())
+          views.TemplateContext(this.templateContext())
         )
       );
 
@@ -116,7 +101,7 @@
    *  The context object containing data to be rendered
    * @return {String} the rendered template
    */
-  piewpiew.views.template = function(template, context) {
+  views.template = function(template, context) {
     return _.template(template, context);
   };
 
@@ -127,11 +112,11 @@
    *  Template data
    * @return {object}
    */
-  piewpiew.views.TemplateContext = function(data) {
-    return _.extend(data, piewpiew.views.helpers);
+  views.TemplateContext = function(data) {
+    return _.extend(data, views.helpers);
   };
   
-  ListView = piewpiew.views.View.extend({
+  views.ListView = views.View.extend({
     tagName: "ul",
 
     itemTemplate: function(item) {
@@ -139,7 +124,7 @@
     },
 
     itemTemplateContext: function(item) {
-      return piewpiew.view.TemplateContext(item.toJSON());
+      return views.TemplateContext(item.toJSON());
     },
 
     initialize: function() {
@@ -178,7 +163,7 @@
     }
   });
 
-  piewpiew.views.FormView = piewpiew.views.View.extend({
+  views.FormView = views.View.extend({
 
     template: function() {
       var buf = [];
@@ -234,6 +219,9 @@
     handleBlur: function(e) {
       var $field = $(e.target);
       this.clearErrorFor($field.attr('name'));
+
+      console.log("set",$field.attr('name'), $field.val());
+
       this.model.set($field.attr('name'), $field.val());
     },
 
@@ -343,51 +331,7 @@
       return o;
   };
 
-  return piewpiew;
+  piewpiew.views = views;
+
+  return views;
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

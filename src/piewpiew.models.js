@@ -1,21 +1,6 @@
-(function(root, factory) {
-  // If AMD is available, use the define() method to load our dependencies 
-  //and declare our module
-  if (typeof define === 'function' && define.amd) {
-    define(['underscore', 'backbone', 'piewpiew'], function(_, Backbone, piewpiew) {
-      return factory(root, _, Backbone, piewpiew);
-    });
-  }
-  // Otherwise we will attach our module to root, and pass references to our 
-  // dependencies into the factory. We're assuming that our dependencies are 
-  // also attached to root here, but they could come from anywhere 
-  else 
-  {    
-    root.piewpiew = factory(root, _, Backbone, piewpiew);
-  }
-})(this, function(root, _, Backbone, piewpiew) {  
+define('piewpiew.models', ['underscore', 'backbone', 'piewpiew.core'], function(_, Backbone, piewpiew) {
   
-  piewpiew.models || (piewpiew.models = {});
+  var models = {};
 
   /**
    *  piewpiew.models.Config
@@ -26,7 +11,7 @@
    *  objects themselves. Just makes it easier to change stuff as you don't need
    *  to go looking for strings hidden away in source.
    */
-  piewpiew.models.Config = {
+  models.Config = {
 
     messages: {
       
@@ -49,10 +34,9 @@
 
   // Shortcut access to config stuff  
   var c    = piewpiew.configValue;
-  var conf = piewpiew.models.Config;
-  var msg  = piewpiew.models.Config.messages;
-  var tmpl = piewpiew.models.Config.templates;
-
+  var conf = models.Config;
+  var msg  = models.Config.messages;
+  var tmpl = models.Config.templates;
 
   /**
    *  piewpiew.models.Model base class
@@ -60,7 +44,7 @@
    *  Adds formal field definitions and a validation framework to the base 
    *  Backbone Model class.
    */
-  piewpiew.models.Model = Backbone.Model.extend({
+  models.Model = Backbone.Model.extend({
 
     /**
      * Custom implementation of toJSON that ensures the models cid and id (if 
@@ -121,6 +105,8 @@
       var isValid = true;
       var model = this;
 
+      console.log("validating", attrs);
+
       _.each(attrs, function(value, key) {
         if (model.fields[key]) {
           var e = model.fields[key].validate(value);
@@ -135,39 +121,11 @@
     }
   });
 
-  return piewpiew;
+  piewpiew.models = models;
+
+  return models;
+  
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

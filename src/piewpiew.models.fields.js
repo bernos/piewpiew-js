@@ -1,30 +1,9 @@
-(function(root, factory) {
-  // If AMD is available, use the define() method to load our dependencies 
-  //and declare our module
-  if (typeof define === 'function' && define.amd) {
-    define(['underscore', 'backbone', 'piewpiew', 'piewpiew.backbone.models.validators'], function(_, Backbone, piewpiew, validators) {
-      return factory(root, _, Backbone, piewpiew, validators);
-    });
-  }
-  // Otherwise we will attach our module to root, and pass references to our 
-  // dependencies into the factory. We're assuming that our dependencies are 
-  // also attached to root here, but they could come from anywhere 
-  else 
-  {    
-    root.piewpiew = factory(root, _, Backbone, piewpiew, piewpiew.models.validators);
-  }
-})(this, function(root, _, Backbone, piewpiew, validators) {  
+define('piewpiew.models.fields', ['underscore', 'backbone', 'piewpiew.core', 'piewpiew.models', 'piewpiew.models.validators'], function(_, Backbone, piewpiew, models, validators) {
 
-  /**
-   *  piewpiew.models.fields namespace
-   *  ==========================================================================
-   *  
-   */
-  piewpiew.models || (piewpiew.models = {});
-  piewpiew.models.fields || (piewpiew.models.fields = {});
+  var fields = {};
   
   /**
-   *  piewpiew.models.Config
+   *  Config
    *  ==========================================================================
    *  
    *  Any and all strings for messages, templates and so forth should live here,
@@ -32,7 +11,7 @@
    *  objects themselves. Just makes it easier to change stuff as you don't need
    *  to go looking for strings hidden away in source.
    */
-  piewpiew.models.fields.Config = {
+  fields.Config = {
 
     messages: {
       
@@ -59,16 +38,16 @@
 
   // Shortcut access to config stuff  
   var c    = piewpiew.configValue;
-  var conf = piewpiew.models.fields.Config;
-  var msg  = piewpiew.models.fields.Config.messages;
-  var tmpl = piewpiew.models.fields.Config.templates;
+  var conf = fields.Config;
+  var msg  = fields.Config.messages;
+  var tmpl = fields.Config.templates;
 
   /**
    *  piewpiew.models.fields.Field base class
    *  --------------------------------------------------------------------------
    *  
    */
-  piewpiew.models.fields.Field = piewpiew.Class({
+  fields.Field = piewpiew.Class({
     /**
      * Is the field required?
      */
@@ -205,7 +184,7 @@
    *  --------------------------------------------------------------------------
    *  
    */
-  piewpiew.models.fields.StringField = piewpiew.models.fields.Field.extend({
+  fields.StringField = fields.Field.extend({
     
     invalidTypeMessage : c(msg.stringFieldInvalidType),
 
@@ -223,7 +202,7 @@
       var self = this;
 
       return {
-        length: new piewpiew.models.validators.StringValidator({
+        length: new validators.StringValidator({
           minLength: self.minLength,
           maxLength: self.maxLength,
           messages: {
@@ -248,7 +227,7 @@
     }
   });
 
-  piewpiew.models.fields.EmailField = piewpiew.models.fields.StringField.extend({
+  fields.EmailField = fields.StringField.extend({
 
     invalidEmailMessage: c(msg.emailFieldInvalidEmailMessage),
 
@@ -256,7 +235,7 @@
       var self = this;
 
       return {
-        email: new piewpiew.models.validators.EmailValidator({
+        email: new validators.EmailValidator({
           messages: {
             invalid: self.invalidEmailMessage
           }
@@ -265,5 +244,7 @@
     }
   });
 
-  return piewpiew;
+  models.fields = fields;
+
+  return fields;
 });

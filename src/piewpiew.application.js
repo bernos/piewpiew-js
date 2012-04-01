@@ -1,19 +1,6 @@
-(function(root, factory) {
-  // If AMD is available, use the define() method to load our dependencies 
-  //and declare our module
-  if (typeof define === 'function' && define.amd) {
-    define(['underscore', 'backbone', 'piewpiew'], function(_, Backbone, piewpiew) {
-      return factory(root, _, Backbone, piewpiew);
-    });
-  }
-  // Otherwise we will attach our module to root, and pass references to our 
-  // dependencies into the factory. We're assuming that our dependencies are 
-  // also attached to root here, but they could come from anywhere 
-  else 
-  {    
-    root.piewpiew = factory(root, _, Backbone, piewpiew);
-  }
-})(this, function(root, _, Backbone, piewpiew) {  
+define('piewpiew.application', ['underscore', 'backbone', 'piewpiew.core'], function(_, Backbone, piewpiew) {
+
+  var application = {};
 
   /**
    *  piewpiew.Application
@@ -22,7 +9,7 @@
    *  It provides a consistent point of access to views and models in our app
    *  via the regsiterView, registerModel, getView, getModel methods.
    */    
-  piewpiew.Application = piewpiew.Class({
+  application.Application = piewpiew.Class({
 
     /**
      * Default element for the application is the body tag
@@ -230,111 +217,9 @@
     }
   });
 
-  /**
-   *  piewpiew.SimpleCommand base class
-   *  --------------------------------------------------------------------------
-   *  Basic command class implementation
-   */
-
-  piewpiew.SimpleCommand = piewpiew.Class({
-    initialize: function(app) {
-      this.app = app;
-    },
-
-    execute: function() { return this; }
-  });
-
-  /**
-   *  piewpiew.MacroCommand base class
-   *  --------------------------------------------------------------------------
-   *  Basic macro commadn class implementation. Macro commands can contain 
-   *  multiple subcommands which will be executed in series.
-   */
   
-  piewpiew.MacroCommand = piewpiew.Class({
-    initialize: function(app) {
-      this.app = app;
-      this.subCommands = [];
-      this.initializeMacroCommand();
-    },
 
-    /**
-     * Initialize the MacroCommand instance. Normally you will override this
-     * an call this.addSubCommand() to add sub commands to the MacroCommand.
-     */
-    initializeMacroCommand: function() { return this },
+  piewpiew.application = application;
 
-    /**
-     * Adds a sub command to the MacroCommand
-     *
-     * @param {Function} commandClass
-     *  Constructor function of the sub command to add
-     */
-    addSubCommand: function(commandClass) {
-      this.subCommands.push(commandClass);
-      return this;
-    },
-
-    /**
-     * Executes the MacroCommand. Iterates over the collection of sub commands
-     * and executes them one after the other
-     */
-    execute: function() {
-      while(this.subCommands.length > 0) {
-        var commandClass = this.subCommands.shift();
-        var command      = new commandClass(this.app);
-
-        command.execute.apply(command, arguments);
-      }
-      return this;
-    }
-  });
-
-  return piewpiew;
+  return application;
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

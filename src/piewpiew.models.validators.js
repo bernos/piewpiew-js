@@ -1,27 +1,6 @@
-(function(root, factory) {
-  // If AMD is available, use the define() method to load our dependencies 
-  //and declare our module
-  if (typeof define === 'function' && define.amd) {
-    define(['underscore', 'backbone', 'piewpiew'], function(_, Backbone, piewpiew) {
-      return factory(root, _, Backbone, piewpiew);
-    });
-  }
-  // Otherwise we will attach our module to root, and pass references to our 
-  // dependencies into the factory. We're assuming that our dependencies are 
-  // also attached to root here, but they could come from anywhere 
-  else 
-  {    
-    root.piewpiew = factory(root, _, Backbone, piewpiew);
-  }
-})(this, function(root, _, Backbone, piewpiew) {  
-  
-  /**
-   *  piewpiew.models.validators namespace
-   *  ==========================================================================
-   *  
-   */
-  piewpiew.models || (piewpiew.models = {});
-  piewpiew.models.validators || (piewpiew.models.validators = {});
+define('piewpiew.models.validators', ['underscore', 'backbone', 'piewpiew.core', 'piewpiew.models'], function(_, Backbone, piewpiew, models) {
+
+  var validators = {};
 
   /**
    *  piewpiew.models.validators.Config
@@ -32,7 +11,7 @@
    *  objects themselves. Just makes it easier to change stuff as you don't need
    *  to go looking for strings hidden away in source.
    */
-  piewpiew.models.validators.Config = {
+  validators.Config = {
 
     messages: {
       
@@ -54,15 +33,15 @@
 
   // Shortcut access to config stuff  
   var c    = piewpiew.configValue;
-  var conf = piewpiew.models.validators.Config;
-  var msg  = piewpiew.models.validators.Config.messages;
+  var conf = validators.Config;
+  var msg  = validators.Config.messages;
 
   /**
    * piewpiew.models.validators.Validator  base class
    * --------------------------------------------------------------------------
    *  
    */
-  piewpiew.models.validators.Validator = piewpiew.Class({
+  validators.Validator = piewpiew.Class({
     initialize: function(options) {
       options || (options = {});
       options.messages || (options.messages = {});
@@ -101,7 +80,7 @@
    *  tooShortNoMaxLength - String is shorter than min length with no maxLength
    *    specified
    */
-  piewpiew.models.validators.StringValidator = piewpiew.models.validators.Validator.extend({
+  validators.StringValidator = validators.Validator.extend({
     minLength: -1,
     maxLength: -1,
 
@@ -148,7 +127,7 @@
    * Validation messages:
    *  outOfRange - Displayed when the value being validated is out of range
    */
-  piewpiew.models.validators.RangeValidator = piewpiew.models.validators.Validator.extend({
+  validators.RangeValidator = validators.Validator.extend({
     min: 0,
     max: -1,
 
@@ -175,7 +154,7 @@
    * piewpiew.models.validators.RegexValidator
    * --------------------------------------------------------------------------
    */
-  piewpiew.models.validators.RegexValidator = piewpiew.models.validators.Validator.extend({
+  validators.RegexValidator = validators.Validator.extend({
     regex: /./,
 
     defaultMessages: function() {
@@ -199,7 +178,7 @@
    * piewpiew.models.validators.EmailValidator
    * --------------------------------------------------------------------------
    */
-  piewpiew.models.validators.EmailValidator = piewpiew.models.validators.RegexValidator.extend({
+  validators.EmailValidator = validators.RegexValidator.extend({
     regex: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
 
     defaultMessages: function() {
@@ -209,51 +188,7 @@
     }
   });  
   
-  return piewpiew;
+  models.validators = validators;
+
+  return validators;
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,25 +1,9 @@
-(function(root, factory) {
-  // If AMD is available, use the define() method to load our dependencies 
-  //and declare our module
-  if (typeof define === 'function' && define.amd) {
-    define(['underscore', 'piewpiew', 'piewpiew.backbone.views'], function(_, piewpiew, views) {
-      return factory(root, _, piewpiew, views);
-    });
-  }
-  // Otherwise we will attach our module to root, and pass references to our 
-  // dependencies into the factory. We're assuming that our dependencies are 
-  // also attached to root here, but they could come from anywhere 
-  else 
-  {    
-    root.piewpiew = factory(root, _, piewpiew, piewpiew.views);
-  }
-})(this, function(root, _, piewpiew, views) {  
-
+define('piewpiew.views.helpers', ['underscore', 'piewpiew.core', 'piewpiew.views'], function(_, piewpiew, views) {
   /**
    * View helpers. These methods get attached to templateContext objects when they
    * are passed to view templates for rendering.
    */
-  piewpiew.views.helpers = {
+  var helpers = {
     Html: {
       /**
        * Creates an HTML attributes string from an object. Name:value pairs in the
@@ -43,9 +27,9 @@
       },
 
       editorForModel: function(model) {
-        return piewpiew.views.template(
+        return views.template(
           model.editorTemplate(), 
-          piewpiew.views.TemplateContext(model.editorTemplateContext())
+          views.TemplateContext(model.editorTemplateContext())
         );
       },
 
@@ -60,10 +44,10 @@
         htmlAttributes.classes.push("control-group");
         htmlAttributes.classes.push("control-group-for-" + field.name);
 
-        var context = piewpiew.views.TemplateContext(field.editorTemplateContext(model));
+        var context = views.TemplateContext(field.editorTemplateContext(model));
         context.attributes = htmlAttributes;
 
-        return piewpiew.views.template(field.editorTemplate(), context);
+        return views.template(field.editorTemplate(), context);
       },
 
       /**
@@ -77,10 +61,10 @@
         htmlAttributes.classes.push("control");
         htmlAttributes.classes.push("control-for-" + field.name);
 
-        var context = piewpiew.views.TemplateContext(field.formControlTemplateContext(model));
+        var context = views.TemplateContext(field.formControlTemplateContext(model));
         context.attributes = htmlAttributes;
 
-        return piewpiew.views.template(field.formControlTemplate(), context);
+        return views.template(field.formControlTemplate(), context);
       },
 
       /**
@@ -93,10 +77,10 @@
         htmlAttributes.classes || (htmlAttributes.classes = []);   
         htmlAttributes.classes.push("control-label");
 
-        var context = piewpiew.views.TemplateContext(field.labelTemplateContext(model));
+        var context = views.TemplateContext(field.labelTemplateContext(model));
         context.attributes = htmlAttributes;
 
-        return piewpiew.views.template(field.labelTemplate(), context); 
+        return views.template(field.labelTemplate(), context); 
       },
 
       hidden: function(name, value) {
@@ -124,51 +108,7 @@
     }
   };
 
-  return piewpiew;
+  views.helpers = helpers;
+
+  return helpers;
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
