@@ -5,36 +5,34 @@
 
   "modules" : {
 
-    "piewpiew.core" : {
-      "version" : "0.0.1",
-      "input-files" : [
-        "piewpiew.core.js"
-      ],
-      "uglify" : true, 
-      "uglify-js-options" : {
-        "strict_semicolons" : false
-      }
-    },
-
-    "piewpiew.backbone" : {
+    "piewpiew" : {
       "version" : "0.0.1",
       "uglify" : false, 
+      "uglify-js-options" : {
+        "strict_semicolons" : false
+      },
       "input-files" : [
-        "piewpiew.core.js",
-        "piewpiew.backbone.js",
-        "piewpiew.backbone.models.js",
-        "piewpiew.backbone.models.validators.js",
-        "piewpiew.backbone.models.fields.js",
-        "piewpiew.backbone.views.js",
-        "piewpiew.backbone.views.helpers.js"
+        "piewpiew.core.js"
+        ,"piewpiew.models.js"       
+        ,"piewpiew.models.validators.js"
+        ,"piewpiew.models.fields.js" 
+        ,"piewpiew.views.js"
+        ,"piewpiew.views.helpers.js"
+        ,"piewpiew.controllers.js"
+        ,"piewpiew.application.js"
       ]
-    }
+    }   
   },
 
   "examples" : {
     "test" : {
       "copy" : {
         "dist/piewpiew.backbone-0.0.1.min.js" : "examples/test/js/piewpiew.backbone-0.0.1.min.js"
+      }
+    },
+    "script-tag" : {
+      "copy" : {
+        "dist/piewpiew-0.0.1.min.js" : "examples/script-tag/js/piewpiew-0.0.1.min.js"
       }
     }
   }
