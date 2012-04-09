@@ -34,6 +34,11 @@
       "copy" : {
         "dist/piewpiew-0.0.1.min.js" : "examples/script-tag/js/piewpiew-0.0.1.min.js"
       }
+    },
+    "requirejs" : {
+      "copy" : {
+        "dist/piewpiew-0.0.1.min.js" : "examples/requirejs/js/libs/piewpiew/piewpiew-0.0.1.min.js"
+      }
     }
   }
 }
