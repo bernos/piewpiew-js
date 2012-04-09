@@ -1,12 +1,32 @@
-(function(global) {
+/*******************************************************************************
+
+  piewpiew.core.js
+
+
+
+*******************************************************************************/
+(function(global) 
+{
   var piewpiew = {};
 
+  /**
+   * Storage for modules loaded using piewpiew's built in define and require
+   * methods. This will only be used when not using a third part AMD loader like
+   * requirejs. The expectation here is that if we're not using AMD then we
+   * are using plain old <script> tags, and we are responsible for ensuring that
+   * all our scripts are loaded in the right order.
+   */
   var modules  = {
     'underscore' : global._,
     'backbone'   : global.Backbone,
     'jquery'     : global.jQuery
   };
 
+  /**
+   * Merges two or more objects. When extend(a,b,c) is called, first the 
+   * properties of b are copied to a, then the properties of c are copied to a.
+   * The updated 'a' object is returned
+   */
   var extend = function(obj) {
     for (var i = 0, max = arguments.length; i < max; i++) {
       var source = arguments[i];
@@ -112,6 +132,13 @@
     return klass;
   };
 
+  /**
+   * Implementation of define. This defininition will be used if no dedicated
+   * module loading library, such as requirejs is used. This implementation does
+   * not actually load external scripts, and relies on us to ensure that we
+   * specify the correct order of our external scripts. The recommeded way to
+   * work with piewpiew is to use a dedicated AMD library, like requirejs
+   */
   piewpiew.define = function(module, dependencies, fn) {
     if (typeof define === 'function' && define.amd) {
       define(module, dependencies, fn);
@@ -131,10 +158,10 @@
     exports.piewpiew = piewpiew;
   }
 
-  piewpiew.define('piewpiew.core', [], function() { return piewpiew });
-
   if (typeof define === 'undefined') {
     global.define = piewpiew.define;
   }
+
+  piewpiew.define('piewpiew.core', [], function() { return piewpiew });
 
 }(typeof window === 'undefined' ? this : window));
