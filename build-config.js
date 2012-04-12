@@ -13,11 +13,11 @@
       },
       "input-files" : [
         "piewpiew.core.js"
+        ,"piewpiew.views.js"
+        ,"piewpiew.views.helpers.js"
         ,"piewpiew.models.js"       
         ,"piewpiew.models.validators.js"
         ,"piewpiew.models.fields.js" 
-        ,"piewpiew.views.js"
-        ,"piewpiew.views.helpers.js"
         ,"piewpiew.controllers.js"
         ,"piewpiew.application.js"
       ]
