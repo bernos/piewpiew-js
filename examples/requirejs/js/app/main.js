@@ -5,8 +5,8 @@
 *******************************************************************************/
 define([
   'piewpiew', 
-  'views/ApplicationView', 
-  'controllers/ApplicationController'
+  'app/views/ApplicationView', 
+  'app/controllers/ApplicationController'
 ], 
 
 function(piewpiew, ApplicationView, ApplicationController) 

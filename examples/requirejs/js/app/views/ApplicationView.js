@@ -1,4 +1,4 @@
-define(['text!templates/ApplicationView.html', 'piewpiew.views'], function(template, views) {
+define(['text!app/templates/ApplicationView.html', 'piewpiew.views'], function(template, views) {
 
   var ApplicationView = piewpiew.views.View.extend({
     template: template,
