@@ -4,12 +4,11 @@
 
 *******************************************************************************/
 define([
-  'piewpiew', 
   'app/views/ApplicationView', 
   'app/controllers/ApplicationController'
 ], 
 
-function(piewpiew, ApplicationView, ApplicationController) 
+function(ApplicationView, ApplicationController) 
 {
   /**
    * This is the application entry point. The bootstrap will
