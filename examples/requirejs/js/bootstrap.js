@@ -11,8 +11,8 @@ require(['config/config'], function(config)
 {
   if (config.requirejs) require.config(config.requirejs);
 
-  require(['app/main'], function(main) 
+  require(['order!piewpiew', 'order!piewpiew.config', 'order!app/main'], function(piewpiew, configuration, main) 
   {
-    main(config);
+    main(new configuration.Config(config));
   });  
 });
