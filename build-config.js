@@ -20,6 +20,7 @@
         ,"piewpiew.models.fields.js" 
         ,"piewpiew.controllers.js"
         ,"piewpiew.application.js"
+        ,"piewpiew.config.js"
       ]
     }   
   },
