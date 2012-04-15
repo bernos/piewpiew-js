@@ -1,5 +1,3 @@
-//if (typeof define !== 'function') { var define = require('amdefine')(module); }
-
 define('piewpiew.config', ['piewpiew.core'], function(piewpiew) {
 
 	var config = {};
