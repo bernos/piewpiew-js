@@ -4,10 +4,10 @@ define(['text!app/templates/ApplicationView.html', 'piewpiew.views'], function(t
     template: template,
 
     events: {
-      'click .hello' : 'handleHelloClick'
+      'click .hello' : 'onHelloClick'
     },
 
-    handleHelloClick: function() {
+    onHelloClick: function() {
       this.trigger('helloClicked', this);
     }
   });
