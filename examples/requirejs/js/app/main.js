@@ -4,11 +4,10 @@
 
 *******************************************************************************/
 define([
-  'app/views/ApplicationView', 
   'app/controllers/ApplicationController'
 ], 
 
-function(ApplicationView, ApplicationController) 
+function(ApplicationController) 
 {
   /**
    * This is the application entry point. The bootstrap will
@@ -16,25 +15,7 @@ function(ApplicationView, ApplicationController)
    */
   return function(config) 
   {
-    /**
-     * Create our application view
-     */
-    var applicationView = new ApplicationView({
-      el: 'body'
-    });
-
-    /**
-     * Create a controller for the view
-     */
-    var applicationController = new ApplicationController({
-      view : applicationView
-    });
-
-    applicationView.trigger("example");
-
-    /**
-     * Now render the view into the DOM
-     */
-    applicationView.render();
+    var applicationController = new ApplicationController(config);
+    applicationController.start();
   }
 });
