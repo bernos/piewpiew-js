@@ -1,17 +1,14 @@
+
 define('piewpiew.config', ['piewpiew.core'], function(piewpiew) {
 
 	var config = {};
-
-  config.DEVELOPMENT  = "development";
-  config.TESTING      = "testing";
-  config.PRODUCTION   = "production";
 
 	config.Config = piewpiew.Class({
 
     initialize: function(options) {
       options || (options = {});
 
-      if (!options.environment) options.environment = config.DEVELOPMENT;
+      if (!options.environment) options.environment = piewpiew.DEVELOPMENT;
 
       this.getOptions = function() {
         return options;
@@ -38,14 +35,14 @@ define('piewpiew.config', ['piewpiew.core'], function(piewpiew) {
       }
 
       // If we didnt find a value, escalate
-      while (null === value && env != config.PRODUCTION) {
+      while (null === value && env != piewpiew.PRODUCTION) {
         switch (env) {
-          case config.DEVELOPMENT :
-            env = config.TESTING;
+          case piewpiew.DEVELOPMENT :
+            env = piewpiew.TESTING;
             break;
 
-          case config.TESTING :
-            env = config.PRODUCTION;
+          case piewpiew.TESTING :
+            env = piewpiew.PRODUCTION;
             break;
         }
 

@@ -2,12 +2,14 @@
 
   piewpiew.core.js
 
-
-
 *******************************************************************************/
 (function(global) 
 {
   var piewpiew = {};
+
+  piewpiew.DEVELOPMENT  = "development";
+  piewpiew.TESTING      = "testing";
+  piewpiew.PRODUCTION   = "production";
 
   /**
    * Storage for modules loaded using piewpiew's built in define and require
