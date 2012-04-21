@@ -5,6 +5,28 @@
 *******************************************************************************/
 
 /**
+ * Default config for requirejs. This is just enough configuration to get the
+ * bootstrap up and running. Further configuration for requirejs can be added
+ * via the config.json application configuration file. You should not change
+ * the requirejs config here, unless you have changed the standard folder
+ * structure for the application.
+ */
+require.config({
+  paths: {
+    // Common libraries
+    'underscore': 'libs/underscore/underscore',
+    'backbone'  : 'libs/backbone/backbone',
+    'piewpiew'  : 'libs/piewpiew/piewpiew-0.0.1.min',
+
+    // Require JS plugins
+    'text'      : 'libs/requirejs/text',
+    'order'     : 'libs/requirejs/order',
+    'i18n'      : 'libs/requirejs/i18n',
+    'domReady'  : 'libs/requirejs/domReady'
+  }
+});
+
+/**
  * Load the config, then the main app file, and away we go
  */
 require(['config/config'], function(config) 
@@ -38,25 +60,7 @@ require(['config/config'], function(config)
     }        
   }
 
-  if (requireConfig == null) {
-    console.info('Did not find requirejs config in config file');
-    requireConfig = {
-      paths: {
-        // Common libraries
-        'underscore': 'libs/underscore/underscore',
-        'backbone'  : 'libs/backbone/backbone',
-        'piewpiew'  : 'libs/piewpiew/piewpiew-0.0.1.min',
-
-        // Require JS plugins
-        'text'      : 'libs/requirejs/text',
-        'order'     : 'libs/requirejs/order',
-        'i18n'      : 'libs/requirejs/i18n',
-        'domReady'  : 'libs/requirejs/domReady'
-      }
-    };
-  }
-
-  require.config(requireConfig);
+  if (requireConfig != null) require.config(requireConfig);  
 
   require(['piewpiew'], function(piewpiew) 
   {
