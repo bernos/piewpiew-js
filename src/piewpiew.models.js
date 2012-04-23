@@ -68,11 +68,10 @@ define('piewpiew.models', ['underscore', 'backbone', 'piewpiew.core'], function(
     },
 
     initialize: function(attributes, options) {
-
+      this.fields || (this.fields = {});
+      
       // Initialize each of our field objects...
       _.each(this.fields, function(field, name) {
-        
-        attributes || (attributes = {});
 
         // Set a default label if none has been provided...
         if (!field.label) {
@@ -105,8 +104,6 @@ define('piewpiew.models', ['underscore', 'backbone', 'piewpiew.core'], function(
       var isValid = true;
       var model = this;
 
-      console.log("validating", attrs);
-
       _.each(attrs, function(value, key) {
         if (model.fields[key]) {
           var e = model.fields[key].validate(value);
@@ -126,18 +123,3 @@ define('piewpiew.models', ['underscore', 'backbone', 'piewpiew.core'], function(
   return models;
   
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

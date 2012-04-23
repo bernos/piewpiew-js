@@ -1,21 +1,40 @@
 
-define(['piewpiew.controllers', 'app/views/ApplicationView'], function(controllers, ApplicationView) {
+define([
+  'piewpiew.controllers', 
+  'app/views/ApplicationView', 
+  'app/views/ContactsCollectionView',
+  'app/models/ContactsCollection'
+], 
+
+function(controllers, ApplicationView, ContactsCollectionView, ContactsCollection) {
   var ApplicationController = controllers.Controller.extend({
 
     initialize: function() {
-      this.applicationView = new ApplicationView({
-        el: 'body'
-      });
-
-      this.applicationView.bind('helloClicked', this.handleHelloClicked, this);
+      this.initializeModel();
     },
 
-    handleHelloClicked: function(view) {
-      console.log('handling helloClicked', this, view);
+    initializeModel: function() {
+      var contacts = [
+        { name: "Contact 1", address: "1, a street, a town, a city, AB12 3CD", tel: "0123456789", email: "anemail@me.com", type: "family" },
+        { name: "Contact 2", address: "1, a street, a town, a city, AB12 3CD", tel: "0123456789", email: "anemail@me.com", type: "family" },
+        { name: "Contact 3", address: "1, a street, a town, a city, AB12 3CD", tel: "0123456789", email: "anemail@me.com", type: "friend" },
+        { name: "Contact 4", address: "1, a street, a town, a city, AB12 3CD", tel: "0123456789", email: "anemail@me.com", type: "colleague" },
+        { name: "Contact 5", address: "1, a street, a town, a city, AB12 3CD", tel: "0123456789", email: "anemail@me.com", type: "family" },
+        { name: "Contact 6", address: "1, a street, a town, a city, AB12 3CD", tel: "0123456789", email: "anemail@me.com", type: "colleague" },
+        { name: "Contact 7", address: "1, a street, a town, a city, AB12 3CD", tel: "0123456789", email: "anemail@me.com", type: "friend" },
+        { name: "Contact 8", address: "1, a street, a town, a city, AB12 3CD", tel: "0123456789", email: "anemail@me.com", type: "family" }
+      ];
+
+      this.contactsCollection = new ContactsCollection(contacts);
+
+      this.view = new ContactsCollectionView({
+        el: 'body',
+        collection : this.contactsCollection
+      });
     },
 
     start: function() {
-      this.applicationView.render();
+      this.view.render();
     }
   });
 

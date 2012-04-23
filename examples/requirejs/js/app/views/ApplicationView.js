@@ -3,12 +3,21 @@ define(['text!app/templates/ApplicationView.html', 'piewpiew.views'], function(t
   var ApplicationView = piewpiew.views.View.extend({
     template: template,
 
-    events: {
-      'click .hello' : 'onHelloClick'
+    initialize: function() {
+      this.model.bind("change:value", this.render, this);
     },
 
-    onHelloClick: function() {
-      this.trigger('helloClicked', this);
+    events: {
+      'click .increment' : 'onIncrementClick',
+      'click .decrement' : 'onDecrementClick'
+    },
+
+    onIncrementClick: function() {
+      this.trigger('incrementClicked', this);
+    },
+
+    onDecrementClick: function() {
+      this.trigger('decrementClicked', this);
     }
   });
 
