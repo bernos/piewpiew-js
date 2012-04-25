@@ -148,7 +148,7 @@ define('piewpiew.views', ['underscore', 'backbone', 'piewpiew.core', 'jquery'], 
       this.addItem(model);
     },
 
-    onItemRemoved: function() {
+    onItemRemoved: function(model, collection, options) {
       this.removeItem(model);
     },
 
@@ -165,6 +165,16 @@ define('piewpiew.views', ['underscore', 'backbone', 'piewpiew.core', 'jquery'], 
     removeItem: function(item) {
       // TODO: Iterate over each child view and find the one whose model is
       // the item, and remove it from the views array (and the dom)
+      console.log("removing item ", item);
+
+      for(var i = 0, m = this.views.length; i < m; i++) {
+        if (this.views[i].model == item) {
+          console.log('found view for item');
+          this.views[i].remove();
+          this.views.splice(i,1);
+          break;
+        }
+      }
     },
 
     clear: function() {
