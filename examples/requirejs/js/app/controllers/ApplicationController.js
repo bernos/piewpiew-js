@@ -1,12 +1,14 @@
 
 define([
-  'piewpiew.controllers', 
+  'piewpiew.controllers',
+  'piewpiew.views', 
   'app/views/ApplicationView', 
   'app/views/ContactsCollectionView',
+  'app/views/ContactView',
   'app/models/ContactsCollection'
 ], 
 
-function(controllers, ApplicationView, ContactsCollectionView, ContactsCollection) {
+function(controllers, views, ApplicationView, ContactsCollectionView, ContactView, ContactsCollection) {
   var ApplicationController = controllers.Controller.extend({
 
     initialize: function() {
@@ -27,7 +29,13 @@ function(controllers, ApplicationView, ContactsCollectionView, ContactsCollectio
 
       this.contactsCollection = new ContactsCollection(contacts);
 
-      this.view = new ContactsCollectionView({
+      /*this.view = new ContactsCollectionView({
+        el: 'body',
+        collection : this.contactsCollection
+      });*/
+
+      this.view = new views.CollectionView({
+        view: ContactView,
         el: 'body',
         collection : this.contactsCollection
       });
@@ -35,6 +43,7 @@ function(controllers, ApplicationView, ContactsCollectionView, ContactsCollectio
 
     start: function() {
       this.view.render();
+      this.contactsCollection.add({ name: "Contact 9", address: "1, a street, a town, a city, AB12 3CD", tel: "0123456789", email: "anemail@me.com", type: "family" });
     }
   });
 
