@@ -29,20 +29,16 @@ function(controllers, views, ApplicationView, ContactsCollectionView, ContactVie
 
       this.contactsCollection = new ContactsCollection(contacts);
 
-      /*this.view = new ContactsCollectionView({
-        el: 'body',
-        collection : this.contactsCollection
-      });*/
-
       this.view = new views.CollectionView({
+        id: "contacts",
         view: ContactView,
-        el: 'body',
+        className: "hello",
         collection : this.contactsCollection
       });
     },
 
     start: function() {
-      this.view.render();
+      document.body.appendChild(this.view.render().el);
       this.contactsCollection.add({ name: "Contact 9", address: "1, a street, a town, a city, AB12 3CD", tel: "0123456789", email: "anemail@me.com", type: "family" });
     }
   });

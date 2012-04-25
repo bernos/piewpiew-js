@@ -2,6 +2,7 @@
 TODO
 ----
 
+# Complete CollectionView
 # Model fields need to be able to be models or collections.
 # Replace piewpiew.printf with calls to piewpiew.template. One templating solution should suffice
   Either that or change printf to be more like printf("Here is {0} the {1} template", arg1, arg2);

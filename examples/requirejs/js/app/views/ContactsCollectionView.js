@@ -8,6 +8,7 @@ define(['piewpiew.views', 'underscore', 'app/views/ContactView'], function(views
           that.renderContact(item);
         }, this);
       }
+      return this;
     },
 
     renderContact: function(contact) {
