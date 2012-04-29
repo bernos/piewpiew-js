@@ -253,8 +253,8 @@ define('piewpiew.views', ['underscore', 'backbone', 'piewpiew.core', 'jquery'], 
       this.addItem(model);
     },
 
-    onCollectionItemRemoved: function(item) {
-      this.removeItem(item);
+    onCollectionItemRemoved: function(model, collection, options) {
+      this.removeItem(model);
     },
 
     addItem: function(item) {

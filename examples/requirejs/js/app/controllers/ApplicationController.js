@@ -29,14 +29,6 @@ function(controllers, views, ApplicationView, ContactsCollectionView, ContactVie
 
       this.contactsCollection = new ContactsCollection(contacts);
 
-      /*
-      this.view = new views.CollectionView({
-        view: ContactView,
-        el: 'body',
-        collection : this.contactsCollection
-      });
-      */
-
       this.view = new ApplicationView({
         el: 'body',
         contacts: this.contactsCollection
