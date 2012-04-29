@@ -1,24 +1,46 @@
-define(['text!app/templates/ApplicationView.html', 'piewpiew.views'], function(template, views) {
+define([
+  'text!app/templates/ApplicationView.html', 
+  'app/views/NavView', 
+  'app/views/ContactView', 
+  'piewpiew.views'
+], 
 
-  var ApplicationView = piewpiew.views.View.extend({
+function(template, NavView, ContactView, views) {
+
+  var ApplicationView = views.Layout.extend({
     template: template,
 
-    initialize: function() {
-      this.model.bind("change:value", this.render, this);
+    initialize: function(options) {
+      this.navRegion = this.addRegion({
+        selector: '.nav'
+      });
+
+      this.contactsRegion = this.addRegion({
+        selector: '.contacts'
+      });
+
+      this.navRegion.addView(new NavView({
+        id: "navbar-1"
+      }));
+
+      this.navRegion.addView(new NavView({
+        id: "navbar-2"
+      }));
+
+      this.contactsRegion.addView(new views.CollectionView({
+        view: ContactView,
+        collection : options.contacts
+      }));
     },
 
     events: {
-      'click .increment' : 'onIncrementClick',
-      'click .decrement' : 'onDecrementClick'
+      'click a.add' : 'onAddClicked'
     },
 
-    onIncrementClick: function() {
-      this.trigger('incrementClicked', this);
-    },
-
-    onDecrementClick: function() {
-      this.trigger('decrementClicked', this);
+    onAddClicked: function() {
+      this.trigger("add");
     }
+
   });
 
   return ApplicationView;
