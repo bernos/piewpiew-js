@@ -15,6 +15,8 @@
         "piewpiew.core.js"
         ,"piewpiew.views.js"
         ,"piewpiew.views.helpers.js"
+        ,"piewpiew.forms.js"
+        ,"piewpiew.forms.fields.js"
         ,"piewpiew.models.js"       
         ,"piewpiew.models.validators.js"
         ,"piewpiew.models.fields.js" 

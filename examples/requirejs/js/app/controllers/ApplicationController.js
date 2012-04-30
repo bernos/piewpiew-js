@@ -5,10 +5,14 @@ define([
   'app/views/ApplicationView', 
   'app/views/ContactsCollectionView',
   'app/views/ContactView',
-  'app/models/ContactsCollection'
+  'app/models/ContactsCollection',
+  'piewpiew.forms',
+  'piewpiew.forms.fields',
+  'piewpiew.models',
+  'piewpiew.models.fields'
 ], 
 
-function(controllers, views, ApplicationView, ContactsCollectionView, ContactView, ContactsCollection) {
+function(controllers, views, ApplicationView, ContactsCollectionView, ContactView, ContactsCollection, forms, fields, models, modelFields) {
   var ApplicationController = controllers.Controller.extend({
 
     initialize: function() {
@@ -16,6 +20,24 @@ function(controllers, views, ApplicationView, ContactsCollectionView, ContactVie
     },
 
     initializeModel: function() {
+
+
+
+      var PersonModel = models.Model.extend({
+        fields: {
+          firstName: new modelFields.StringField(),
+          lastName: new modelFields.StringField()
+        }
+      });
+
+      var PersonForm = forms.Form.extend({
+        model: PersonModel
+      });
+
+      var form = new PersonForm();
+
+      console.log("adfafsd", form)
+
       var contacts = [
         { name: "Contact 1", address: "1, a street, a town, a city, AB12 3CD", tel: "0123456789", email: "anemail@me.com", type: "family" },
         { name: "Contact 2", address: "1, a street, a town, a city, AB12 3CD", tel: "0123456789", email: "anemail@me.com", type: "family" },
