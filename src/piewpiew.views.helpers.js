@@ -33,6 +33,19 @@ define('piewpiew.views.helpers', ['underscore', 'piewpiew.core', 'piewpiew.views
         );
       },
 
+      formField: function(form, field, htmlAttributes) {
+        var context = views.TemplateContext(field.templateContext(form));
+
+        htmlAttributes || (htmlAttributes = {});
+        htmlAttributes.classes || (htmlAttributes.classes = []);   
+        htmlAttributes.classes.push("control");
+        htmlAttributes.classes.push("control-for-" + field.name);
+
+        context.attributes = htmlAttributes;
+
+        return views.template(field.template(), context);
+      },
+
       /**
        * Creates an editor control for a field, using the value of the field from
        * a particular model. The template used is determined by the value of the

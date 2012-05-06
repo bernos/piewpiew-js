@@ -9,10 +9,11 @@ define([
   'piewpiew.forms',
   'piewpiew.forms.fields',
   'piewpiew.models',
-  'piewpiew.models.fields'
+  'piewpiew.models.fields',
+  'piewpiew.views.helpers'
 ], 
 
-function(controllers, views, ApplicationView, ContactsCollectionView, ContactView, ContactsCollection, forms, fields, models, modelFields) {
+function(controllers, views, ApplicationView, ContactsCollectionView, ContactView, ContactsCollection, forms, fields, models, modelFields, helpers) {
   var ApplicationController = controllers.Controller.extend({
 
     initialize: function() {
@@ -31,12 +32,18 @@ function(controllers, views, ApplicationView, ContactsCollectionView, ContactVie
       });
 
       var PersonForm = forms.Form.extend({
-        model: PersonModel
+        fields: {
+          name: new fields.TextField()
+        }
       });
 
-      var form = new PersonForm();
+      var form = new PersonForm({
+        name: "Brendan"
+      });
 
-      console.log("adfafsd", form)
+      console.log("adfafsd", form);
+
+      console.log(helpers.Html.formField(form, form.fields.name));
 
       var contacts = [
         { name: "Contact 1", address: "1, a street, a town, a city, AB12 3CD", tel: "0123456789", email: "anemail@me.com", type: "family" },

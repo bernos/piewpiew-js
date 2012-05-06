@@ -72,12 +72,6 @@ define('piewpiew.models', ['underscore', 'backbone', 'piewpiew.core'], function(
       
       // Initialize each of our field objects...
       _.each(this.fields, function(field, name) {
-
-        // Set a default label if none has been provided...
-        if (!field.label) {
-          field.label = name;
-        }
-
         field.name  = name;
       });
     },
