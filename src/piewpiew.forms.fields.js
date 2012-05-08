@@ -1,7 +1,8 @@
 define('piewpiew.forms.fields', [
   'underscore',
   'piewpiew.core',
-  'piewpiew.forms'
+  'piewpiew.forms',
+  'piewpiew.views.helpers'
 ], 
 
 function(_, piewpiew, forms, helpers) {
@@ -54,24 +55,17 @@ function(_, piewpiew, forms, helpers) {
     },
 
     /**
-     * Return template string for rendering the field.
+     * Render the field. Form subclasses should override this method and return
+     * the appropriate HTML formatted string.
+     *
+     * @param {Object} value
+     *  Value of the field
+     * @param {Object} attributes
+     *  Extra html attributes for the field
+     * @return {String}
      */
-    template: function() {
+    render: function(value, attributes) {
       return "";
-    },
-
-    /**
-     * Return template context used when rendering the field. This context will 
-     * be passed to the template returned by the template() function
-     * 
-     * @param {Object} form
-     *  Form instance to extract data for the template context from
-     */
-    templateContext: function(form) {
-      return {
-        name: this.name,
-        value: form.get(this.name)
-      }
     },
 
     /**
@@ -128,8 +122,8 @@ function(_, piewpiew, forms, helpers) {
   });
 
   fields.TextField = fields.Field.extend({
-    template: function() {
-      return "<%= Html.textfield(name, value, attributes) %>";
+    render: function(value, attributes) {
+      return helpers.Html.textfield(this.name, value, attributes);
     }
   });
 

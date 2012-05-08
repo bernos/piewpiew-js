@@ -20,9 +20,9 @@ function(controllers, views, ApplicationView, ContactsCollectionView, ContactVie
       this.initializeModel();
     },
 
+
+
     initializeModel: function() {
-
-
 
       var PersonModel = models.Model.extend({
         fields: {
@@ -33,17 +33,21 @@ function(controllers, views, ApplicationView, ContactsCollectionView, ContactVie
 
       var PersonForm = forms.Form.extend({
         fields: {
-          name: new fields.TextField()
+          firstName: new fields.TextField(),
+          lastName: new fields.TextField()
         }
       });
 
       var form = new PersonForm({
-        name: "Brendan"
+        firstName: "Brendan",
+        lastName: "McMahon"
+      });
+
+      this.formView = new views.FormView({
+        model: form
       });
 
       console.log("adfafsd", form);
-
-      console.log(helpers.Html.formField(form, form.fields.name));
 
       var contacts = [
         { name: "Contact 1", address: "1, a street, a town, a city, AB12 3CD", tel: "0123456789", email: "anemail@me.com", type: "family" },
@@ -72,6 +76,7 @@ function(controllers, views, ApplicationView, ContactsCollectionView, ContactVie
 
     start: function() {
       this.view.render();      
+      $('body').append(this.formView.render().el);
     }
   });
 

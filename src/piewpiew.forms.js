@@ -8,6 +8,7 @@ function(_, backbone, piewpiew) {
   var forms = {};
 
   forms.Form = backbone.Model.extend({
+
     initialize: function(attributes, options) {
       this.fields || (this.fields = {});
 

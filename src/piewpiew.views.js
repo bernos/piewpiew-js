@@ -308,7 +308,10 @@ define('piewpiew.views', ['underscore', 'backbone', 'piewpiew.core', 'jquery'], 
   views.FormView = views.View.extend({
 
     template: function() {
-      var buf = [];
+      var buf   = [],
+          model = this.model,
+          helpers = helpers;
+
 
       buf.push('<form class="form-horizontal">');
 
@@ -317,9 +320,16 @@ define('piewpiew.views', ['underscore', 'backbone', 'piewpiew.core', 'jquery'], 
       }
 
       buf.push('<%= Html.hidden("cid", model.cid) %>');
-      buf.push('<%= Html.editorForModel(model) %>');
+
+      buf.push('<% _.each(model.fields, function(field, name) { %>');
+      buf.push('<%= Html.formField(model, field) %>');
+      buf.push('<% }) %>');
+
+      //buf.push('<%= Html.editorForModel(model) %>');
       buf.push('<input type="submit" value="save"/>');
       buf.push('</form>');
+
+      console.log(buf.join("\n"));
 
       return buf.join("\n");
     },

@@ -18,7 +18,8 @@ define('piewpiew.views.helpers', ['underscore', 'piewpiew.core', 'piewpiew.views
         _.each(htmlAttributes, function(value, key) {
           if (key == "classes") {
             key = "class";
-            value = value.join(" ");
+            
+            if (typeof value.join == "function") value = value.join(" ");
           }
           buf.push(piewpiew.printf('${key}="${value}"', {key:key, value:value}));
         });
@@ -34,24 +35,24 @@ define('piewpiew.views.helpers', ['underscore', 'piewpiew.core', 'piewpiew.views
       },
 
       formField: function(form, field, htmlAttributes) {
-        var context = views.TemplateContext(field.templateContext(form));
-
+        console.log("formField ", field)
         htmlAttributes || (htmlAttributes = {});
         htmlAttributes.classes || (htmlAttributes.classes = []);   
         htmlAttributes.classes.push("control");
         htmlAttributes.classes.push("control-for-" + field.name);
 
-        context.attributes = htmlAttributes;
-
-        return views.template(field.template(), context);
+        return field.render(form.get(field.name), htmlAttributes);
       },
 
       /**
        * Creates an editor control for a field, using the value of the field from
        * a particular model. The template used is determined by the value of the
        * field.editorTemplate property.
+
+       DEPRECATED
        */
       editorForField: function(model, field, htmlAttributes) {
+
         htmlAttributes || (htmlAttributes = {});
         htmlAttributes.classes || (htmlAttributes.classes = []);   
         htmlAttributes.classes.push("control-group");
@@ -67,6 +68,8 @@ define('piewpiew.views.helpers', ['underscore', 'piewpiew.core', 'piewpiew.views
        * Creates a form control for a field, using the value of the field from
        * a particular model. The template used is determined by the value of the
        * field.formControlTemplate property.
+
+       DEPRECATED
        */
       formControlForField: function(model, field, htmlAttributes) {
         htmlAttributes || (htmlAttributes = {});
@@ -84,6 +87,8 @@ define('piewpiew.views.helpers', ['underscore', 'piewpiew.core', 'piewpiew.views
        * Creates a label for a field, using the value of the field from
        * a particular model. The template used is determined by the value of the
        * field.editorTemplate property.
+
+       DEPRECTATED
        */
       labelForField: function(model, field, htmlAttributes) {
         htmlAttributes || (htmlAttributes = {});
