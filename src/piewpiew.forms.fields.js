@@ -91,6 +91,8 @@ function(_, piewpiew, forms, helpers) {
         if (null != v) errors = errors.concat(v);
       });
 
+      console.log("validated field ", errors)
+
       if (errors.length > 0) return errors;
 
       return false;
@@ -116,6 +118,8 @@ function(_, piewpiew, forms, helpers) {
      */
     validateRequired: function(value) {
       if (null == value) return false;
+
+      if (typeof value == "string" && value == "") return false;
 
       return true;
     }    

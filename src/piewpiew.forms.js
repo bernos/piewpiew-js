@@ -21,8 +21,40 @@ function(_, backbone, piewpiew) {
       });
     },
 
-    validate : function() {
+    /**
+     * Iterate over each of the model's field definitions and validate the
+     * corresponding value from the model instance. Returns either and object of
+     * errors or false if no validation errors occured. The structure of the 
+     * error object is:
+     *
+     *  {
+     *    "field-one-name" : [
+     *      "Error message one",
+     *      "Error message two"
+     *    ],
+     *    "field-two-name" : [
+     *      "Error message one",
+     *      "Error message two"
+     *    ]
+     *  }
+     */
+    validate: function(attrs) {
+      console.log("validate", attrs)
+      var errors = {};
+      var isValid = true;
+      var model = this;
 
+      _.each(attrs, function(value, key) {
+        if (model.fields[key]) {
+          var e = model.fields[key].validate(value);
+          if (e) {
+            isValid = false;
+            errors[key] = e;
+          }
+        }
+      });
+
+      if (!isValid) return errors;
     },
 
     submit : function(data) {

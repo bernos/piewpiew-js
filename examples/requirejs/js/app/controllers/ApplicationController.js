@@ -33,8 +33,13 @@ function(controllers, views, ApplicationView, ContactsCollectionView, ContactVie
 
       var PersonForm = forms.Form.extend({
         fields: {
-          firstName: new fields.TextField(),
-          lastName: new fields.TextField()
+          firstName: new fields.TextField({
+            label: "First name",
+            required: true
+          }),
+          lastName: new fields.TextField({
+            label: "Last name"
+          })
         }
       });
 

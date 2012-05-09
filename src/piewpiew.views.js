@@ -322,7 +322,11 @@ define('piewpiew.views', ['underscore', 'backbone', 'piewpiew.core', 'jquery'], 
       buf.push('<%= Html.hidden("cid", model.cid) %>');
 
       buf.push('<% _.each(model.fields, function(field, name) { %>');
-      buf.push('<%= Html.formField(model, field) %>');
+      buf.push('<div>');
+
+      buf.push('<div class="control-group control-group-for-<%= name %>"><label class="control-label"><%= field.label %></label><div class="controls"><%= Html.formField(model, field) %></div></div>');
+
+      buf.push('</div>');
       buf.push('<% }) %>');
 
       //buf.push('<%= Html.editorForModel(model) %>');
