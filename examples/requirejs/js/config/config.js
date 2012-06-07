@@ -1,46 +1,69 @@
-define({
-	version: "0.0.1",
+define(function() {
 
   /**
-   * Specify the environment configuration. Valid values are 
-   * development|test|production.
+   * Our main environment configuration
    */
-  environment: "development",        
+  var env = "development"
 
   /**
-   * Configuration options specific to the development environment. Development
-   * environment also inherits from the test and production environments
+   * Configuration functions in this section are run
+   * during the bootstrap phase, prior to the application
+   * module even being loaded. This is the place to put
+   * any environment settings that need to be defined
+   * before the app loads, such as requirejs configuration
+   * and so forth
    */
-  development: { },
+  require.config({
+    paths: {
+      // Common libraries
+      'amd-loader': 'libs/amd-loader', // Wrapper for loading non-amd libs
+      'jquery'    : 'libs/jquery/jquery-1.7.1.min',
+      'underscore': 'libs/underscore/underscore',
+      'backbone'  : 'libs/backbone/backbone',
+      'piewpiew'  : 'libs/piewpiew/piewpiew-0.0.1.min',
 
-  /**
-   * Configuration options specifc to the test environment. Test environment 
-   * also inherits from the production environment.
-   */
-  test: { },
-
-  /**
-   * Configuration options for the production environment. All values in this
-   * environment are ineritted by the test and development environments. You 
-   * should define all your configuration options here in the production block
-   * and only override what is necessary in the test and development blocks
-   */
-  production: {
-    requirejs: {
-      paths: {
-        // Common libraries
-        'amd-loader': 'libs/amd-loader', // Wrapper for loading non-amd libs
-        'jquery'    : 'libs/jquery/jquery-1.7.1.min',
-        'underscore': 'libs/underscore/underscore',
-        'backbone'  : 'libs/backbone/backbone',
-        'piewpiew'  : 'libs/piewpiew/piewpiew-0.0.1.min',
-
-        // Require JS plugins
-        'text'      : 'libs/requirejs/text',
-        'order'     : 'libs/requirejs/order',
-        'i18n'      : 'libs/requirejs/i18n',
-        'domReady'  : 'libs/requirejs/domReady'
-      }
+      // Require JS plugins
+      'text'      : 'libs/requirejs/text',
+      'order'     : 'libs/requirejs/order',
+      'i18n'      : 'libs/requirejs/i18n',
+      'domReady'  : 'libs/requirejs/domReady'
     }
+  });
+
+  /**
+   * The configuration function below will be called when
+   * the Application is instantiated. The app argument is a
+   * reference to the application object being configured
+   */
+  return function(app) {
+
+    /**
+     * Set the app environment
+     */
+    app.env = env;
+
+    /**
+     * Set "foo" to "bar" for the staging environment
+     */
+    app.configure("staging", function() {
+      app.set("foo", "bar");
+    });
+
+    /**
+     * Set "fizz" to "buzz" for both development and staging
+     * environments
+     */
+    app.configure("development", "staging", function() {
+      app.set("fizz", "buzz")
+    });
+
+    /**
+     * Ommitting the environment argument is equivalent to
+     * specifying "all" environments
+     */
+    app.configure(function() {
+      app.set("title", "awesome");
+    });
+
   }
 });

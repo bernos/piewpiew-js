@@ -2,6 +2,14 @@
 
   bootstrap.js
 
+
+  TODO: Change configuration pattern to something more like express.js
+
+  app.configure("staging", "production", function() {
+    app.set();
+    require.config();
+  });
+
 *******************************************************************************/
 
 /**
@@ -11,6 +19,8 @@
  * the requirejs config here, unless you have changed the standard folder
  * structure for the application.
  */
+
+ /*
 require.config({
   paths: {
     // Common libraries
@@ -25,7 +35,7 @@ require.config({
     'domReady'  : 'libs/requirejs/domReady'
   }
 });
-
+*/
 /**
  * Load the config, then the main app file, and away we go
  */
