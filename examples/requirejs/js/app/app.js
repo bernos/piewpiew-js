@@ -1,5 +1,5 @@
-
 define([
+  'piewpiew.application',
   'piewpiew.controllers',
   'piewpiew.views', 
   'app/views/ApplicationView', 
@@ -10,20 +10,16 @@ define([
   'piewpiew.forms.fields',
   'piewpiew.models',
   'piewpiew.models.fields',
-  'piewpiew.views.helpers'
-], 
+  'piewpiew.views.helpers'], 
 
-function(controllers, views, ApplicationView, ContactsCollectionView, ContactView, ContactsCollection, forms, fields, models, modelFields, helpers) {
-  var ApplicationController = controllers.Controller.extend({
-
-    initialize: function() {
-      this.initializeModel();
-    },
-
-
-
+  function(application, controllers, views, ApplicationView, ContactsCollectionView, ContactView, ContactsCollection, forms, fields, models, modelFields, helpers) {
+  var app = application.Application.extend({
     initializeModel: function() {
 
+      return this;
+    },
+
+    initializeView: function() {
       var PersonModel = models.Model.extend({
         fields: {
           firstName: new modelFields.StringField(),
@@ -73,6 +69,8 @@ function(controllers, views, ApplicationView, ContactsCollectionView, ContactVie
       });
 
       this.view.bind("add", this.addContact, this);
+
+      return this;
     },
 
     addContact: function() {
@@ -82,8 +80,9 @@ function(controllers, views, ApplicationView, ContactsCollectionView, ContactVie
     start: function() {
       this.view.render();      
       $('body').append(this.formView.render().el);
+      return this;
     }
   });
 
-  return ApplicationController;
+  return app;
 });

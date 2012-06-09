@@ -36,7 +36,7 @@ define(function() {
    * reference to the application object being configured
    */
   return function(app) {
-
+    console.log("configuring", app);
     /**
      * Set the app environment
      */
