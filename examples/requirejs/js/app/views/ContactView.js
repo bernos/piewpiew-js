@@ -7,8 +7,7 @@ define(['piewpiew.views', 'text!app/templates/ContactView.html'], function(views
     },
 
     onDeleteClicked: function() {
-      console.log("delete clicked", arguments);
-      this.model.collection.remove(this.model);
+      this.trigger("delete", this);
       return false;
     }
   });

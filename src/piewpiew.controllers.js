@@ -6,14 +6,12 @@ define('piewpiew.controllers', ['piewpiew.core'], function(piewpiew) {
     initialize: function(options) {
       options || (options = {});
       
-      this.events || (this.events = {});
-
-      for (var e in options.events) {
-        this.events[e] = options.events[e];
-      }
-
       if (options.view) {
         this.setView(options.view);
+      }
+
+      if (options.model) {
+        this.setModel(options.model);
       }
     },
 
@@ -26,86 +24,39 @@ define('piewpiew.controllers', ['piewpiew.core'], function(piewpiew) {
         this.unbindView(this.getView());
       }
 
+      this._view = view;
+
       if (view) {
         this.bindView(view);
       }
-
-      this._view = view;
-
+      
       return this;
     },
 
-    bindView: function(view) {
-      for (var e in this.events) {
-        view.bind(e, this[this.events[e]], this);
+    bindView: function(view) { },
+
+    unbindView: function(view) { },
+
+    getModel: function() {
+      return this._model;
+    },
+
+    setModel: function(model) {
+      if (this.getModel()) {
+        this.unbindModel(this.getModel());
+      }      
+
+      this._model = model;
+
+      if (model) {
+        this.bindModel(model);
       }
-    },
-
-    unbindView: function(view) {
-      for (var e in this.events) {
-        view.unbind(e, this[this.events[e]]);
-      }
-    }
-  });
-
-  /**
-   *  piewpiew.SimpleCommand base class
-   *  --------------------------------------------------------------------------
-   *  Basic command class implementation
-   */
-
-  controllers.SimpleCommand = piewpiew.Class({
-    initialize: function(app) {
-      this.app = app;
-    },
-
-    execute: function() { return this; }
-  });
-
-  /**
-   *  piewpiew.MacroCommand base class
-   *  --------------------------------------------------------------------------
-   *  Basic macro commadn class implementation. Macro commands can contain 
-   *  multiple subcommands which will be executed in series.
-   */
-  
-  controllers.MacroCommand = piewpiew.Class({
-    initialize: function(app) {
-      this.app = app;
-      this.subCommands = [];
-      this.initializeMacroCommand();
-    },
-
-    /**
-     * Initialize the MacroCommand instance. Normally you will override this
-     * an call this.addSubCommand() to add sub commands to the MacroCommand.
-     */
-    initializeMacroCommand: function() { return this },
-
-    /**
-     * Adds a sub command to the MacroCommand
-     *
-     * @param {Function} commandClass
-     *  Constructor function of the sub command to add
-     */
-    addSubCommand: function(commandClass) {
-      this.subCommands.push(commandClass);
+      
       return this;
     },
 
-    /**
-     * Executes the MacroCommand. Iterates over the collection of sub commands
-     * and executes them one after the other
-     */
-    execute: function() {
-      while(this.subCommands.length > 0) {
-        var commandClass = this.subCommands.shift();
-        var command      = new commandClass(this.app);
-
-        command.execute.apply(command, arguments);
-      }
-      return this;
-    }
+    bindModel: function(model) {},
+    unbindModel: function(model) {}
   });
 
   piewpiew.controllers = controllers;

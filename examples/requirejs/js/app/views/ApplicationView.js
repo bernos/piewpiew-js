@@ -27,10 +27,12 @@ function(template, NavView, ContactView, views) {
         id: "navbar-2"
       }));
 
-      this.contactsRegion.addView(new views.CollectionView({
+      this.contactsCollectionView = new views.CollectionView({
         view: ContactView,
         collection : options.contacts
-      }));
+      });
+
+      this.contactsRegion.addView(this.contactsCollectionView);
     },
 
     events: {

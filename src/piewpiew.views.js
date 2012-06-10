@@ -262,6 +262,8 @@ define('piewpiew.views', ['underscore', 'backbone', 'piewpiew.core', 'jquery'], 
         model: item
       });
 
+      view.bind("all", this.proxyEvent, this);
+
       this.$el.append(view.render().el);
 
       this.views.push(view);
@@ -274,6 +276,7 @@ define('piewpiew.views', ['underscore', 'backbone', 'piewpiew.core', 'jquery'], 
         v = this.views[i];
         if (v.model == item) {
           this.views.splice(i,1);
+          v.unbind("all", this.proxyEvent, this);
           v.remove();
           break;
         }
@@ -302,6 +305,10 @@ define('piewpiew.views', ['underscore', 'backbone', 'piewpiew.core', 'jquery'], 
       }
 
       return this;
+    },
+
+    proxyEvent: function() {
+      this.trigger.apply(this, arguments);
     }
   });
   
@@ -332,8 +339,6 @@ define('piewpiew.views', ['underscore', 'backbone', 'piewpiew.core', 'jquery'], 
       //buf.push('<%= Html.editorForModel(model) %>');
       buf.push('<input type="submit" value="save"/>');
       buf.push('</form>');
-
-      console.log(buf.join("\n"));
 
       return buf.join("\n");
     },

@@ -3,53 +3,19 @@ define([
   'piewpiew.controllers',
   'piewpiew.views', 
   'app/views/ApplicationView', 
-  'app/views/ContactsCollectionView',
   'app/views/ContactView',
   'app/models/ContactsCollection',
   'piewpiew.forms',
   'piewpiew.forms.fields',
   'piewpiew.models',
   'piewpiew.models.fields',
-  'piewpiew.views.helpers'], 
+  'piewpiew.views.helpers',
+  'app/forms/ContactForm',
+  'app/controllers/ApplicationController'], 
 
-  function(application, controllers, views, ApplicationView, ContactsCollectionView, ContactView, ContactsCollection, forms, fields, models, modelFields, helpers) {
+  function(application, controllers, views, ApplicationView,  ContactView, ContactsCollection, forms, fields, models, modelFields, helpers, ContactForm, ApplicationController) {
   var app = application.Application.extend({
     initializeModel: function() {
-
-      return this;
-    },
-
-    initializeView: function() {
-      var PersonModel = models.Model.extend({
-        fields: {
-          firstName: new modelFields.StringField(),
-          lastName: new modelFields.StringField()
-        }
-      });
-
-      var PersonForm = forms.Form.extend({
-        fields: {
-          firstName: new fields.TextField({
-            label: "First name",
-            required: true
-          }),
-          lastName: new fields.TextField({
-            label: "Last name"
-          })
-        }
-      });
-
-      var form = new PersonForm({
-        firstName: "Brendan",
-        lastName: "McMahon"
-      });
-
-      this.formView = new views.FormView({
-        model: form
-      });
-
-      console.log("adfafsd", form);
-
       var contacts = [
         { name: "Contact 1", address: "1, a street, a town, a city, AB12 3CD", tel: "0123456789", email: "anemail@me.com", type: "family" },
         { name: "Contact 2", address: "1, a street, a town, a city, AB12 3CD", tel: "0123456789", email: "anemail@me.com", type: "family" },
@@ -63,18 +29,32 @@ define([
 
       this.contactsCollection = new ContactsCollection(contacts);
 
+      return this;
+    },
+
+    initializeView: function() {
+            
+      var form = new ContactForm({
+        name: "Brendan McMahon"
+      });
+
+      this.formView = new views.FormView({
+        model: form
+      });
+
       this.view = new ApplicationView({
         el: 'body',
         contacts: this.contactsCollection
       });
 
-      this.view.bind("add", this.addContact, this);
-
       return this;
     },
 
-    addContact: function() {
-      this.contactsCollection.add({ name: "Contact 9", address: "1, a street, a town, a city, AB12 3CD", tel: "0123456789", email: "anemail@me.com", type: "family" });
+    initializeController: function() {
+      var applicationController = new ApplicationController({
+        view: this.view,
+        model: this.contactsCollection
+      });
     },
 
     start: function() {
