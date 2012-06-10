@@ -16,19 +16,9 @@ define('piewpiew.application', ['underscore', 'backbone', 'piewpiew.core'], func
      */
     el: 'body',
 
-    /**
-     * Initializes the Application instance.
-     *
-     * @param {Object} options
-     *  Default options for the app
-     */
-    initialize: function(config, options) {
+    initialize: function(config) {
 
-      if (config) {
-        config(this);
-      }
-
-      options || (options = {});
+      var options = {};
 
       var defaults;
 
@@ -36,16 +26,19 @@ define('piewpiew.application', ['underscore', 'backbone', 'piewpiew.core'], func
         if (typeof defaults == 'function') {
           defaults = defaults.call(this);
         }
-        options = _.extend({}, defaults, options);
+        options = _.extend({}, defaults);
       }
 
       this.set(options);
+
+      if (config) {
+        config(this);
+      }
 
       this._routerMap   = {};
       this._modelMap    = {};
       this._viewMap     = {};
 
-      this.initializeOptions(options);
       this.initializeRouter();
       this.initializeModel();
       this.initializeView();
@@ -55,13 +48,13 @@ define('piewpiew.application', ['underscore', 'backbone', 'piewpiew.core'], func
     },
 
     set: function(name, value) {
-      this.options || (this.options = {});
+      this._options || (this._options = {});
 
       if (arguments.length == 2) {
-        this.options[name] == value;
+        this._options[name] = value;
       } else {
         for (var n in name) {
-          this.options[n] = name[n];
+          this._options[n] = name[n];
         }
       }
 
@@ -69,8 +62,8 @@ define('piewpiew.application', ['underscore', 'backbone', 'piewpiew.core'], func
     },
 
     get: function(name) {
-      this.options || (this.options = {});
-      return this.options[name];
+      this._options || (this._options = {});
+      return this._options[name];
     },
 
     configure: function(env, fn) {
@@ -87,13 +80,6 @@ define('piewpiew.application', ['underscore', 'backbone', 'piewpiew.core'], func
       }
 
       return this;
-    },
-
-    /**
-     * Initialize the app with options passed to the constructor
-     */
-    initializeOptions: function(options) {
-      _.extend(this, options);
     },
 
     /**
