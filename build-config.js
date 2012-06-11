@@ -12,9 +12,16 @@
         "strict_semicolons" : false
       },
       "input-files" : [
-        "piewpiew.core.js"
+        "piewpiew.core.js"        
+        
+        ,"piewpiew.views.Helpers.js"
+        ,"piewpiew.views.Region.js"
+        ,"piewpiew.views.View.js"
+        ,"piewpiew.views.CollectionView.js"
+        ,"piewpiew.views.FormView.js"
+        ,"piewpiew.views.Layout.js"
         ,"piewpiew.views.js"
-        ,"piewpiew.views.helpers.js"
+
         ,"piewpiew.forms.js"
         ,"piewpiew.forms.fields.js"
         ,"piewpiew.models.js"       

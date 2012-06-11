@@ -1,9 +1,36 @@
-define('piewpiew.views.helpers', ['underscore', 'piewpiew.core', 'piewpiew.views'], function(_, piewpiew, views) {
-  /**
-   * View helpers. These methods get attached to templateContext objects when they
-   * are passed to view templates for rendering.
-   */
-  var helpers = {
+define('piewpiew.views.Helpers', 
+[
+  'underscore', 
+], 
+
+function(_) {
+  return {
+    /**
+     * Template processing function for all views. If you wish to use a templating
+     * library other than the underscore template function (such as mustache etc)
+     * just override this function
+     *
+     * @param {String} template
+     *  The template string to be rendered
+     * @param {Object} context
+     *  The context object containing data to be rendered
+     * @return {String} the rendered template
+     */
+    renderTemplate: function(template, context) {
+      return _.template(template, this.templateContext(context));
+    },
+
+    /**
+     * Builds a template context object by merging template data with our view helpers
+     *
+     * @param {object} data
+     *  Template data
+     * @return {object}
+     */
+    templateContext: function(data) {
+      return _.extend(data, this);
+    },
+    
     Html: {
       /**
        * Creates an HTML attributes string from an object. Name:value pairs in the
@@ -28,9 +55,9 @@ define('piewpiew.views.helpers', ['underscore', 'piewpiew.core', 'piewpiew.views
       },
 
       editorForModel: function(model) {
-        return views.template(
+        return Template.renderTemplate(
           model.editorTemplate(), 
-          views.TemplateContext(model.editorTemplateContext())
+          model.editorTemplateContext()
         );
       },
 
@@ -58,10 +85,10 @@ define('piewpiew.views.helpers', ['underscore', 'piewpiew.core', 'piewpiew.views
         htmlAttributes.classes.push("control-group");
         htmlAttributes.classes.push("control-group-for-" + field.name);
 
-        var context = views.TemplateContext(field.editorTemplateContext(model));
+        var context = field.editorTemplateContext(model);
         context.attributes = htmlAttributes;
 
-        return views.template(field.editorTemplate(), context);
+        return Template.renderTemplate(field.editorTemplate(), context);
       },
 
       /**
@@ -77,10 +104,10 @@ define('piewpiew.views.helpers', ['underscore', 'piewpiew.core', 'piewpiew.views
         htmlAttributes.classes.push("control");
         htmlAttributes.classes.push("control-for-" + field.name);
 
-        var context = views.TemplateContext(field.formControlTemplateContext(model));
+        var context = field.formControlTemplateContext(model);
         context.attributes = htmlAttributes;
 
-        return views.template(field.formControlTemplate(), context);
+        return Template.renderTemplate(field.formControlTemplate(), context);
       },
 
       /**
@@ -95,10 +122,10 @@ define('piewpiew.views.helpers', ['underscore', 'piewpiew.core', 'piewpiew.views
         htmlAttributes.classes || (htmlAttributes.classes = []);   
         htmlAttributes.classes.push("control-label");
 
-        var context = views.TemplateContext(field.labelTemplateContext(model));
+        var context = field.labelTemplateContext(model);
         context.attributes = htmlAttributes;
 
-        return views.template(field.labelTemplate(), context); 
+        return Template.renderTemplate(field.labelTemplate(), context); 
       },
 
       hidden: function(name, value) {
@@ -123,10 +150,6 @@ define('piewpiew.views.helpers', ['underscore', 'piewpiew.core', 'piewpiew.views
           attributes: this.attributeString(htmlAttributes)
         });
       }
-    }
+    }    
   };
-
-  views.helpers = helpers;
-
-  return helpers;
 });

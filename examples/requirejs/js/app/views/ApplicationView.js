@@ -4,7 +4,7 @@ define([
   'app/views/ContactCollectionView',
   'app/controllers/ContactCollectionController',
   'piewpiew.forms',
-  'piewpiew.views',  
+  'piewpiew.views',
   'app/forms/ContactForm'
 ], 
 

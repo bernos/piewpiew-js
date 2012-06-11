@@ -2,10 +2,10 @@ define('piewpiew.forms.fields', [
   'underscore',
   'piewpiew.core',
   'piewpiew.forms',
-  'piewpiew.views.helpers'
+  'piewpiew.views.Helpers'
 ], 
 
-function(_, piewpiew, forms, helpers) {
+function(_, piewpiew, forms, Helpers) {
 
   var fields = {};
 
@@ -127,7 +127,7 @@ function(_, piewpiew, forms, helpers) {
 
   fields.TextField = fields.Field.extend({
     render: function(value, attributes) {
-      return helpers.Html.textfield(this.name, value, attributes);
+      return Helpers.Html.textfield(this.name, value, attributes);
     }
   });
 
