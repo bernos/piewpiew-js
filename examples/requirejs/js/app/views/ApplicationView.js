@@ -1,11 +1,14 @@
 define([
-  'text!app/templates/ApplicationView.html', 
+  'text!app/templates/ApplicationView.html',
   'app/views/NavView', 
-  'app/views/ContactView', 
-  'piewpiew.views'
+  'app/views/ContactCollectionView',
+  'app/controllers/ContactCollectionController',
+  'piewpiew.forms',
+  'piewpiew.views',  
+  'app/forms/ContactForm'
 ], 
 
-function(template, NavView, ContactView, views) {
+function(template, NavView, ContactCollectionView, ContactCollectionController, forms, views, ContactForm) {
 
   var ApplicationView = views.Layout.extend({
     template: template,
@@ -23,26 +26,26 @@ function(template, NavView, ContactView, views) {
         id: "navbar-1"
       }));
 
-      this.navRegion.addView(new NavView({
-        id: "navbar-2"
-      }));
-
-      this.contactsCollectionView = new views.CollectionView({
-        view: ContactView,
+      this.contactCollectionView = new ContactCollectionView({
         collection : options.contacts
       });
 
-      this.contactsRegion.addView(this.contactsCollectionView);
-    },
+      this.contactCollectionController = new ContactCollectionController({
+        view: this.contactCollectionView
+      })
 
-    events: {
-      'click a.add' : 'onAddClicked'
-    },
+      this.contactsRegion.addView(this.contactCollectionView);
 
-    onAddClicked: function() {
-      this.trigger("add");
+      var form = new ContactForm({
+        name: "Brendan McMahon"
+      });
+
+      this.formView = new views.FormView({
+        model: form
+      });
+
+      this.contactsRegion.addView(this.formView);
     }
-
   });
 
   return ApplicationView;

@@ -229,7 +229,10 @@ define('piewpiew.views', ['underscore', 'backbone', 'piewpiew.core', 'jquery'], 
 
       // TODO: options go nowhere ATM
 
-      this.view = options.view;
+      if (options.view) {
+        this.view = options.view;
+      }
+
       this.views = [];
 
       if (this.collection) {
@@ -239,9 +242,16 @@ define('piewpiew.views', ['underscore', 'backbone', 'piewpiew.core', 'jquery'], 
       }
     },
 
+    template: '',
+    view: views.View,
+
+    getListEl: function() {
+      return this.$el;
+    },
+
     defaults: function() {
       return {
-        view: views.View
+        
       };
     },
 
@@ -295,6 +305,8 @@ define('piewpiew.views', ['underscore', 'backbone', 'piewpiew.core', 'jquery'], 
 
     render: function() {
       this.clear();
+
+      views.View.prototype.render.apply(this);
 
       if (this.collection) {
         var that = this;
