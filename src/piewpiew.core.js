@@ -29,7 +29,7 @@
    * properties of b are copied to a, then the properties of c are copied to a.
    * The updated 'a' object is returned
    */
-  var extend = function(obj) {
+  piewpiew.extend = function(obj) {
     for (var i = 0, max = arguments.length; i < max; i++) {
       var source = arguments[i];
       for (var prop in source) {
@@ -119,7 +119,7 @@
       initializing = false;
     }
 
-    extend(klass.prototype, methods);
+    piewpiew.extend(klass.prototype, methods);
     
     klass.prototype.constructor = klass;
 
