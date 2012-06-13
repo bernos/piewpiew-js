@@ -1,9 +1,9 @@
-all: test-all js
+all: test js
 
 js:
 	node ./build.js
 
-test-all:
-	node ./node_modules/mocha/bin/mocha --reporter spec --globals piewpiew
+test:
+	node ./node_modules/mocha/bin/mocha --reporter spec --globals piewpiew --ui tdd --require assert
 
-.PHONY: test-all js
+.PHONY: test js
