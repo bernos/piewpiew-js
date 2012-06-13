@@ -1,4 +1,4 @@
-define('piewpiew.validators', ['piewpiew.core', 'piewpiew.models'], function(piewpiew, models) {
+define('piewpiew.validators', ['piewpiew.core'], function(piewpiew) {
 
   var validators = {};
 
