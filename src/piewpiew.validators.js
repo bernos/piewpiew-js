@@ -1,4 +1,4 @@
-define('piewpiew.validators', ['underscore', 'backbone', 'piewpiew.core', 'piewpiew.models'], function(_, Backbone, piewpiew, models) {
+define('piewpiew.validators', ['piewpiew.core', 'piewpiew.models'], function(piewpiew, models) {
 
   var validators = {};
 
@@ -46,11 +46,11 @@ define('piewpiew.validators', ['underscore', 'backbone', 'piewpiew.core', 'piewp
       options || (options = {});
       options.messages || (options.messages = {});
 
-      _.extend(this, options);
+      piewpiew.extend(this, options);
 
       this.messages = this.defaultMessages();
 
-      _.extend(this.messages, options.messages);
+      piewpiew.extend(this.messages, options.messages);
     },
 
     defaultMessages: function() {
