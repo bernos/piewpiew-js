@@ -1,4 +1,4 @@
-define('piewpiew.models.validators', ['underscore', 'backbone', 'piewpiew.core', 'piewpiew.models'], function(_, Backbone, piewpiew, models) {
+define('piewpiew.validators', ['underscore', 'backbone', 'piewpiew.core', 'piewpiew.models'], function(_, Backbone, piewpiew, models) {
 
   var validators = {};
 
@@ -188,7 +188,5 @@ define('piewpiew.models.validators', ['underscore', 'backbone', 'piewpiew.core',
     }
   });  
   
-  models.validators = validators;
-
   return validators;
 });

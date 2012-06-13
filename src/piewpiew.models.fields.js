@@ -1,4 +1,4 @@
-define('piewpiew.models.fields', ['underscore', 'backbone', 'piewpiew.core', 'piewpiew.models', 'piewpiew.models.validators'], function(_, Backbone, piewpiew, models, validators) {
+define('piewpiew.models.fields', ['underscore', 'backbone', 'piewpiew.core', 'piewpiew.models', 'piewpiew.validators'], function(_, Backbone, piewpiew, models, validators) {
 
   var fields = {};
   

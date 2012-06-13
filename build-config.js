@@ -24,8 +24,10 @@
 
         ,"piewpiew.forms.js"
         ,"piewpiew.forms.fields.js"
-        ,"piewpiew.models.js"       
-        ,"piewpiew.models.validators.js"
+        ,"piewpiew.models.js"
+
+        ,"piewpiew.validators.js"
+        
         ,"piewpiew.models.fields.js" 
         ,"piewpiew.controllers.js"
         ,"piewpiew.application.js"
