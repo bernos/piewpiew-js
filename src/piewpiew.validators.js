@@ -3,40 +3,6 @@ define('piewpiew.validators', ['piewpiew.core'], function(piewpiew) {
   var validators = {};
 
   /**
-   *  piewpiew.models.validators.Config
-   *  ==========================================================================
-   *  
-   *  Any and all strings for messages, templates and so forth should live here,
-   *  and be retrieved by objects in the models module, rather than declared on
-   *  objects themselves. Just makes it easier to change stuff as you don't need
-   *  to go looking for strings hidden away in source.
-   */
-  validators.Config = {
-
-    messages: {
-      
-      /* StringValidator */
-      stringTooLongNoMinLength:  "String must have no more than ${maxLength} characters"
-      ,stringTooShortNoMaxLength: "String must have at least ${minLength} characters"
-      ,stringOutOfRange:          "String must have between ${minLength} and ${maxLength} characters"
-      
-      /* RangeValidator */
-      ,rangeOutOfRange: "A value between ${min} and ${max} is required."
-      
-      /* RegexValidator */
-      ,regexNoMatch: "The supplied string does not match the regular expression."
-      
-      /* EmailValidator */
-      ,emailInvalid: "${value} is not a valid email address."
-    }    
-  };
-
-  // Shortcut access to config stuff  
-  var c    = piewpiew.configValue;
-  var conf = validators.Config;
-  var msg  = validators.Config.messages;
-
-  /**
    * piewpiew.models.validators.Validator  base class
    * --------------------------------------------------------------------------
    *  
@@ -86,9 +52,9 @@ define('piewpiew.validators', ['piewpiew.core'], function(piewpiew) {
 
     defaultMessages: function() {
       return {
-        tooLongNoMinLength : c(msg.stringTooLongNoMinLength),
-        tooShortNoMaxLength : c(msg.stringTooShortNoMaxLength),
-        outOfRange : c(msg.stringTooShortNoMaxLength)
+        tooLongNoMinLength  : validators.StringValidator.messages.tooLongNoMinLength,
+        tooShortNoMaxLength : validators.StringValidator.messages.tooShortNoMaxLength,
+        outOfRange          : validators.StringValidator.messages.outOfRange
       }
     },
 
@@ -97,19 +63,27 @@ define('piewpiew.validators', ['piewpiew.core'], function(piewpiew) {
 
       if (this.maxLength > -1) {
         if (value.length > this.maxLength) {
-          errors.push((this.minLength > -1) ? piewpiew.printf(this.messages.outOfRange, this) : piewpiew.printf(this.messages.tooLongNoMinLength, this));
+          errors.push((this.minLength > -1) ? piewpiew.printf(this.messages.outOfRange, this) : 
+                                              piewpiew.printf(this.messages.tooLongNoMinLength, this));
         }
       }
 
       if (this.minLength > -1) {
         if (value.length < this.minLength) {
-          errors.push((this.maxLength > -1) ? piewpiew.printf(this.messages.outOfRange, this) : piewpiew.printf(this.messages.tooShortNoMaxLength, this));
+          errors.push((this.maxLength > -1) ? piewpiew.printf(this.messages.outOfRange, this) : 
+                                              piewpiew.printf(this.messages.tooShortNoMaxLength, this));
         }
       }
 
       return errors;
     }
   });
+
+  validators.StringValidator.messages = {
+     tooLongNoMinLength   : "String must have no more than ${maxLength} characters"
+    ,tooShortNoMaxLength  : "String must have at least ${minLength} characters"
+    ,outOfRange           : "String must have between ${minLength} and ${maxLength} characters"
+  };
 
   /**
    * piewpiew.models.validators.RangeValidator
@@ -133,7 +107,7 @@ define('piewpiew.validators', ['piewpiew.core'], function(piewpiew) {
 
     defaultMessages: function() {
       return {
-        outOfRange: c(msg.rangeOutOfRange)
+        outOfRange: validators.RangeValidator.messages.outOfRange
       }
     },
 
@@ -150,6 +124,10 @@ define('piewpiew.validators', ['piewpiew.core'], function(piewpiew) {
     }
   });
 
+  validators.RangeValidator.messages = {
+    outOfRange : "A value between ${min} and ${max} is required."
+  };
+
   /**
    * piewpiew.models.validators.RegexValidator
    * --------------------------------------------------------------------------
@@ -159,7 +137,7 @@ define('piewpiew.validators', ['piewpiew.core'], function(piewpiew) {
 
     defaultMessages: function() {
       return {
-        invalid: c(msg.regexNoMatch)
+        invalid: validators.RegexValidator.messages.invalid
       }
     },
 
@@ -174,6 +152,10 @@ define('piewpiew.validators', ['piewpiew.core'], function(piewpiew) {
     }
   });
 
+  validators.RegexValidator.messages = {
+    invalid: "The supplied string does not match the regular expression."
+  };
+
   /**
    * piewpiew.models.validators.EmailValidator
    * --------------------------------------------------------------------------
@@ -183,10 +165,14 @@ define('piewpiew.validators', ['piewpiew.core'], function(piewpiew) {
 
     defaultMessages: function() {
       return {
-        invalid: c(msg.emailInvalid)
+        invalid: validators.EmailValidator.messages.invalid
       }
     }
   });  
+
+  validators.EmailValidator.messages = {
+    invalid : "${value} is not a valid email address."
+  };
   
   return validators;
 });
