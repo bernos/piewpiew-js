@@ -1,4 +1,5 @@
-/* piewpiew-0.0.1.min.js */
+/*! piewpiew - v0.0.2 - 2012-06-16 */
+
 /*******************************************************************************
 
   piewpiew.core.js
@@ -30,7 +31,7 @@
    * properties of b are copied to a, then the properties of c are copied to a.
    * The updated 'a' object is returned
    */
-  var extend = function(obj) {
+  piewpiew.extend = function(obj) {
     for (var i = 0, max = arguments.length; i < max; i++) {
       var source = arguments[i];
       for (var prop in source) {
@@ -120,7 +121,7 @@
       initializing = false;
     }
 
-    extend(klass.prototype, methods);
+    piewpiew.extend(klass.prototype, methods);
     
     klass.prototype.constructor = klass;
 
@@ -167,7 +168,8 @@
 
   piewpiew.define('piewpiew.core', [], function() { return piewpiew });
 
-}(typeof window === 'undefined' ? this : window));define('piewpiew.views.Helpers', 
+}(typeof window === 'undefined' ? this : window));
+define('piewpiew.views.Helpers', 
 [
   'underscore', 
 ], 
@@ -321,7 +323,8 @@ function(_) {
       }
     }    
   };
-});define('piewpiew.views.Region', 
+});
+define('piewpiew.views.Region', 
 [
   'piewpiew.core'
 ], 
@@ -399,7 +402,8 @@ function(piewpiew) {
       }
     }
   });
-});define('piewpiew.views.View', 
+});
+define('piewpiew.views.View', 
 [
   'backbone', 
   'piewpiew.views.Helpers'
@@ -480,7 +484,8 @@ function(Backbone, Helpers) {
       return this;
     }
   });
-});define('piewpiew.views.CollectionView', 
+});
+define('piewpiew.views.CollectionView', 
 
 [
   'piewpiew.views.View'
@@ -610,7 +615,8 @@ function(View) {
       this.trigger.apply(this, arguments);
     }
   });
-});define('piewpiew.views.FormView', 
+});
+define('piewpiew.views.FormView', 
 
 [
    'jquery'
@@ -794,7 +800,8 @@ function($, View) {
       $input.closest('.control-group').addClass('error');
     }
   });
-});define('piewpiew.views.Layout', 
+});
+define('piewpiew.views.Layout', 
 [
   'piewpiew.views.View', 
   'piewpiew.views.Region'
@@ -846,7 +853,8 @@ function(View, Region){
       return this;
     }
   });
-});define('piewpiew.views', 
+});
+define('piewpiew.views', 
 [
    'piewpiew.core'
   ,'piewpiew.views.Helpers'
@@ -870,7 +878,8 @@ function(piewpiew, Helpers, Region, View, CollectionView, FormView, Layout) {
   };
   
   return piewpiew.views;
-});define('piewpiew.forms', [
+});
+define('piewpiew.forms', [
   'underscore',
   'backbone',
   'piewpiew.core'
@@ -981,7 +990,8 @@ Try to avoid template library specific template syntax
 All view type functions in piewpiew.models.fields needs to be removed
 
 
-*/define('piewpiew.forms.fields', [
+*/
+define('piewpiew.forms.fields', [
   'underscore',
   'piewpiew.core',
   'piewpiew.forms',
@@ -1117,7 +1127,8 @@ function(_, piewpiew, forms, Helpers) {
   forms.fields = fields;
 
   return forms.fields;
-});define('piewpiew.models', ['underscore', 'backbone', 'piewpiew.core'], function(_, Backbone, piewpiew) {
+});
+define('piewpiew.models', ['underscore', 'backbone', 'piewpiew.core'], function(_, Backbone, piewpiew) {
   
   var models = {};
 
@@ -1235,43 +1246,10 @@ function(_, piewpiew, forms, Helpers) {
 
   return models;
   
-});define('piewpiew.models.validators', ['underscore', 'backbone', 'piewpiew.core', 'piewpiew.models'], function(_, Backbone, piewpiew, models) {
+});
+define('piewpiew.validators', ['piewpiew.core'], function(piewpiew) {
 
   var validators = {};
-
-  /**
-   *  piewpiew.models.validators.Config
-   *  ==========================================================================
-   *  
-   *  Any and all strings for messages, templates and so forth should live here,
-   *  and be retrieved by objects in the models module, rather than declared on
-   *  objects themselves. Just makes it easier to change stuff as you don't need
-   *  to go looking for strings hidden away in source.
-   */
-  validators.Config = {
-
-    messages: {
-      
-      /* StringValidator */
-      stringTooLongNoMinLength:  "String must have no more than ${maxLength} characters"
-      ,stringTooShortNoMaxLength: "String must have at least ${minLength} characters"
-      ,stringOutOfRange:          "String must have between ${minLength} and ${maxLength} characters"
-      
-      /* RangeValidator */
-      ,rangeOutOfRange: "A value between ${min} and ${max} is required."
-      
-      /* RegexValidator */
-      ,regexNoMatch: "The supplied string does not match the regular expression."
-      
-      /* EmailValidator */
-      ,emailInvalid: "${value} is not a valid email address."
-    }    
-  };
-
-  // Shortcut access to config stuff  
-  var c    = piewpiew.configValue;
-  var conf = validators.Config;
-  var msg  = validators.Config.messages;
 
   /**
    * piewpiew.models.validators.Validator  base class
@@ -1283,11 +1261,11 @@ function(_, piewpiew, forms, Helpers) {
       options || (options = {});
       options.messages || (options.messages = {});
 
-      _.extend(this, options);
+      piewpiew.extend(this, options);
 
       this.messages = this.defaultMessages();
 
-      _.extend(this.messages, options.messages);
+      piewpiew.extend(this.messages, options.messages);
     },
 
     defaultMessages: function() {
@@ -1323,9 +1301,9 @@ function(_, piewpiew, forms, Helpers) {
 
     defaultMessages: function() {
       return {
-        tooLongNoMinLength : c(msg.stringTooLongNoMinLength),
-        tooShortNoMaxLength : c(msg.stringTooShortNoMaxLength),
-        outOfRange : c(msg.stringTooShortNoMaxLength)
+        tooLongNoMinLength  : validators.StringValidator.messages.tooLongNoMinLength,
+        tooShortNoMaxLength : validators.StringValidator.messages.tooShortNoMaxLength,
+        outOfRange          : validators.StringValidator.messages.outOfRange
       }
     },
 
@@ -1334,19 +1312,27 @@ function(_, piewpiew, forms, Helpers) {
 
       if (this.maxLength > -1) {
         if (value.length > this.maxLength) {
-          errors.push((this.minLength > -1) ? piewpiew.printf(this.messages.outOfRange, this) : piewpiew.printf(this.messages.tooLongNoMinLength, this));
+          errors.push((this.minLength > -1) ? piewpiew.printf(this.messages.outOfRange, this) : 
+                                              piewpiew.printf(this.messages.tooLongNoMinLength, this));
         }
       }
 
       if (this.minLength > -1) {
         if (value.length < this.minLength) {
-          errors.push((this.maxLength > -1) ? piewpiew.printf(this.messages.outOfRange, this) : piewpiew.printf(this.messages.tooShortNoMaxLength, this));
+          errors.push((this.maxLength > -1) ? piewpiew.printf(this.messages.outOfRange, this) : 
+                                              piewpiew.printf(this.messages.tooShortNoMaxLength, this));
         }
       }
 
       return errors;
     }
   });
+
+  validators.StringValidator.messages = {
+     tooLongNoMinLength   : "String must have no more than ${maxLength} characters"
+    ,tooShortNoMaxLength  : "String must have at least ${minLength} characters"
+    ,outOfRange           : "String must have between ${minLength} and ${maxLength} characters"
+  };
 
   /**
    * piewpiew.models.validators.RangeValidator
@@ -1370,7 +1356,7 @@ function(_, piewpiew, forms, Helpers) {
 
     defaultMessages: function() {
       return {
-        outOfRange: c(msg.rangeOutOfRange)
+        outOfRange: validators.RangeValidator.messages.outOfRange
       }
     },
 
@@ -1387,6 +1373,10 @@ function(_, piewpiew, forms, Helpers) {
     }
   });
 
+  validators.RangeValidator.messages = {
+    outOfRange : "A value between ${min} and ${max} is required."
+  };
+
   /**
    * piewpiew.models.validators.RegexValidator
    * --------------------------------------------------------------------------
@@ -1396,7 +1386,7 @@ function(_, piewpiew, forms, Helpers) {
 
     defaultMessages: function() {
       return {
-        invalid: c(msg.regexNoMatch)
+        invalid: validators.RegexValidator.messages.invalid
       }
     },
 
@@ -1411,6 +1401,10 @@ function(_, piewpiew, forms, Helpers) {
     }
   });
 
+  validators.RegexValidator.messages = {
+    invalid: "The supplied string does not match the regular expression."
+  };
+
   /**
    * piewpiew.models.validators.EmailValidator
    * --------------------------------------------------------------------------
@@ -1420,15 +1414,18 @@ function(_, piewpiew, forms, Helpers) {
 
     defaultMessages: function() {
       return {
-        invalid: c(msg.emailInvalid)
+        invalid: validators.EmailValidator.messages.invalid
       }
     }
   });  
-  
-  models.validators = validators;
 
+  validators.EmailValidator.messages = {
+    invalid : "${value} is not a valid email address."
+  };
+  
   return validators;
-});define('piewpiew.models.fields', ['underscore', 'backbone', 'piewpiew.core', 'piewpiew.models', 'piewpiew.models.validators'], function(_, Backbone, piewpiew, models, validators) {
+});
+define('piewpiew.models.fields', ['underscore', 'backbone', 'piewpiew.core', 'piewpiew.models', 'piewpiew.validators'], function(_, Backbone, piewpiew, models, validators) {
 
   var fields = {};
   
@@ -1677,7 +1674,8 @@ function(_, piewpiew, forms, Helpers) {
   models.fields = fields;
 
   return fields;
-});define('piewpiew.controllers', ['piewpiew.core'], function(piewpiew) {
+});
+define('piewpiew.controllers', ['piewpiew.core'], function(piewpiew) {
   
   var controllers = {};
 
@@ -1741,7 +1739,8 @@ function(_, piewpiew, forms, Helpers) {
   piewpiew.controllers = controllers;
 
   return controllers;
-});define('piewpiew.application', ['underscore', 'backbone', 'piewpiew.core'], function(_, Backbone, piewpiew) {
+});
+define('piewpiew.application', ['underscore', 'backbone', 'piewpiew.core'], function(_, Backbone, piewpiew) {
 
   var application = {};
 
@@ -1993,6 +1992,7 @@ function(_, piewpiew, forms, Helpers) {
 
   return application;
 });
+
 define('piewpiew.config', ['piewpiew.core'], function(piewpiew) {
 
 	var config = {};

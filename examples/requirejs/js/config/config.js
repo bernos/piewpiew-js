@@ -19,7 +19,7 @@ define(function() {
       'jquery'    : 'libs/jquery/jquery-1.7.1.min',
       'underscore': 'libs/underscore/underscore-1.3.1.min',
       'backbone'  : 'libs/backbone/backbone-0.9.2.min',
-      'piewpiew'  : 'libs/piewpiew/piewpiew-0.0.1.min',
+      'piewpiew'  : 'libs/piewpiew/piewpiew-0.0.2.min',
 
       // Require JS plugins
       'text'      : 'libs/requirejs/text',

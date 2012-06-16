@@ -40,39 +40,4 @@ requirejs(['assert', 'piewpiew.config'], function(assert, config) {
     });
   });
 
-
 });
-
-// describe('Config', function(){
-
-//   describe('environment management', function() {
-//     it('should default to development environment configuration', function() {
-//       var c = new config.Config(defaultOptions());
-//       c.getEnvironment().should.equal(config.DEVELOPMENT)
-//     });
-
-//     it('should set environment based on constructor options', function() {
-//       var c = new config.Config({
-//         environment: config.TESTING
-//       });
-
-//       c.getEnvironment().should.equal(config.TESTING);
-//     })
-
-//     it('should be able to change environments', function() {
-//       var c = new config.Config(defaultOptions());
-//       c.setEnvironment(config.TESTING).getEnvironment().should.equal(config.TESTING);
-//     });
-//   });
-
-//   describe('value overrides', function() {
-//     it ('should override values for each environment', function() {
-//       var c = new config.Config(defaultOptions());
-//       c.get("notInherited", {}).should.equal("development value");
-//       c.setEnvironment(config.TESTING).get("notInherited", {}).should.equal("testing value");
-//       c.setEnvironment(config.PRODUCTION).get("notInherited", {}).should.equal("production value");
-//     });
-//   });
-
-
-// })
