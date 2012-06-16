@@ -8,3 +8,5 @@ build/node_modules/.bin/mocha
 piewpiew-js.sublime-workspace
 
 piewpiew-js.sublime-project
+
+node_modules
