@@ -19,28 +19,28 @@ module.exports = function(grunt) {
     concat : {
       dist : {
         src : [
-          "<banner>"
+          "<banner>",
           
-          ,"<%= dirs.src %>/piewpiew.core.js"        
+          "<%= dirs.src %>/piewpiew.core.js",
         
-          ,"<%= dirs.src %>/piewpiew.views.Helpers.js"
-          ,"<%= dirs.src %>/piewpiew.views.Region.js"
-          ,"<%= dirs.src %>/piewpiew.views.View.js"
-          ,"<%= dirs.src %>/piewpiew.views.CollectionView.js"
-          ,"<%= dirs.src %>/piewpiew.views.FormView.js"
-          ,"<%= dirs.src %>/piewpiew.views.Layout.js"
-          ,"<%= dirs.src %>/piewpiew.views.js"
+          "<%= dirs.src %>/piewpiew.views.Helpers.js",
+          "<%= dirs.src %>/piewpiew.views.Region.js",
+          "<%= dirs.src %>/piewpiew.views.View.js",
+          "<%= dirs.src %>/piewpiew.views.CollectionView.js",
+          "<%= dirs.src %>/piewpiew.views.FormView.js",
+          "<%= dirs.src %>/piewpiew.views.Layout.js",
+          "<%= dirs.src %>/piewpiew.views.js",
     
-          ,"<%= dirs.src %>/piewpiew.forms.js"
-          ,"<%= dirs.src %>/piewpiew.forms.fields.js"
-          ,"<%= dirs.src %>/piewpiew.models.js"
+          "<%= dirs.src %>/piewpiew.forms.js",
+          "<%= dirs.src %>/piewpiew.forms.fields.js",
+          "<%= dirs.src %>/piewpiew.models.js",
 
-          ,"<%= dirs.src %>/piewpiew.validators.js"
+          "<%= dirs.src %>/piewpiew.validators.js",
 
-          ,"<%= dirs.src %>/piewpiew.models.fields.js" 
-          ,"<%= dirs.src %>/piewpiew.controllers.js"
-          ,"<%= dirs.src %>/piewpiew.application.js"
-          ,"<%= dirs.src %>/piewpiew.config.js"
+          "<%= dirs.src %>/piewpiew.models.fields.js" ,
+          "<%= dirs.src %>/piewpiew.controllers.js",
+          "<%= dirs.src %>/piewpiew.application.js",
+          "<%= dirs.src %>/piewpiew.config.js"
         ],
         dest : '<%= dirs.dest %>/<%= pkg.name %>-<%= pkg.version %>.js'
       },
@@ -60,20 +60,15 @@ module.exports = function(grunt) {
     },   
 
     mocha : {
-      
       all : {
-        src : 'test/**/*.js',
-        options : {
-          globals : ['piewpiew'],
-          ui : 'tdd',
-          reporter : 'spec'
-        }        
+        src : ['test/index.html']
       }
     }
   });
 
   grunt.registerTask('default', 'mocha:all concat:dist min:dist concat:examples');
+  grunt.registerTask('test', 'mocha:all');
 
-  grunt.loadTasks('tasks');
-}
+  grunt.loadNpmTasks('grunt-mocha');
+};
 

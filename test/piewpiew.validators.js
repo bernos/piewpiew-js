@@ -1,89 +1,96 @@
-/**
- * Because the piewpiew library will make use of requirejs and node also defines
- * a "native" implementation of the require() global function, we need to import
- * requirejs under the alternative name 'requirejs' and use requirejs() when
- * importing our libraries to test. We also need to set up requirejs config to
- * enable conpatibility with node's require() function
- */
-var requirejs = require('requirejs');
+describe('Validators', function() {
 
-requirejs.config({
-    nodeRequire: require,
-    baseUrl: 'src/'
-});
-
-requirejs(['assert', 'piewpiew.validators'], function(assert, validators) {
-
-  suite('piewpiew.validators', function() {
-    suite('StringValidator', function() {
-      test('Allows unbounded string lengths', function() {
+  describe('StringValidator', function() {
+    
+    it("Should allow unbounded string lengths", function(done) {
+      require(['piewpiew.validators'], function(validators) {
         var v = new validators.StringValidator();
-        var errors = v.validate("");
-        assert.equal(errors.length, 0);
+        expect(v.validate("").length).to.eq(0);
+        done();
       });
+    });
 
-      test('Validates max length', function() {
+    it("Should validate max length", function(done) {
+      require(['piewpiew.validators'], function(validators) {
         var v = new validators.StringValidator({
           maxLength: 4
         });
-        
-        assert.equal(v.validate("abcd").length, 0);
-        assert.notEqual(v.validate("abcde").length, 0);
-      });
 
-      test('Validates min length', function() {
+        expect(v.validate("abcd").length).to.eq(0);
+        expect(v.validate("abcde").length).not.to.eq(0);
+
+        done();
+      });
+    });
+
+    it("Should validate min length", function(done) {
+      require(['piewpiew.validators'], function(validators) {
         var v = new validators.StringValidator({
           minLength: 4
         });
         
-        assert.notEqual(v.validate("abc").length, 0);
-        assert.equal(v.validate("abcd").length, 0);
-        assert.equal(v.validate("abcde").length, 0);
-      });
+        expect(v.validate("abc").length).not.to.eq(0);
+        expect(v.validate("abcd").length).to.eq(0);
+        expect(v.validate("abcde").length).to.eq(0);
 
-      test('Validates between min and max length', function() {
+        done();
+      });
+    });
+
+    it("Should validate between min and max length", function(done) {
+      require(['piewpiew.validators'], function(validators) {
         var v = new validators.StringValidator({
           minLength: 4,
           maxLength: 6
         });
         
-        assert.notEqual(v.validate("abc").length, 0);
-        assert.notEqual(v.validate("abcdefg").length, 0);
+        expect(v.validate("abc").length).not.to.eq(0);
+        expect(v.validate("abcdefg").length).not.to.eq(0);
 
-        assert.equal(v.validate("abcd").length, 0);
-        assert.equal(v.validate("abcde").length, 0);
-        assert.equal(v.validate("abcdef").length, 0);
+        expect(v.validate("abcd").length).to.eq(0);
+        expect(v.validate("abcde").length).to.eq(0);
+        expect(v.validate("abcdef").length).to.eq(0);
+
+        done();
       });
+    });
 
-      test('Default validation messages are correct', function() {
+    it("Should elicit appropriate validation error messages", function(done) {
+      require(['piewpiew.validators'], function(validators) {
         var v = new validators.StringValidator({
           maxLength : 3
         });
 
         var errors = v.validate("asdf");
 
-        assert.ok(errors.length == 1 && errors[0] == "String must have no more than 3 characters");
+        expect(errors.length == 1 && errors[0] == "String must have no more than 3 characters").to.eq(true);
 
         v.maxLength = -1;
         v.minLength = 3;
 
         errors = v.validate("a");
 
-        assert.ok(errors.length == 1 && errors[0] == "String must have at least 3 characters");
+        expect(errors.length == 1 && errors[0] == "String must have at least 3 characters").to.eq(true);
 
         v.maxLength = 3;
         v.minLength = 1;
 
         errors = v.validate("asdfddd");
 
-        assert.ok(errors.length == 1 && errors[0] == "String must have between 1 and 3 characters");
-      });
-    });
-    
-    suite('EmailValidator', function() {
-      test('Allows valid email addresses', function() {
-        var v = new validators.EmailValidator();
+        expect(errors.length == 1 && errors[0] == "String must have between 1 and 3 characters").to.eq(true);
 
+        done();
+      });
+    });   
+
+  });
+
+  describe('EmailValidator', function() {
+
+    it("Should allow valid email addresses", function(done) {
+      require(['piewpiew.validators'], function(validators) {
+
+        var v = new validators.EmailValidator();
         assert.equal(v.validate("email@example.com").length, 0, "email@example.com");
         assert.equal(v.validate("firstname.lastname@example.com").length, 0, "firstname.lastname@example.com");
         assert.equal(v.validate("email@subdomain.example.com").length, 0, "email@subdomain.example.com");
@@ -103,11 +110,13 @@ requirejs(['assert', 'piewpiew.validators'], function(assert, validators) {
         //assert.equal(v.validate("much.”more\\ unusual”@example.com").length, 0, "much.”more\\ unusual”@example.com");
         //assert.equal(v.validate("very.unusual.”@”.unusual.com@example.com").length, 0, "very.unusual.”@”.unusual.com@example.com");
         //assert.equal(v.validate("very.”(),:;<>[]”.VERY.”very@\\\\ \"very”.unusual@strange.example.com").length, 0, "very.”(),:;<>[]”.VERY.”very@\\\\ \"very”.unusual@strange.example.com");
-
-
+        
+        done();
       });
+    });
 
-      test('Denies invalid email addresses', function() {
+    it("Should detect invalid email addresses", function(done) {
+      require(['piewpiew.validators'], function(validators) {
         var v = new validators.EmailValidator();
         
         assert.notEqual(v.validate("plainaddress").length, 0, "plainaddress");
@@ -131,10 +140,10 @@ requirejs(['assert', 'piewpiew.validators'], function(assert, validators) {
         assert.notEqual(v.validate("”(),:;<>[\\]@example.com").length, 0, "”(),:;<>[\\]@example.com");
         //assert.notEqual(v.validate("just”not”right@example.com").length, 0, "just”not”right@example.com");
         assert.notEqual(v.validate("this\\ is\"really\"not\\allowed@example.com").length, 0, "this\\ is\"really\"not\\allowed@example.com");
+        
+        done();
       });
     });
 
   });
-
-
 });

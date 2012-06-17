@@ -13,6 +13,8 @@
   "devDependencies": {
     "mocha" : "latest",
     "requirejs" : "latest",
-    "assert" : "latest"
+    "chai" : "latest",
+    "grunt" : "latest",
+    "grunt-mocha" : "latest"
   }
 }
