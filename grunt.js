@@ -52,6 +52,19 @@ module.exports = function(grunt) {
 
     },
 
+    copy : {
+      examples : {
+        src : [
+          'lib/**/*.js',
+          'node_modules/requirejs/require.js',
+          'node_modules/backbone/node_modules/underscore/underscore-min.js',
+          'node_modules/backbone/backbone-min.js',
+        ],
+        dest : 'examples/requirejs/js/libs/',
+        strip : /(^lib|^node_modules\/backbone\/node_modules\/underscore|^node_modules\/backbone|^node_modules\/requirejs)/
+      }
+    },
+
     min : {
       dist : {
         src : ["<banner>", "<%= dirs.dest %>/<%= pkg.name %>-<%= pkg.version %>.js"],
@@ -70,5 +83,6 @@ module.exports = function(grunt) {
   grunt.registerTask('test', 'mocha:all');
 
   grunt.loadNpmTasks('grunt-mocha');
+  grunt.loadTasks( "build/tasks" );
 };
 

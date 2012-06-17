@@ -16,15 +16,15 @@ define(function() {
   require.config({
     paths: {
       // Common libraries
-      'jquery'    : 'libs/jquery/jquery-1.7.1.min',
-      'underscore': 'libs/underscore/underscore-1.3.1.min',
-      'backbone'  : 'libs/backbone/backbone-0.9.2.min',
+      'jquery'    : 'libs/jquery-1.7.1.min',
+      'underscore': 'libs/underscore-min',
+      'backbone'  : 'libs/backbone-min',
       'piewpiew'  : 'libs/piewpiew/piewpiew-0.0.2.min',
 
       // Require JS plugins
-      'text'      : 'libs/requirejs/text',
-      'i18n'      : 'libs/requirejs/i18n',
-      'domReady'  : 'libs/requirejs/domReady'
+      'text'      : 'libs/text',
+      'i18n'      : 'libs/i18n',
+      'domReady'  : 'libs/domReady'
     },
 
     shim : {
