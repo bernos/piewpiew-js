@@ -1,10 +1,17 @@
 module.exports = function(grunt) {
 
+  grunt.loadNpmTasks('grunt-mocha');
+  grunt.loadTasks( "build/tasks" );
+
   grunt.initConfig({
     pkg : '<json:package.json>',
 
     meta: {
-      banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */'
+      banner: '/*! \n * <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
+              '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
+              '<%= pkg.homepage ? " * " + pkg.homepage + "\n" : "" %>' +
+              ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;\n' +
+              ' */'
     },
 
     dirs : {
@@ -43,25 +50,27 @@ module.exports = function(grunt) {
           "<%= dirs.src %>/piewpiew.config.js"
         ],
         dest : '<%= dirs.dest %>/<%= pkg.name %>-<%= pkg.version %>.js'
-      },
-
-      examples : {
-        src : "<%= dirs.dest %>/<%= pkg.name %>-<%= pkg.version %>.min.js",
-        dest : "examples/requirejs/js/libs/piewpiew/<%= pkg.name %>-<%= pkg.version %>.min.js"
       }
+    },
 
+    clean : {
+      examples : {
+        src : [
+          'examples/requirejs/js/libs/*.js'
+        ]
+      }
     },
 
     copy : {
       examples : {
         src : [
           'lib/**/*.js',
-          'node_modules/requirejs/require.js',
+          '<%= dirs.dest %>/<%= pkg.name %>-<%= pkg.version %>.min.js',
           'node_modules/backbone/node_modules/underscore/underscore-min.js',
           'node_modules/backbone/backbone-min.js',
         ],
         dest : 'examples/requirejs/js/libs/',
-        strip : /(^lib|^node_modules\/backbone\/node_modules\/underscore|^node_modules\/backbone|^node_modules\/requirejs)/
+        strip : /(^dist|^lib|^node_modules\/backbone\/node_modules\/underscore|^node_modules\/backbone|^node_modules\/requirejs)/
       }
     },
 
@@ -79,10 +88,24 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('default', 'mocha:all concat:dist min:dist concat:examples');
+  /**
+   * Run tests
+   */
   grunt.registerTask('test', 'mocha:all');
 
-  grunt.loadNpmTasks('grunt-mocha');
-  grunt.loadTasks( "build/tasks" );
+  /**
+   * Build the piewpiew library
+   */
+  grunt.registerTask('build-lib', 'concat:dist min:dist');
+  
+  /**
+   * Build the examples - will also build the library
+   */
+  grunt.registerTask('build-examples', 'build-lib clean:examples copy:examples')
+
+  /**
+   * Default task. Run build-examples, which also build the lib(s)
+   */
+  grunt.registerTask('default', 'build-examples')
 };
 
