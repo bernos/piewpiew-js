@@ -1,4 +1,8 @@
-/*! piewpiew - v0.0.2 - 2012-06-16 */
+/*! 
+ * piewpiew - v0.0.2 - 2012-06-18
+ * http://github.com/bernos/piewpiew-js
+ * Copyright (c) 2012 Brendan McMahon;
+ */
 
 /*******************************************************************************
 
@@ -992,13 +996,13 @@ All view type functions in piewpiew.models.fields needs to be removed
 
 */
 define('piewpiew.forms.fields', [
-  'underscore',
   'piewpiew.core',
   'piewpiew.forms',
+  'piewpiew.validators',
   'piewpiew.views.Helpers'
 ], 
 
-function(_, piewpiew, forms, Helpers) {
+function(piewpiew, forms, validators, Helpers) {
 
   var fields = {};
 
@@ -1032,11 +1036,11 @@ function(_, piewpiew, forms, Helpers) {
     initialize: function(options) {
       options || (options = {});
 
-      _.extend(this, options);
+      piewpiew.extend(this, options);
 
       this.validators = this.defaultValidators();
 
-      _.extend(this.validators, options.validators);
+      piewpiew.extend(this.validators, options.validators);
     },
 
     /**
@@ -1084,8 +1088,6 @@ function(_, piewpiew, forms, Helpers) {
         if (null != v) errors = errors.concat(v);
       });
 
-      console.log("validated field ", errors)
-
       if (errors.length > 0) return errors;
 
       return false;
@@ -1118,7 +1120,32 @@ function(_, piewpiew, forms, Helpers) {
     }    
   });
 
+  /**
+   * piewpiew.forms.fields.TextField
+   * ===========================================================================
+   *
+   */
   fields.TextField = fields.Field.extend({
+
+    minLength : -1,
+
+    maxLength : -1,
+
+    regex : /./,
+
+    defaultValidators : function() {
+      return {
+        length : new validators.StringValidator({
+          minLength : this.minLength,
+          maxLength : this.maxLength
+        }),
+
+        regex : new validators.RegexValidator({
+          pattern : this.regex
+        })
+      };
+    },
+
     render: function(value, attributes) {
       return Helpers.Html.textfield(this.name, value, attributes);
     }

@@ -1,8 +1,12 @@
 {
-  "author": "Brendan McMahon <bernos@gmail.com>",
+  "author": {
+    "name":"Brendan McMahon",
+    "email": "bernos@gmail.com"
+  },
   "name": "piewpiew",
   "description": "Piewpiew JS library",
   "version": "0.0.2",
+  "homepage": "http://github.com/bernos/piewpiew-js",
   "repository": {
     "url": ""
   },
