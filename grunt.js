@@ -66,11 +66,11 @@ module.exports = function(grunt) {
         src : [
           'lib/**/*.js',
           '<%= dirs.dest %>/<%= pkg.name %>-<%= pkg.version %>.min.js',
-          'node_modules/backbone/node_modules/underscore/underscore-min.js',
+          'node_modules/underscore/underscore-min.js',
           'node_modules/backbone/backbone-min.js',
         ],
         dest : 'examples/requirejs/js/libs/',
-        strip : /(^dist|^lib|^node_modules\/backbone\/node_modules\/underscore|^node_modules\/backbone|^node_modules\/requirejs)/
+        strip : /(^dist|^lib|^node_modules\/underscore|^node_modules\/backbone|^node_modules\/requirejs)/
       }
     },
 
