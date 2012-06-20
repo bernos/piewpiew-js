@@ -652,8 +652,6 @@ function($, View) {
     },
 
     template: function() {
-//       var model = this.model;
-// console.log("asfasdfsdafdafdas");
       return [
         '<form class="form-horizontal">',
         '  <% if (null != model.id) { %>',
@@ -671,31 +669,6 @@ function($, View) {
         '  <input type="submit" value="save"/>',
         '</form>'
       ].join("\n");
-          
-
-
-      buf.push('<form class="form-horizontal">');
-
-      buf.push('<% if() { %>');
-      buf.push('<%= Html.hidden("id", model.id) %>');
-      buf.push('<% } %>');
-
-
-      buf.push('<%= Html.hidden("cid", model.cid) %>');
-
-      buf.push('<% _.each(model.fields, function(field, name) { %>');
-      buf.push('<div>');
-
-      buf.push('<div class="control-group control-group-for-<%= name %>"><label class="control-label"><%= field.label %></label><div class="controls"><%= Html.formField(model, field) %></div></div>');
-
-      buf.push('</div>');
-      buf.push('<% }) %>');
-
-      //buf.push('<%= Html.editorForModel(model) %>');
-      buf.push('<input type="submit" value="save"/>');
-      buf.push('</form>');
-
-      return buf.join("\n");
     },
 
     templateContext: function() {
@@ -716,7 +689,9 @@ function($, View) {
       this.clearErrors();
 
       if (null != this.model) {
-        if (this.model.set(formData)) this.trigger("submit", this);
+        if (this.model.set(formData)) {
+          this.trigger("submit", this);
+        }
       }     
 
       e.preventDefault();
