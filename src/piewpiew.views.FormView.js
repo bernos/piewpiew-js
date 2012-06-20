@@ -37,31 +37,23 @@ function($, View) {
     },
 
     template: function() {
-      var buf   = [],
-          model = this.model;
-
-
-      buf.push('<form class="form-horizontal">');
-
-      if (this.model.id) {
-        buf.push('<%= Html.hidden("id", model.id) %>');
-      }
-
-      buf.push('<%= Html.hidden("cid", model.cid) %>');
-
-      buf.push('<% _.each(model.fields, function(field, name) { %>');
-      buf.push('<div>');
-
-      buf.push('<div class="control-group control-group-for-<%= name %>"><label class="control-label"><%= field.label %></label><div class="controls"><%= Html.formField(model, field) %></div></div>');
-
-      buf.push('</div>');
-      buf.push('<% }) %>');
-
-      //buf.push('<%= Html.editorForModel(model) %>');
-      buf.push('<input type="submit" value="save"/>');
-      buf.push('</form>');
-
-      return buf.join("\n");
+      return [
+        '<form class="form-horizontal">',
+        '  <% if (null != model.id) { %>',
+        '    <%= Html.hidden("id", model.id) %>',
+        '  <% } %>',
+        '  <%= Html.hidden("cid", model.cid) %>',
+        '  <% _.each(model.fields, function(field, name) { %>',
+        '    <div>',
+        '      <div class="control-group control-group-for-<%= name %>">',
+        '        <label class="control-label"><%= field.label %></label>',
+        '        <div class="controls"><%= Html.formField(model, field) %></div>',
+        '      </div>',
+        '    </div>',
+        '  <% }) %>',
+        '  <input type="submit" value="save"/>',
+        '</form>'
+      ].join("\n");
     },
 
     templateContext: function() {
@@ -82,7 +74,9 @@ function($, View) {
       this.clearErrors();
 
       if (null != this.model) {
-        if (this.model.set(formData)) this.trigger("submit", this);
+        if (this.model.set(formData)) {
+          this.trigger("submit", this);
+        }
       }     
 
       e.preventDefault();
