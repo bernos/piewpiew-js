@@ -1,5 +1,5 @@
 /*! 
- * piewpiew - v0.0.2 - 2012-06-20
+ * piewpiew - v0.0.2 - 2012-06-23
  * http://github.com/bernos/piewpiew-js
  * Copyright (c) 2012 Brendan McMahon;
  */
