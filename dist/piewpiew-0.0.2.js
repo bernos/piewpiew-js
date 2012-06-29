@@ -1,5 +1,5 @@
 /*! 
- * piewpiew - v0.0.2 - 2012-06-23
+ * piewpiew - v0.0.2 - 2012-06-29
  * http://github.com/bernos/piewpiew-js
  * Copyright (c) 2012 Brendan McMahon;
  */
@@ -882,6 +882,7 @@ function(_, backbone, piewpiew) {
   forms.Form = backbone.Model.extend({
 
     initialize: function(attributes, options) {
+      console.log("form", this);
       this.fields || (this.fields = {});
 
       _.each(this.fields, function(field, name) {

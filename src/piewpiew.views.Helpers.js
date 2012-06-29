@@ -126,6 +126,41 @@ function(_) {
       },
 
       /**
+       * Renders an HTML <select> element
+       *
+       * @param {String} name
+       *  Name attribute for the element
+       * @param {String} options
+       *  An object containing name/values for the select list options. Format
+       *  of the object is a simple { name: value, name: value }
+       * @param {String} selectedOption
+       *  The name of the selected option
+       * @param {Object} htmlAttributes
+       *  Object containing extra html attributes to add to the element
+       * @return {String} The rendered element
+       */
+      selectList: function(name, options, selectedOption, htmlAttributes) {
+        var output = piewpiew.printf('<select name="${name} ${attributes}>', {
+          name: name,
+          attributes: this.attributeString(htmlAttributes) 
+        });
+
+        for(var n in options) {
+          var selected = (n == selectedOption) ? ' selected="selected"' : '';
+
+          output += piewpiew.printf('<option value="${value}"${selected}>${label}</option>', {
+            value: n,
+            label: options[n],
+            selected: selected
+          });
+        }
+
+        output += '</select>';
+
+        return output;
+      },
+
+      /**
        * Renders an HTML textfield element
        *
        * @param {String} name
@@ -142,7 +177,28 @@ function(_) {
           value:  (value != null) ? value : "",
           attributes: this.attributeString(htmlAttributes)
         });
+      },
+
+      /**
+       * Renders an HTML textarea element
+       *
+       * @param {String} name
+       *  Name attribute for the element
+       * @param {String} value
+       *  Value attribute for the element
+       * @param {Object} htmlAttributes
+       *  Object containing extra html attributes to add to the element
+       * @return {String} The rendered element
+       */
+      textarea: function(name, value, htmlAttributes) {
+        return piewpiew.printf('<textarea name="${name}" ${attributes}>${value}</textarea>', {
+          name: name,
+          value: value,
+          attributes: this.attributeString(htmlAttributes)
+        });
       }
+
+
     }    
   };
 });

@@ -39,7 +39,6 @@ function(_, backbone, piewpiew) {
      *  }
      */
     validate: function(attrs) {
-      console.log("validate", attrs)
       var errors = {};
       var isValid = true;
       var model = this;
