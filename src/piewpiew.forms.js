@@ -2,7 +2,7 @@ define('piewpiew.forms', [
   'underscore',
   'backbone',
   'piewpiew.core'
-], 
+],
 
 function(_, backbone, piewpiew) {
   var forms = {};
@@ -10,12 +10,12 @@ function(_, backbone, piewpiew) {
   forms.Form = backbone.Model.extend({
 
     initialize: function(attributes, options) {
-      this.fields || (this.fields = {});
+      this.fields = this.fields || {};
 
       _.each(this.fields, function(field, name) {
         field.name = name;
 
-        if (!field.label) { 
+        if (!field.label) {
           field.label = name;
         }
       });
@@ -24,7 +24,7 @@ function(_, backbone, piewpiew) {
     /**
      * Iterate over each of the model's field definitions and validate the
      * corresponding value from the model instance. Returns either and object of
-     * errors or false if no validation errors occured. The structure of the 
+     * errors or false if no validation errors occured. The structure of the
      * error object is:
      *
      *  {
@@ -63,16 +63,16 @@ function(_, backbone, piewpiew) {
 
   forms.ModelForm = forms.Form.extend({
     initialize : function(attributes, options) {
-      this.fields || (this.fields = {});
+      this.fields = this.fields || {};
 
-      // For any fields not explicitly set in the ModelForm.fields 
-      // configuration, check the fields of the associated model and 
+      // For any fields not explicitly set in the ModelForm.fields
+      // configuration, check the fields of the associated model and
       // set up corresponding form fields for each
       if (this.model) {
         var that = this;
 
         _.each(this.model.prototype.fields, function(field, name) {
-          if (that.fields[name] == null) {
+          if (that.fields[name] === null) {
             that.fields[name] = that.getFormFieldForModelField(field);
           }
         });
@@ -86,7 +86,7 @@ function(_, backbone, piewpiew) {
     },
 
     save: function() {
-      this.validate
+      this.validate();
     }
   });
 

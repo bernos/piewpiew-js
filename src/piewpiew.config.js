@@ -6,13 +6,13 @@ define('piewpiew.config', ['piewpiew.core'], function(piewpiew) {
 	config.Config = piewpiew.Class({
 
     initialize: function(options) {
-      options || (options = {});
+      options = options || {};
 
       if (!options.environment) options.environment = piewpiew.DEVELOPMENT;
 
       this.getOptions = function() {
         return options;
-      }
+      };
 		},
 
     setEnvironment: function(environment) {
@@ -46,9 +46,9 @@ define('piewpiew.config', ['piewpiew.core'], function(piewpiew) {
             break;
         }
 
-        if(null != options[env]) {
+        if(null !== options[env]) {
           value = options[env][key];
-        }        
+        }
       }
 
       if (null !== value) {

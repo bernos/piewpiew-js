@@ -5,10 +5,10 @@ define('piewpiew.application', ['underscore', 'backbone', 'piewpiew.core'], func
   /**
    *  piewpiew.Application
    *  -------------------------------------------------------------------------
-   *  The Application class represents the 'core' of our app or app component. 
+   *  The Application class represents the 'core' of our app or app component.
    *  It provides a consistent point of access to views and models in our app
    *  via the regsiterView, registerModel, getView, getModel methods.
-   */    
+   */
   application.Application = piewpiew.Class({
 
     /**
@@ -20,9 +20,9 @@ define('piewpiew.application', ['underscore', 'backbone', 'piewpiew.core'], func
 
       var options = {};
 
-      var defaults;
+      var defaults = this.defaults;
 
-      if (defaults = this.defaults) {
+      if (defaults) {
         if (typeof defaults == 'function') {
           defaults = defaults.call(this);
         }
@@ -48,7 +48,7 @@ define('piewpiew.application', ['underscore', 'backbone', 'piewpiew.core'], func
     },
 
     set: function(name, value) {
-      this._options || (this._options = {});
+      this._options = this._options || {};
 
       if (arguments.length == 2) {
         this._options[name] = value;
@@ -62,21 +62,21 @@ define('piewpiew.application', ['underscore', 'backbone', 'piewpiew.core'], func
     },
 
     get: function(name) {
-      this._options || (this._options = {});
+      this._options = this._options || {};
       return this._options[name];
     },
 
     configure: function(env, fn) {
       var envs = 'all';
       var args = Array.prototype.slice.call(arguments);
-      var fn = args.pop();
+      fn = args.pop();
 
       if (args.length) {
         envs = args;
       }
 
       if (envs == 'all' || envs.indexOf(this.env) > -1) {
-        fn.call(this); 
+        fn.call(this);
       }
 
       return this;
@@ -85,7 +85,7 @@ define('piewpiew.application', ['underscore', 'backbone', 'piewpiew.core'], func
     /**
      * Register your router(s) here.
      */
-    initializeRouter: function() { 
+    initializeRouter: function() {
       if (this.routes) {
         var routes = this.normalizeRoutes(this.routes);
 
@@ -95,7 +95,7 @@ define('piewpiew.application', ['underscore', 'backbone', 'piewpiew.core'], func
 
       }
 
-      return this; 
+      return this;
     },
 
     /**
@@ -133,7 +133,7 @@ define('piewpiew.application', ['underscore', 'backbone', 'piewpiew.core'], func
           var p = pattern.length ? this.baseUrl + '/' + pattern : this.baseUrl;
 
           normalizedRoutes[p] = routes[pattern];
-        }  
+        }
 
         return normalizedRoutes;
       }
@@ -182,7 +182,7 @@ define('piewpiew.application', ['underscore', 'backbone', 'piewpiew.core'], func
      * @return {Backbone.Model}
      */
     getModel: function(name) {
-      return this._modelMap[name]
+      return this._modelMap[name];
     },
 
     /**
@@ -237,7 +237,7 @@ define('piewpiew.application', ['underscore', 'backbone', 'piewpiew.core'], func
 
       eventSource.bind(eventName, function() {
         var command = new commandClass(app);
-        command.execute.apply(command, arguments)  
+        command.execute.apply(command, arguments);
       });
 
       return this;

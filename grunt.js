@@ -67,7 +67,7 @@ module.exports = function(grunt) {
           'lib/**/*.js',
           '<%= dirs.dest %>/<%= pkg.name %>-<%= pkg.version %>.min.js',
           'node_modules/underscore/underscore-min.js',
-          'node_modules/backbone/backbone-min.js',
+          'node_modules/backbone/backbone-min.js'
         ],
         dest : 'examples/requirejs/js/libs/',
         strip : /(^dist|^lib|^node_modules\/underscore|^node_modules\/backbone|^node_modules\/requirejs)/
@@ -79,7 +79,7 @@ module.exports = function(grunt) {
         src : ["<banner>", "<%= dirs.dest %>/<%= pkg.name %>-<%= pkg.version %>.js"],
         dest : '<%= dirs.dest %>/<%= pkg.name %>-<%= pkg.version %>.min.js'
       }
-    },   
+    },
 
     mocha : {
       all : {
@@ -96,16 +96,16 @@ module.exports = function(grunt) {
   /**
    * Build the piewpiew library
    */
-  grunt.registerTask('build-lib', 'concat:dist min:dist');
+  grunt.registerTask('build-lib', 'lint:all concat:dist min:dist');
   
   /**
    * Build the examples - will also build the library
    */
-  grunt.registerTask('build-examples', 'build-lib clean:examples copy:examples')
+  grunt.registerTask('build-examples', 'build-lib clean:examples copy:examples');
 
   /**
    * Default task. Run build-examples, which also build the lib(s)
    */
-  grunt.registerTask('default', 'build-examples')
+  grunt.registerTask('default', 'build-examples');
 };
 

@@ -3,7 +3,7 @@
   piewpiew.core.js
 
 *******************************************************************************/
-(function(global) 
+(function(global)
 {
   var piewpiew = {};
 
@@ -25,7 +25,7 @@
   };
 
   /**
-   * Merges two or more objects. When extend(a,b,c) is called, first the 
+   * Merges two or more objects. When extend(a,b,c) is called, first the
    * properties of b are copied to a, then the properties of c are copied to a.
    * The updated 'a' object is returned
    */
@@ -78,7 +78,7 @@
   /**
    *  piewpiew.Class
    *  --------------------------------------------------------------------------
-   *  Utility function for defining 'Classes'. 
+   *  Utility function for defining 'Classes'.
    */
   var initializing = false;
     
@@ -87,7 +87,7 @@
     var parent  = null;
                 
     /**
-     * Default constructor for our new class. All classes created using the 
+     * Default constructor for our new class. All classes created using the
      * piewpiew.Class() method will share this constructor.
      */
     var klass = function() {
@@ -97,11 +97,11 @@
     };
       
     /**
-     * If the first argument is a function, assume it is the "class" from which 
-     * the new class will inherit. In this case the second argument is an object 
+     * If the first argument is a function, assume it is the "class" from which
+     * the new class will inherit. In this case the second argument is an object
      * containing the methods and properties for the new class.
      *
-     * If the first argument is not a function, then we interpret it as an 
+     * If the first argument is not a function, then we interpret it as an
      * object containing the methods and properties of the new class
      */
     if (typeof arguments[0] === 'function') {
@@ -112,7 +112,7 @@
     }
 
     if (parent) {
-      // Set the initializing flag to prevent the normal initialization methods 
+      // Set the initializing flag to prevent the normal initialization methods
       // firing when creating the new prototype object
       initializing = true;
       klass.prototype = new parent();
@@ -125,11 +125,11 @@
 
     if (!klass.prototype.initialize) {
       klass.prototype.initialize = function(){};
-    } 
+    }
 
     klass.extend = function(o) {
       return piewpiew.Class(this, o);
-    }
+    };
 
     return klass;
   };
@@ -164,6 +164,6 @@
     global.define = piewpiew.define;
   }
 
-  piewpiew.define('piewpiew.core', [], function() { return piewpiew });
+  piewpiew.define('piewpiew.core', [], function() { return piewpiew; });
 
 }(typeof window === 'undefined' ? this : window));

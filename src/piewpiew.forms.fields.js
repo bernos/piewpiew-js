@@ -3,7 +3,7 @@ define('piewpiew.forms.fields', [
   'piewpiew.forms',
   'piewpiew.validators',
   'piewpiew.views.Helpers'
-], 
+],
 
 function(piewpiew, forms, validators, Helpers) {
 
@@ -37,7 +37,7 @@ function(piewpiew, forms, validators, Helpers) {
      * @param {object} options
      */
     initialize: function(options) {
-      options || (options = {});
+      options = options || {};
 
       piewpiew.extend(this, options);
 
@@ -47,7 +47,7 @@ function(piewpiew, forms, validators, Helpers) {
     },
 
     /**
-     * Creates default validators for the field. Inheritting classes should 
+     * Creates default validators for the field. Inheritting classes should
      * provide their own implementation
      */
     defaultValidators: function() {
@@ -88,7 +88,7 @@ function(piewpiew, forms, validators, Helpers) {
       _.each(this.validators, function(validator, name) {
         var v = validator.validate(value);
 
-        if (null != v) errors = errors.concat(v);
+        if (null !== v) errors = errors.concat(v);
       });
 
       if (errors.length > 0) return errors;
@@ -108,19 +108,19 @@ function(piewpiew, forms, validators, Helpers) {
     },
 
     /**
-     * Validates that the value is valid, if this is a required field. For 
+     * Validates that the value is valid, if this is a required field. For
      * example, an empty string would pass the validateType() method, but should
      * not pass the validateRequired() test.
      * @param {Object} value
      * @return {boolean}
      */
     validateRequired: function(value) {
-      if (null == value) return false;
+      if (null === value) return false;
 
-      if (typeof value == "string" && value == "") return false;
+      if (typeof value == "string" && value === "") return false;
 
       return true;
-    }    
+    }
   });
 
   /**

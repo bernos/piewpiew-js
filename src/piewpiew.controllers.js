@@ -4,7 +4,7 @@ define('piewpiew.controllers', ['piewpiew.core'], function(piewpiew) {
 
   controllers.Controller = piewpiew.Class({
     initialize: function(options) {
-      options || (options = {});
+      options = options || {};
       
       if (options.view) {
         this.setView(options.view);
@@ -44,7 +44,7 @@ define('piewpiew.controllers', ['piewpiew.core'], function(piewpiew) {
     setModel: function(model) {
       if (this.getModel()) {
         this.unbindModel(this.getModel());
-      }      
+      }
 
       this._model = model;
 
