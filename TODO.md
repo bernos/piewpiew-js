@@ -1,4 +1,23 @@
-----
+PACKAGING
+---------
+
+Model dependency plan. Strategy for module breakdown. The idea is that we
+can include piewpiew.js, which will pull down all piewpiew modules, or, alternatively
+we can cherry pick only the modules we need.
+
+piewpiew should ship as piewpiew.min.js, which would be a single file containing a
+prebuilt version of the entire library, or a set of individual amd modules
+
+piewpiew.js
+  piewpiew.core.js (change this to piewpiew.oop)
+  piewpiew.application.js
+    piewpiew.core.js
+  piewpiew.controllers.js
+    piewpiew.core.js
+  piewpiew.forms
+    piewpiew.forms.Form.js
+    piewpiew.forms.ModelForm.js
+
 TODO
 ----
 
@@ -10,7 +29,7 @@ TODO
   having to create custom validators.
 # Create a listview
 
-----
+
 DONE
 ----
 # Move template strings, validation messages and so forth into a config object.
@@ -23,7 +42,7 @@ DONE
 		piewpiew.models.validators
 			piewpiew.models.fields
 
----------------
+
 TEST FRAMEWORKS
 ---------------
 
