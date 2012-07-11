@@ -161,4 +161,22 @@ describe('forms.fields', function() {
     });
   });
   
+  describe('Checkbox', function() {
+    it('Should render to the DOM', function(done) {
+      require(['jquery', 'forms/fields'], function($, fields) {
+        
+        var field = new fields.CheckBox({
+          label: "Check this guy",
+          name: "opt-in"
+        });
+
+        
+        var $el = addToDom($, field, true);
+
+        expect($el.val()).to.equal(true);
+
+        done();
+      });
+    });
+  });
 });
