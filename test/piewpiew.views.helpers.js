@@ -3,7 +3,7 @@ describe('View Helpers', function() {
   function testDomOutput($, expected, actual) {
     var el = $('<div/>');
     el.append(actual);
-    $('#output').append(el);
+    $('#html-helpers .output').append(el);
     expect(el.html()).to.equal(expected);
   }
 
@@ -12,11 +12,13 @@ describe('View Helpers', function() {
    * html output, and arguments for the helper. Saves a bunch of typing
    */
   function htmlHelperTest(helperName, expectedHtml, helperArgs) {
-    return function() {
-      require(['jquery', 'piewpiew.views.Helpers'], function($, helpers) {
+    return function(done) {
+      require(['jquery', 'views/Helpers'], function($, helpers) {
         var str = helpers.Html[helperName].apply(helpers.Html, helperArgs);
 
         testDomOutput($, expectedHtml, str);
+
+        done();
       });
     };
   }
@@ -57,11 +59,11 @@ describe('View Helpers', function() {
 
   describe('HTML.selectList', function() {
     var expected = '<select name="mylist" id="mylistid" class="class-one class-two"><option value="one">Option one</option><option value="two" selected="selected">Option two</option><option value="three">Option three</option></select>';
-    var options = [
-      {value: "one", label : "Option one"},
-      {value: "two", label : "Option two"},
-      {value: "three", label: "Option three"}
-    ];
+    var options = {
+      "Option one" : "one",
+      "Option two" : "two",
+      "Option three": "three"
+    };
 
     var args = ["mylist", options, "two", false, {
       id: 'mylistid',
@@ -73,16 +75,16 @@ describe('View Helpers', function() {
     expected = '<select name="mylist" id="mylistid" class="class-one class-two" multiple="multiple"><optgroup label="Group one"><option value="one">Option one</option><option value="two" selected="selected">Option two</option><option value="three">Option three</option></optgroup><optgroup label="Group two"><option value="four" selected="selected">Option four</option><option value="five">Option five</option><option value="six">Option six</option></optgroup></select>';
 
     options = {
-      "Group one" : [
-        {value: "one", label : "Option one"},
-        {value: "two", label : "Option two"},
-        {value: "three", label: "Option three"}
-      ],
-      "Group two" : [
-        {value: "four", label : "Option four"},
-        {value: "five", label : "Option five"},
-        {value: "six", label: "Option six"}
-      ]
+      "Group one" : {
+        "Option one" : "one",
+        "Option two" : "two",
+        "Option three": "three"
+      },
+      "Group two" : {
+        "Option three" : "three",
+        "Option four" : "four",
+        "Option five": "five"
+      }
     };
 
     args = ["mylist", options, ["two", "four"], true, {

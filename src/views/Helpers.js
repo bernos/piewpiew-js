@@ -1,4 +1,4 @@
-define('piewpiew.views.Helpers',
+define(
 [
   'underscore'
 ],
@@ -339,27 +339,28 @@ function(_) {
        *
        * @param {String} name
        *  Name attribute for the element
-       * @param {String} options
-       *  An array of objects specifying the value/label for the select list options. Format
+       * @param {Object} options
+       *  An object containing value/label pairs for the select list options. Format
        *  is simply
-       *  [
-       *    {label: "option 1 label", value: "option 1 value"},
-       *    {label: "option 2 label", value: "option 2 value"}
-       *  ]
-       *  Option groups are also supported by passing in an object, rather than
-       *  array. Each key in the object will be used as the option group labels,
-       *  with each value an array of options. For example:
        *  {
-       *    "Option group one" : [
-       *      {label: "option 1 label", value: "option 1 value"},
-       *      {label: "option 2 label", value: "option 2 value"}
-       *    ],
+       *    "Label one" : "value one",
+       *    "Label two" : "value two"
+       *  }  
+       *
+       *  Option groups are also supported by passing in a nested object, structure.
+       *  Each key in the object will be used as the option group labels,
+       *  with each value an object of options. For example:
+       *  {
+       *    "Option group one" : {
+       *      "option 1 label" : "option 1 value",
+       *      "option 2 label" : "option 2 value"
+       *    },
        *    "Option group two" : [
-       *      {label: "option 3 label", value: "option 3 value"},
-       *      {label: "option 4 label", value: "option 4 value"}
-       *    ]
+       *      "option 3 label": "option 3 value",
+       *      "option 4 label": "option 4 value"
+       *    }
        *  }
-       * @param {String} selectedOptions
+       * @param {Array} selectedValues
        *  Either and array of selected option values for multi select lists, or a singe
        *  selected option value
        * @param {Boolean} multipleSelect
@@ -368,7 +369,7 @@ function(_) {
        *  Object containing extra html attributes to add to the element
        * @return {String} The rendered element
        */
-      selectList: function(name, options, selectedOptions, multipleSelect, htmlAttributes) {
+      selectList: function(name, options, selectedValues, multipleSelect, htmlAttributes) {
         var i,m,selected;
 
         htmlAttributes = htmlAttributes || {};
@@ -382,48 +383,42 @@ function(_) {
           attributes: this.attributeString(htmlAttributes)
         });
 
-        if (selectedOptions.constructor.prototype !== Array.prototype) {
-          selectedOptions = [selectedOptions];
+        if (selectedValues.constructor.prototype !== Array.prototype) {
+          selectedValues = [selectedValues];
         }
 
-        if (options.constructor.prototype === Array.prototype) {
-          for (i = 0, m = options.length; i < m; i++) {
+        function renderOption(label, value) {
+          selected = _.any(selectedValues, function(selectedValue) {
+            return selectedValue == value;
+          });
 
-            selected = _.any(selectedOptions, function(value) {
-              return value == options[i].value;
-            });
+          selected = (selected) ? ' selected="selected"' : '';
+          
+          return piewpiew.printf('<option value="${value}"${selected}>${label}</option>', {
+            value: value,
+            label: label,
+            selected: selected
+          });
+        }
 
-            selected = (selected) ? ' selected="selected"' : '';
-            output += piewpiew.printf('<option value="${value}"${selected}>${label}</option>', {
-              value: options[i].value,
-              label: options[i].label,
-              selected: selected
-            });
-          }
-        } else if (typeof options == "object") {
-          for (var group in options) {
+        _.each(options, function(value, label) {
+          if (typeof value == 'string') {
+            // An regular option
+            output += renderOption(label, value);
+
+          } else {
+            // An option group
             output += piewpiew.printf('<optgroup label="${label}">', {
-              label: group
+              label: label
             });
 
-            for (i = 0, m = options[group].length; i < m; i++) {
-
-              selected = _.any(selectedOptions, function(value) {
-                return value == options[group][i].value;
-              });
-
-              selected = (selected) ? ' selected="selected"' : '';
-              
-              output += piewpiew.printf('<option value="${value}"${selected}>${label}</option>', {
-                value: options[group][i].value,
-                label: options[group][i].label,
-                selected: selected
-              });
-            }
+            _.each(value, function(value, label) {
+              output += renderOption(label, value);
+            });
 
             output += '</optgroup>';
           }
-        }
+        });
 
         output += '</select>';
 
@@ -476,8 +471,6 @@ function(_) {
           attributes: this.attributeString(htmlAttributes)
         });
       }
-
-
     }
   };
 });

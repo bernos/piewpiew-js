@@ -1,6 +1,6 @@
-define('piewpiew.forms.ModelForm', [
+define([
   'underscore',
-  'piewpiew.forms.Form'
+  './Form'
 ],
 
 function(_, Form) {

@@ -1,7 +1,7 @@
-define('piewpiew.forms.fields.TextField', [
-  'piewpiew.forms.fields.Field',
-  'piewpiew.validators',
-  'piewpiew.views.Helpers'
+define([
+  './Field',
+  '../../piewpiew.validators',
+  '../../views/Helpers'
 ],
 
 function(Field, validators, Helpers) {
@@ -22,7 +22,7 @@ function(Field, validators, Helpers) {
         }),
 
         regex : new validators.RegexValidator({
-          pattern : this.regex
+          regex : this.regex
         })
       };
     },

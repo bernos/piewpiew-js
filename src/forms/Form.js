@@ -1,4 +1,4 @@
-define('piewpiew.forms.Form', [
+define([
   'underscore',
   'backbone'
 ],

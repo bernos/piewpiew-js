@@ -2,7 +2,7 @@
  * validators package
  * --------------------------------------------------------------------------
  */
-define('piewpiew.validators', [
+define([
   'validators/Validator',
   'validators/StringValidator',
   'validators/RangeValidator',

@@ -1,18 +1,16 @@
-define('piewpiew.views', 
-[
-   'piewpiew.core'
-  ,'piewpiew.views.Helpers'
-  ,'piewpiew.views.Region'
-  ,'piewpiew.views.View'
-  ,'piewpiew.views.CollectionView'
-  ,'piewpiew.views.FormView'
-  ,'piewpiew.views.Layout'
-  
-], 
+define([
+ 'piewpiew.core',
+ './views/Helpers',
+ 'piewpiew.views.Region',
+ 'piewpiew.views.View',
+ 'piewpiew.views.CollectionView',
+ 'piewpiew.views.FormView',
+ 'piewpiew.views.Layout'
+],
 
 function(piewpiew, Helpers, Region, View, CollectionView, FormView, Layout) {
 
-  piewpiew.views = {
+  return {
     View: View,
     CollectionView: CollectionView,
     FormView: FormView,
@@ -20,6 +18,4 @@ function(piewpiew, Helpers, Region, View, CollectionView, FormView, Layout) {
     Layout: Layout,
     Helpers: Helpers
   };
-  
-  return piewpiew.views;
 });

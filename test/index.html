@@ -51,9 +51,10 @@
       });
     </script>
 
-    <!--<script src="piewpiew.forms.fields.js"></script> -->
+    <script src="piewpiew.forms.fields.js"></script>
     <script src="piewpiew.validators.js"></script>
-    <!-- <script src="piewpiew.views.helpers.js"></script> -->
+    <script src="piewpiew.views.helpers.js"></script>
+    <script src="piewpiew.forms.js"></script>
 
     <script>
       require(['jquery'], function($) {
@@ -64,7 +65,14 @@
     </script>
   </head>
   <body>
-    <div id="mocha"></div>  
-    <div id="output"></div>
+    <div id="mocha"></div>
+    <div id="html-helpers">
+      <h1>HTML Helpers</h1>
+      <div class="output"></div>
+    </div>  
+    <div id="form-fields">
+      <h1>Form Fields</h1>
+      <div class="output"></div>
+    </div>
   </body>
 </html>

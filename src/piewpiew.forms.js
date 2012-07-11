@@ -1,20 +1,15 @@
-define('piewpiew.forms',
-[
-   'piewpiew.core',
-   'piewpiew.forms.Form',
-   'piewpiew.forms.ModelForm',
-   'piewpiew.forms.fields'
+define([
+  './forms/Form',
+  './forms/ModelForm',
+  './forms/fields'
 ],
 
-function(piewpiew, Form, ModelForm, fields) {
-
-  piewpiew.forms = {
+function(Form, ModelForm, fields) {
+  return {
     Form: Form,
     ModelForm: ModelForm,
     fields: fields
   };
-  
-  return piewpiew.forms;
 });
 
 

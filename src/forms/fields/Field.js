@@ -1,4 +1,4 @@
-define('piewpiew.forms.fields.Field', [
+define([
   'piewpiew.core'
 ],
 
