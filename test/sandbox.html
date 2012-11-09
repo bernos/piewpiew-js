@@ -39,14 +39,14 @@
     </script>
 
     <script>
-      require(['models/Model'], function(Model) {
+      require(['models/Model', 'models/fields/Field'], function(Model, Field) {
         
         var PersonModel = Model.extend({
 
           fields: {
-            name : {
-              dataType: "string"
-            }
+            name : new Field({
+              required: true
+            })
           },
 
 
@@ -66,9 +66,10 @@
 
 
         var brendan = new PersonModel({          
-          name: "brendan",
-          age: 33
+
         });
+
+
 
 
 
@@ -77,7 +78,8 @@
         });
 
 
-        brendan.set("age", 44);
+        console.log("is valid?", brendan.isValid())
+
 
         var man = new ManModel({
 
