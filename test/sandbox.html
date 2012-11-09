@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Piewpiew sandbox</title>
+
+    <script type="text/javascript" src="../lib/require.js"></script>
+
+    <script type="text/javascript" >
+    
+      // Configure requirejs
+      require.config({
+        baseUrl: '../src/',
+
+        paths: {
+          // Common libraries
+          'jquery'    : '../lib/jquery-1.7.1.min',
+          'underscore': '../node_modules/underscore/underscore-min',
+          'backbone'  : '../node_modules/backbone/backbone-min',
+          
+          // Require JS plugins
+          'text'      : '../lib/text',
+          'i18n'      : '../lib/i18n',
+          'domReady'  : '../lib/domReady'
+        },
+
+        shim : {
+          'underscore' : {
+            exports : '_'
+          },
+
+          'backbone' : {
+            deps : ['underscore'],
+            exports : 'Backbone'          
+          }
+        }
+      });
+    </script>
+
+    <script>
+      require(['models/Model'], function(Model) {
+        
+        var PersonModel = Model.extend({
+
+          fields: {
+            name : {
+              dataType: "string"
+            }
+          },
+
+
+          sayHello: function() {
+            console.log("Hello. My name is " + this.get("name"));
+          }
+        });
+
+        var ManModel = PersonModel.extend({
+          fields: {
+            personalTitle: {
+              dataType: "string"
+            }
+          }
+        });
+
+
+
+        var brendan = new PersonModel({          
+          name: "brendan",
+          age: 33
+        });
+
+
+
+        brendan.bind("error", function(m, e) {
+          console.error(e);
+        });
+
+
+        brendan.set("age", 44);
+
+        var man = new ManModel({
+
+        });
+
+        brendan.sayHello();
+
+
+        console.log("PersonModel.fields", PersonModel.fields);
+        console.log("brendan.constructor.fields", brendan.constructor.fields);
+
+
+        console.log("ManModel.fields", ManModel.fields);
+        console.log("man.constructor.fields", man.constructor.fields);
+
+      });    
+    </script>
+  </head>
+  <body>
+    
+  </body>
+</html>
