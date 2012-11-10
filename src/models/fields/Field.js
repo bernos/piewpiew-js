@@ -1,16 +1,33 @@
 define(['underscore', 'piewpiew.core'], function(_, piewpiew) {
+	/**
+	 * Base class for all field types
+	 */
 	return piewpiew.Class({
+
+		/**
+		 * Indicates that the field is required
+		 */
 		required: false,
 
+		validators: null,
+
+		validationMessages: null,
+
+		/**
+		 * Initialises the field instance
+		 * @param {Object} options
+		 */
 		initialize: function(options) {
 			options = options || {};
 			_.extend(this, options);
 
-			this.validators = this.defaultValidators();
+			// Set up validation messages first, as they are used when setting up our
+			// default validators
 			this.validationMessages = this.defaultValidationMessages();
-
-			_.extend(this.validators, options.validators || {});
-			_.extend(this.validationMessages, options.validationMessages || {});
+ 			_.extend(this.validationMessages, options.validationMessages || {});
+			
+			this.validators = this.defaultValidators();
+ 			_.extend(this.validators, options.validators || {});
 		},
 
 		defaultValidators: function() {
@@ -26,8 +43,6 @@ define(['underscore', 'piewpiew.core'], function(_, piewpiew) {
 
 		validate: function(value) {
 			var errors = [];
-
-			console
 
 			if (!this.validateType(value)) {
 				errors.push(piewpiew.printf(this.validationMessages.type, this));
