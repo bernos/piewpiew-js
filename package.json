@@ -22,7 +22,6 @@
     "requirejs" : "latest",
     "chai" : "latest",
     "grunt" : "latest",
-    "grunt-mocha" : "latest",
-    "grunt-contrib" : "latest"
+    "grunt-mocha" : "latest"
   }
 }
