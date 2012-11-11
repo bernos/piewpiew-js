@@ -19,6 +19,7 @@ define([
 function(piewpiew, Validator) {
   
   var RegexValidator = Validator.extend({
+    label: "String",
     regex: /./,
 
     defaultMessages: function() {
@@ -31,7 +32,7 @@ function(piewpiew, Validator) {
       var errors = [];
 
       if (!this.regex.test(value)) {
-        errors.push(piewpiew.printf(this.messages.invalid, {value: value}));
+        errors.push(piewpiew.printf(this.messages.invalid, this));
       }
 
       return errors;
@@ -39,7 +40,7 @@ function(piewpiew, Validator) {
   });
 
   RegexValidator.messages = {
-    invalid: "The supplied string does not match the regular expression."
+    invalid: "${label} does not match the regular expression ${regex}"
   };
 
   return RegexValidator;

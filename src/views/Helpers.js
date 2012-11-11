@@ -4,7 +4,8 @@ define(
 ],
 
 function(_) {
-  return {
+
+  var Helpers = {
     /**
      * Template processing function for all views. If you wish to use a templating
      * library other than the underscore template function (such as mustache etc)
@@ -30,7 +31,7 @@ function(_) {
     templateContext: function(data) {
       return _.extend(data, this);
     },
-    
+
     Html: {
       /**
        * Creates an HTML attributes string from an object. Name:value pairs in the
@@ -60,11 +61,27 @@ function(_) {
 
       // TODO: there should be a better way to handle model editors. The generic
       // ModelForm class should really be able to handle this
-      editorForModel: function(model) {
-        return Template.renderTemplate(
-          model.editorTemplate(),
-          model.editorTemplateContext()
-        );
+      editorForModel: function(model, htmlAttributes) {
+        return model.renderEditor(htmlAttributes, Helpers);
+      },
+
+      /**
+       * @param {Model} model
+       * @param {String} fieldname
+       */
+      editorForModelField: function(model, fieldname, htmlAttributes) {
+        var field = model.constructor.fields[fieldname];
+
+        if (field) {
+          htmlAttributes = htmlAttributes || {};
+          htmlAttributes.classes = htmlAttributes.classes || [];
+          htmlAttributes.classes.push("control");
+          htmlAttributes.classes.push("control-for-" + fieldname);
+
+          return field.renderEditor(model.get(fieldname), htmlAttributes, Helpers);
+        }
+
+        return "";
       },
 
       /**
@@ -473,4 +490,6 @@ function(_) {
       }
     }
   };
+
+  return Helpers;
 });

@@ -23,7 +23,12 @@ define(['underscore', 'piewpiew.core'], function(_, piewpiew) {
 
 			// Set up validation messages first, as they are used when setting up our
 			// default validators
-			this.validationMessages = this.defaultValidationMessages();
+			this.validationMessages = {
+				type : "The type of ${label} is invalid.",
+				required : "${label} is a required field."
+			};
+
+			_.extend(this.validationMessages, this.defaultValidationMessages());
  			_.extend(this.validationMessages, options.validationMessages || {});
 			
 			this.validators = this.defaultValidators();
@@ -35,14 +40,12 @@ define(['underscore', 'piewpiew.core'], function(_, piewpiew) {
 		},
 
 		defaultValidationMessages: function() {
-			return {
-				required : "${label} is a required field.",
-				type : "The value of ${label} is invalid."
-			}
+			return {}
 		},
 
 		validate: function(value) {
-			var errors = [];
+			var errors = [],
+					field = this;
 
 			if (!this.validateType(value)) {
 				errors.push(piewpiew.printf(this.validationMessages.type, this));
@@ -53,6 +56,8 @@ define(['underscore', 'piewpiew.core'], function(_, piewpiew) {
 			}
 
 			_.each(this.validators, function(validator, name) {
+				validator.label = field.label;
+
 				var v = validator.validate(value);
 
 				if (null !== v) {
@@ -75,6 +80,10 @@ define(['underscore', 'piewpiew.core'], function(_, piewpiew) {
 		    if (typeof value == "string" && value === "") return false;
 
 		    return true;
+		},
+
+		renderEditor: function(value, attributes, helpers) {
+			return "";
 		}
 	});
 });

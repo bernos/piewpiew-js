@@ -24,6 +24,7 @@ define([
 function(piewpiew, Validator) {
   
   var StringValidator = Validator.extend({
+    label: "String",
     minLength: -1,
     maxLength: -1,
 
@@ -37,6 +38,8 @@ function(piewpiew, Validator) {
 
     validate: function(value) {
       var errors = [];
+
+      value = value || "";
 
       if (this.maxLength > -1) {
         if (value.length > this.maxLength) {
@@ -59,9 +62,9 @@ function(piewpiew, Validator) {
   });
 
   StringValidator.messages = {
-     tooLongNoMinLength   : "String must have no more than ${maxLength} characters",
-     tooShortNoMaxLength  : "String must have at least ${minLength} characters",
-     outOfRange           : "String must have between ${minLength} and ${maxLength} characters"
+     tooLongNoMinLength   : "${label} must have no more than ${maxLength} characters",
+     tooShortNoMaxLength  : "${label} must have at least ${minLength} characters",
+     outOfRange           : "${label} must have between ${minLength} and ${maxLength} characters"
   };
   
   return StringValidator;

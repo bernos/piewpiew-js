@@ -22,6 +22,7 @@ define([
 function(piewpiew, Validator) {
   
   var RangeValidator = Validator.extend({
+    label: "Number",
     min: 0,
     max: -1,
 
@@ -45,7 +46,7 @@ function(piewpiew, Validator) {
   });
 
   RangeValidator.messages = {
-    outOfRange : "A value between ${min} and ${max} is required."
+    outOfRange : "${label} must be between ${min} and ${max}."
   };
 
   return RangeValidator;

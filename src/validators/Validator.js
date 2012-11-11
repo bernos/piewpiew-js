@@ -9,6 +9,10 @@ define([
 function(piewpiew) {
 
   return piewpiew.Class({
+    /**
+     * Label used when composing validation error messages
+     */
+    label: "Value",
     
     initialize: function(options) {
       options = options || {};

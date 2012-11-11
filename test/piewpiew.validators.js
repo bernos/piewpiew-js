@@ -58,30 +58,64 @@ describe('Validators', function() {
     it("Should elicit appropriate validation error messages", function(done) {
       require(['piewpiew.validators'], function(validators) {
         var v = new validators.StringValidator({
-          maxLength : 3
+          maxLength : 3,
+          label: "Test"
         });
 
         var errors = v.validate("asdf");
 
-        expect(errors.length == 1 && errors[0] == "String must have no more than 3 characters").to.eq(true);
+        expect(errors.length == 1 && errors[0] == "Test must have no more than 3 characters").to.eq(true);
 
         v.maxLength = -1;
         v.minLength = 3;
 
         errors = v.validate("a");
 
-        expect(errors.length == 1 && errors[0] == "String must have at least 3 characters").to.eq(true);
+        expect(errors.length == 1 && errors[0] == "Test must have at least 3 characters").to.eq(true);
 
         v.maxLength = 3;
         v.minLength = 1;
 
         errors = v.validate("asdfddd");
 
-        expect(errors.length == 1 && errors[0] == "String must have between 1 and 3 characters").to.eq(true);
+        expect(errors.length == 1 && errors[0] == "Test must have between 1 and 3 characters").to.eq(true);
 
         done();
       });
-    });   
+    });  
+
+    it("Should allow custom error messages to be set", function(done) {
+        require(['piewpiew.validators'], function(validators) {
+            var v = new validators.StringValidator({
+                messages: {
+                    tooLongNoMinLength: "That is too long",
+                    tooShortNoMaxLength: "That is too short",
+                    outOfRange: "That is out of range"
+                },
+                maxLength: 3
+            });
+
+            var errors = v.validate("asdf");
+
+            expect(errors.length == 1 && errors[0] == "That is too long").to.eq(true);
+
+            v.maxLength = -1;
+            v.minLength = 3;
+
+            errors = v.validate("a");
+
+            expect(errors.length == 1 && errors[0] == "That is too short").to.eq(true);
+
+            v.maxLength = 3;
+            v.minLength = 1;
+
+            errors = v.validate("asdfddd");
+
+            expect(errors.length == 1 && errors[0] == "That is out of range").to.eq(true);
+
+            done();
+        });
+    });
 
   });
 

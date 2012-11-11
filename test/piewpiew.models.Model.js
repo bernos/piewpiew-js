@@ -1,0 +1,3 @@
+describe('models.Model', function() {
+
+});

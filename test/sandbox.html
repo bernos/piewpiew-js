@@ -17,7 +17,7 @@
           // Common libraries
           'jquery'    : '../lib/jquery-1.7.1.min',
           'underscore': '../node_modules/underscore/underscore-min',
-          'backbone'  : '../node_modules/backbone/backbone-min',
+          'backbone'  : '../node_modules/backbone/backbone',
           
           // Require JS plugins
           'text'      : '../lib/text',
@@ -39,13 +39,18 @@
     </script>
 
     <script>
-      require(['models/Model', 'models/fields/Field'], function(Model, Field) {
+      require(['models/Model', 'models/fields/StringField', 'views/Helpers'], function(Model, StringField, Helpers) {
         
         var PersonModel = Model.extend({
 
           fields: {
-            name : new Field({
-              required: true
+            name : new StringField({
+              label: "Name",
+              maxLength: 14,
+              regex: /./,
+              validationMessages: {
+                tooLongNoMinLength : "Your name is too long!!!"
+              }              
             })
           },
 
@@ -65,20 +70,16 @@
 
 
 
-        var brendan = new PersonModel({          
-
-        });
-
-
-
-
+        var brendan = new PersonModel({});
 
         brendan.bind("error", function(m, e) {
-          console.error(e);
+          console.error("error", e);
         });
 
 
-        console.log("is valid?", brendan.isValid())
+        brendan.set("name", "brendan");
+
+        //console.log("is valid?", brendan.isValid())
 
 
         var man = new ManModel({
@@ -94,6 +95,10 @@
 
         console.log("ManModel.fields", ManModel.fields);
         console.log("man.constructor.fields", man.constructor.fields);
+
+        console.log(Helpers.Html.editorForModelField(brendan, "name"));
+
+        console.log(Helpers.Html.editorForModel(brendan));
 
       });    
     </script>

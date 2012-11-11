@@ -94,6 +94,24 @@ define(['underscore', 'backbone'], function(_, Backbone) {
 			});
 
 			return isValid ? null : errors;
+		},
+
+		renderEditor: function(htmlAttributes, helpers) {
+			var output = [],
+					model = this;
+
+			_.each(this.constructor.fields, function(field, name) {
+				output = output.concat([
+					'<div>',
+					'  <div class="control-group control-group-for-' + name + '">',
+					'    ' + helpers.Html.label(name, field.label, {classes:["control-label"]}),
+					'    <div class="controls">' + helpers.Html.editorForModelField(model, name) + '</div>',
+					'  </div>',
+					'</div>'
+				]);
+			});
+			
+			return output.join("\n");
 		}
 	});
 
